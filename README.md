@@ -2,11 +2,7 @@
 Construct2 Plugin for AirConsole
 
 ## Installation
-Clone this repo or [download files as zip](https://github.com/AirConsole/airconsole-construct2/archive/master.zip) and copy the airconsole directory into construct2 plugin directory:
-
-```
-/path-to-construct2/exporters/html5/plugins/airconsole
-```
+Clone this repo or [download files as zip](https://github.com/AirConsole/airconsole-construct2/archive/master.zip) and drag and drop the airconsole.c2addon file into the Construct2 application.
 
 More information about the plugin:
 
