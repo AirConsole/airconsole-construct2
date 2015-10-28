@@ -102,6 +102,8 @@ cr.plugins_.AirConsole = function(runtime)
       // Game already started, then we can simply add a device
       } else if (connected_devices.indexOf(device_id) === -1 && self.air_console.game_ready) {
         addDeviceId(device_id);
+      } else {
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnGetCustomDeviceState, self);
       }
     };
 
