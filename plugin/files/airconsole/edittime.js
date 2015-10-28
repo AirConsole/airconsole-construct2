@@ -59,7 +59,7 @@ AddCondition(3, cf_trigger, "On device left", "Signalling", "On device disconnec
 AddAnyTypeParam("DeviceID", "The device id to check the custom state");
 AddAnyTypeParam("Key", "The key of the custom state data");
 AddAnyTypeParam("Value", "Is equal this value");
-AddCondition(4, cf_trigger, "On check device custom state", "Data", "Custom state {1} of device {0} is {3}", "Triggered when custom state data of a device matches a value.", "OnGetCustomDeviceState");
+AddCondition(4, cf_trigger, "On check device custom state", "Data", "Custom state {1} of device {0} is {2}", "Triggered when custom state data of a device matches a value.", "OnGetCustomDeviceState");
 
 // ==============================================
 // ACTION
