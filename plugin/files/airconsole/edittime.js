@@ -59,16 +59,22 @@ AddCondition(3, cf_trigger, "On device left", "Signalling", "On device disconnec
 // ACTION
 // ==============================================
 // Message
-AddAnyTypeParam("Device ID", "Data to send to the device.");
+AddAnyTypeParam("Device ID", "The device id to send the data");
 AddAnyTypeParam("Data", "The data to send to the device");
 AddAction(1, af_none, "Send data", "Data", "Send data <i>{1}</i> to {0}", "Send data to the device.", "Message");
 
 // Broadcast
-AddAnyTypeParam("Data", "Data to send to all device.");
+AddAnyTypeParam("Data", "The data to send to all device.");
 AddAction(2, af_none, "Broadcast data", "Data", "Broadcast data <i>{0}</i>", "Send a message to all devices", "Broadcast");
 
 // Game ready
 AddAction(3, af_none, "Game ready", "Data", "Broadcast game is ready", "Send a message to all devices that game is ready and devices can connect", "GameReady");
+
+// Set setCustomDeviceState
+AddAnyTypeParam("Key", "The device state key");
+AddAnyTypeParam("Value", "The device state value");
+AddAction(4, af_none, "Set custom device state (key and value)", "Data", "Set custom data <i>{0}</i> to <i>{1}</i>", "Sets the screen custom data", "SetCustomDeviceState");
+
 
 // ==============================================
 // EXPRESSIONS

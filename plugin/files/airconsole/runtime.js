@@ -225,6 +225,13 @@ cr.plugins_.AirConsole = function(runtime)
     this.air_console.broadcast(message);
   };
 
+  Acts.prototype.SetCustomDeviceState = function (key, value)
+  {
+    var custom = this.air_console.getCustomDeviceState() || {};
+    custom[key] = value;
+    this.air_console.setCustomDeviceState(custom);
+  };
+
   Acts.prototype.GameReady = function (message)
   {
     this.air_console.game_ready = true;
