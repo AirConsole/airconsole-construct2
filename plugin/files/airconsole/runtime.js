@@ -208,6 +208,16 @@ cr.plugins_.AirConsole = function(runtime)
     return true;
   };
 
+  Cnds.prototype.OnGetCustomDeviceState = function (device_id, key, value)
+  {
+    var result = false;
+    var custom_data = this.air_console.getCustomDeviceState(device_id);
+    if (custom_data) {
+      result = custom_data[key] === value;
+    }
+    return result;
+  };
+
   pluginProto.cnds = new Cnds();
 
   //////////////////////////////////////

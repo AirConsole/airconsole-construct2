@@ -55,6 +55,12 @@ AddCmpParam("Is", "Is equal device id");
 AddAnyTypeParam("DeviceID", "The device id which leaves");
 AddCondition(3, cf_trigger, "On device left", "Signalling", "On device disconnects", "Triggered when device leaves the game.", "OnDeviceLeft");
 
+// Receive on device state
+AddAnyTypeParam("DeviceID", "The device id to check the custom state");
+AddAnyTypeParam("Key", "The key of the custom state data");
+AddAnyTypeParam("Value", "Is equal this value");
+AddCondition(4, cf_trigger, "On check device custom state", "Data", "Custom state {1} of device {0} is {3}", "Triggered when custom state data of a device matches a value.", "OnGetCustomDeviceState");
+
 // ==============================================
 // ACTION
 // ==============================================
