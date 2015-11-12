@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style type="text/css">
+    body {
+      background: #FFFFFF;
+    }
+
+    .btn {
+      display: block;
+      padding: 2em;
+      background: #333333;
+      margin-top: 1em;
+      border: 0;
+      font-size: 20px;
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body>
+
+  CONTROLLER
+
+  <button class="btn" id="send">MOVE</button>
+
+  <button class="btn" id="rotate">ROTATE</button>
+
+  <button class="btn" id="counter">COUNT UP</button>
+
+  <script type="text/javascript" src="http://www.airconsole.com/api/airconsole-1.2.1.js"></script>
+  <script type="text/javascript">
+
+    function isMobile() {
+      if (navigator.userAgent.match(/Android/i)
+                  || navigator.userAgent.match(/iPhone/i)
+                  || navigator.userAgent.match(/iPad/i)
+                  || navigator.userAgent.match(/iPod/i)
+                  || navigator.userAgent.match(/BlackBerry/i)
+                  || navigator.userAgent.match(/Windows Phone/i)
+                  || navigator.userAgent.match(/Opera Mini/i)
+                  || navigator.userAgent.match(/IEMobile/i)
+                  ) {
+        return true;
+      }
+    }
+
+    var air_console = new AirConsole();
+
+    var handshake = function() {
+      air_console.message(0, { handshake: true });
+    };
+
+    air_console.onMessage = function (device_id, data) {
+      var d = document.createElement('DIV');
+      d.innerHTML = data;
+      document.body.appendChild(d);
+      if (data.handshake) {
+        handshake();
+      }
+    };
+
+    air_console.onReady = function () {
+      handshake();
+    };
+
+    air_console.onDeviceStateChange = function (id, data) {
+      console.log("StateChange", id, data);
+    };
+
+    var down = isMobile() ? 'touchstart' : 'click';
+
+    var btn = document.getElementById('send');
+    btn.addEventListener(down, function() {
+      air_console.message(0, {
+        message: "move"
+      });
+    });
+
+    var btn_rotate = document.getElementById('rotate');
+    btn_rotate.addEventListener(down, function() {
+      air_console.message(0, {
+        key: "rotate"
+      });
+    });
+
+    var counter = 0;
+    var btn_counter = document.getElementById('counter');
+    btn_counter.addEventListener(down, function() {
+      air_console.setCustomDeviceState({
+        taps: ++counter
+      });
+    });
+
+
+  </script>
+
+</body>
+</html>
