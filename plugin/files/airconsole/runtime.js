@@ -61,21 +61,9 @@ cr.plugins_.AirConsole = function(runtime)
     this.air_console = new AirConsole();
     this.air_console.game_ready = false;
 
-    var connected_devices = [];
-
     var addDeviceId = function(device_id) {
-      if (connected_devices.indexOf(device_id) === -1) {
-        connected_devices.push(device_id);
-        self.ac_join_id = device_id;
-        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceJoin, self);
-      }
-    };
-
-    var removeDeviceId = function(device_id) {
-      var index = connected_devices.indexOf(device_id);
-      if (index !== -1) {
-        connected_devices.splice(index, 1);
-      }
+      self.ac_join_id = device_id;
+      self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceJoin, self);
     };
 
     this.air_console.onMessage = function(device_id, data) {
@@ -97,11 +85,8 @@ cr.plugins_.AirConsole = function(runtime)
     this.air_console.onDeviceStateChange = function(device_id, device_data) {
       if (!device_data) {
         self.ac_leave_id = device_id;
-        removeDeviceId(device_id);
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceLeft, self);
       // Game already started, then we can simply add a device
-      } else if (connected_devices.indexOf(device_id) === -1 && self.air_console.game_ready) {
-        addDeviceId(device_id);
       } else {
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnGetCustomDeviceState, self);
       }

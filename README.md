@@ -9,6 +9,9 @@ More information about the plugin:
 http://developers.airconsole.com/#/guides/construct2
 
 ## Changes in version 1.1
+* Improved onDeviceJoin event - first connect was not always working correctly
+
+## Changes in version 1.1
 * Condition: on device custom state change (key, value)
 * Action: set device custom state (key, value)
 
