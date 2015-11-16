@@ -190,9 +190,9 @@ cr.plugins_.AirConsole = function(runtime)
     return true;
   };
 
-  Cnds.prototype.OnDeviceLeft = function (myparam)
+  Cnds.prototype.OnDeviceLeft = function (expected_device_id)
   {
-    return true;
+    return this.ac_leave_id === expected_device_id;
   };
 
   Cnds.prototype.OnGetCustomDeviceState = function (device_id, key, value)

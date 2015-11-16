@@ -47,9 +47,8 @@ AddCondition(1, cf_trigger, "On message", "Data", "On message is {0} and from {1
 AddCondition(2, cf_trigger, "On device join", "Signalling", "On device join", "Triggered when device joins the game.", "OnDeviceJoin");
 
 // On Leave
-AddCmpParam("Is", "Is equal device id");
 AddAnyTypeParam("DeviceID", "The device id which leaves");
-AddCondition(3, cf_trigger, "On device left", "Signalling", "On device disconnects", "Triggered when device leaves the game.", "OnDeviceLeft");
+AddCondition(3, cf_trigger, "On device left", "Signalling", "On device {0} disconnects", "Triggered when device leaves the game.", "OnDeviceLeft");
 
 // Receive on device state
 AddAnyTypeParam("DeviceID", "The device id to check the custom state");

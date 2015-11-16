@@ -9,9 +9,10 @@ More information about the plugin:
 http://developers.airconsole.com/#/guides/construct2
 
 ## Changes in version 1.2
-* Improved onDeviceJoin event - first connect was not always working correctly
+* Fixed onDisconnect bug
 * Replace example game
 * onMessage does not need all input variables
+* Improved onDeviceJoin event - first connect was not always working correctly
 
 ## Changes in version 1.1
 * Condition: on device custom state change (key, value)
