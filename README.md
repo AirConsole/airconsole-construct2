@@ -10,6 +10,8 @@ http://developers.airconsole.com/#/guides/construct2
 
 ## Changes in version 1.2
 * Improved onDeviceJoin event - first connect was not always working correctly
+* Replace example game
+* onMessage does not need all input variables
 
 ## Changes in version 1.1
 * Condition: on device custom state change (key, value)
