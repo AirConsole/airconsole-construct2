@@ -167,7 +167,7 @@ cr.plugins_.AirConsole = function(runtime)
     // will need 'name' (the property name) and 'value', but you can also use 'header' (the
     // header title for the section) to distinguish properties with the same name.
     if (name === "My property")
-      this.myProperty = value; //asd asd
+      this.myProperty = value;
   };
   /**END-PREVIEWONLY**/
 
@@ -175,9 +175,9 @@ cr.plugins_.AirConsole = function(runtime)
   // Conditions
   function Cnds() {};
 
-  Cnds.prototype.OnMessage = function (sent_message_val, comp1, expected_message_val, from_id, comp2, object_device_id)
+  Cnds.prototype.OnMessage = function (expected_message_val, object_device_id)
   {
-    return sent_message_val === expected_message_val && from_id === object_device_id;
+    return this.ac_message_data === expected_message_val && this.ac_from_id === object_device_id;
   };
 
   Cnds.prototype.OnMessageKey = function (sent_message_val, comp1, expected_message_val)

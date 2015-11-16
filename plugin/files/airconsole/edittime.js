@@ -38,14 +38,10 @@ AddAnyTypeParam("Value", "Compare to this value");
 AddCondition(0, cf_trigger, "On message key", "Data", "On message key is {2}", "Triggered when a message key is received from a device.", "OnMessageKey");
 
 // Receive onMessage
-AddAnyTypeParam("Message", "Data of the message AirConsole.Message");
-AddCmpParam("Is", "Compare message data");
 AddAnyTypeParam("Value", "Compare to this value");
 // AND DEVICE ID IS
-AddAnyTypeParam("DeviceID", "The device which send the data AirConsole.DeviceID");
-AddCmpParam("Is", "Compare device id with an object device id");
 AddAnyTypeParam("Object DeviceID", "The object associated to this device id");
-AddCondition(1, cf_trigger, "On message", "Data", "On receive message data is {2} and from {5}", "Triggered when a message is received from a device.", "OnMessage");
+AddCondition(1, cf_trigger, "On message", "Data", "On message is {0} and from {1}", "Triggered when a message is received from a device.", "OnMessage");
 
 // On Join
 AddCondition(2, cf_trigger, "On device join", "Signalling", "On device join", "Triggered when device joins the game.", "OnDeviceJoin");
@@ -96,7 +92,7 @@ ACESDone();
 ////////////////////////////////////////
 
 var property_list = [
-  new cr.Property(ept_integer,  "Max players",    2,   "Define the maximum amount of players")
+  //new cr.Property(ept_integer,  "Max players",    2,   "Define the maximum amount of players")
 ];
 
 // Called by IDE when a new object type is to be created

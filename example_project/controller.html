@@ -1,99 +1,80 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <style type="text/css">
-    body {
-      background: #FFFFFF;
+    html, body {
+      height: 100%;
+      overflow: hidden;
     }
-
-    .btn {
-      display: block;
-      padding: 2em;
-      background: #333333;
-      margin-top: 1em;
+    body {
+      background-color: #222;
+    }
+    button {
+      margin-bottom: 1px;
+      width: 100%;
+      height: 48%;
       border: 0;
-      font-size: 20px;
+      box-sizing: border-box;
+      font-size: 40px;
       color: #FFFFFF;
+      background-color: #333333;
+      outline: none;
     }
   </style>
 </head>
 <body>
 
-  CONTROLLER
+<button id="up">UP</button>
+<button id="down">DOWN</button>
 
-  <button class="btn" id="send">MOVE</button>
 
-  <button class="btn" id="rotate">ROTATE</button>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="http://www.airconsole.com/api/airconsole-1.2.1.js"></script>
+<script type="text/javascript">
 
-  <button class="btn" id="counter">COUNT UP</button>
+  var air_console = new AirConsole();
 
-  <script type="text/javascript" src="http://www.airconsole.com/api/airconsole-1.2.1.js"></script>
-  <script type="text/javascript">
+  // Let the screen know we are here
+  var sendHandshake = function() {
+    air_console.message(AirConsole.SCREEN, {
+      handshake: true
+    });
+  };
 
-    function isMobile() {
-      if (navigator.userAgent.match(/Android/i)
-                  || navigator.userAgent.match(/iPhone/i)
-                  || navigator.userAgent.match(/iPad/i)
-                  || navigator.userAgent.match(/iPod/i)
-                  || navigator.userAgent.match(/BlackBerry/i)
-                  || navigator.userAgent.match(/Windows Phone/i)
-                  || navigator.userAgent.match(/Opera Mini/i)
-                  || navigator.userAgent.match(/IEMobile/i)
-                  ) {
-        return true;
-      }
+  air_console.onReady = function() {
+    sendHandshake();
+  };
+
+  air_console.onMessage = function(device_id, data) {
+    if (data.handshake) {
+      sendHandshake();
     }
+  };
 
-    var air_console = new AirConsole();
-
-    var handshake = function() {
-      air_console.message(0, { handshake: true });
-    };
-
-    air_console.onMessage = function (device_id, data) {
-      var d = document.createElement('DIV');
-      d.innerHTML = data;
-      document.body.appendChild(d);
-      if (data.handshake) {
-        handshake();
-      }
-    };
-
-    air_console.onReady = function () {
-      handshake();
-    };
-
-    air_console.onDeviceStateChange = function (id, data) {
-      console.log("StateChange", id, data);
-    };
-
-    var down = isMobile() ? 'touchstart' : 'click';
-
-    var btn = document.getElementById('send');
-    btn.addEventListener(down, function() {
-      air_console.message(0, {
-        message: "move"
-      });
+  $("#up").on('mousedown', function () {
+    air_console.message(AirConsole.SCREEN, {
+      message: 'up'
     });
+  });
 
-    var btn_rotate = document.getElementById('rotate');
-    btn_rotate.addEventListener(down, function() {
-      air_console.message(0, {
-        key: "rotate"
-      });
+  $("#down").on('mousedown', function () {
+    air_console.message(AirConsole.SCREEN, {
+      message: 'down'
     });
+  });
 
-    var counter = 0;
-    var btn_counter = document.getElementById('counter');
-    btn_counter.addEventListener(down, function() {
-      air_console.setCustomDeviceState({
-        taps: ++counter
-      });
+  $("#up").on('mouseup', function () {
+    air_console.message(AirConsole.SCREEN, {
+      message: 'stop'
     });
+  });
 
+  $("#down").on('mouseup', function () {
+    air_console.message(AirConsole.SCREEN, {
+      message: 'stop'
+    });
+  });
 
-  </script>
-
+</script>
 </body>
 </html>
