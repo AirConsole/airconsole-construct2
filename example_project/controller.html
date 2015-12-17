@@ -28,8 +28,8 @@
 <button id="down">DOWN</button>
 
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="http://www.airconsole.com/api/airconsole-1.2.1.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://www.airconsole.com/api/airconsole-1.3.0.js"></script>
 <script type="text/javascript">
 
   var air_console = new AirConsole();
@@ -51,25 +51,25 @@
     }
   };
 
-  $("#up").on('mousedown', function () {
+  $("#up").on('touchstart', function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'up'
     });
   });
 
-  $("#down").on('mousedown', function () {
+  $("#down").on('touchstart', function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'down'
     });
   });
 
-  $("#up").on('mouseup', function () {
+  $("#up").on('touchend', function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'stop'
     });
   });
 
-  $("#down").on('mouseup', function () {
+  $("#down").on('touchend', function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'stop'
     });
