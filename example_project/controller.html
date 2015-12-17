@@ -51,24 +51,45 @@
     }
   };
 
-  $("#up").on('touchstart', function () {
+  var down_event = isMobile() ? 'touchstart' : 'mousedown';
+  var up_event = isMobile() ? 'touchend' : 'mouseup';
+
+  $("#up").on(down_event, function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'up'
     });
   });
 
-  $("#down").on('touchstart', function () {
+  $("#down").on(down_event, function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'down'
     });
   });
 
-  $("#up").on('touchend', function () {
+  $("#up").on(up_event, function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'stop'
     });
   });
 
+  /**
+   * Returns true if device is a mobile device
+   * @return {Boolean}
+   */
+  function isMobile() {
+    if (navigator.userAgent.match(/Android/i) ||
+        navigator.userAgent.match(/iPhone/i) ||
+        navigator.userAgent.match(/iPad/i) ||
+        navigator.userAgent.match(/iPod/i) ||
+        navigator.userAgent.match(/BlackBerry/i) ||
+        navigator.userAgent.match(/Windows Phone/i) ||
+        navigator.userAgent.match(/Opera Mini/i) ||
+        navigator.userAgent.match(/IEMobile/i)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 </script>
 </body>
 </html>
