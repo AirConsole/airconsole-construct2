@@ -56,6 +56,9 @@ AddAnyTypeParam("Key", "The key of the custom state data");
 AddAnyTypeParam("Value", "Is equal this value");
 AddCondition(4, cf_trigger, "On check device custom state", "Data", "Custom state {1} of device {0} is {2}", "Triggered when custom state data of a device matches a value.", "OnGetCustomDeviceState");
 
+//On any leave
+AddCondition(5, cf_trigger, "On any device left", "Signalling", "On any device left", "Triggered when device left the game (use DeviceLeftID)", "OnAnyDeviceLeft");
+
 // ==============================================
 // ACTION
 // ==============================================
