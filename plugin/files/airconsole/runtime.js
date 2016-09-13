@@ -86,6 +86,7 @@ cr.plugins_.AirConsole = function(runtime)
       if (!device_data) {
         self.ac_leave_id = device_id;
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceLeft, self);
+		self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnAnyDeviceLeft, self);
       // Game already started, then we can simply add a device
       } else {
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnGetCustomDeviceState, self);
@@ -193,6 +194,11 @@ cr.plugins_.AirConsole = function(runtime)
   Cnds.prototype.OnDeviceLeft = function (expected_device_id)
   {
     return this.ac_leave_id === expected_device_id;
+  };
+  
+  Cnds.prototype.OnAnyDeviceLeft = function (myparam)
+  {
+     return true;
   };
 
   Cnds.prototype.OnGetCustomDeviceState = function (device_id, key, value)
