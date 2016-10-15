@@ -8,8 +8,10 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
-## Changes in version 1.5
-* Use AirConsole Version 1.5 API
+## Changes in version 1.3.1
+* Renamed onMessage
+* Added proper onMessage
+* Added onMessageFrom
 
 ## Changes in version 1.3
 * Updated to AirConsole Version 1.3 API
