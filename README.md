@@ -8,6 +8,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.3.2
+* Added onAnyDeviceLeft
+
 ## Changes in version 1.3.1
 * Renamed onMessage
 * Added proper onMessage

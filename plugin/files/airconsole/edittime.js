@@ -65,6 +65,9 @@ AddCondition(5, cf_trigger, "On message", "Data", "On message from any controlle
 // Receive onMessageFrom
 AddAnyTypeParam("DeviceID", "The device id sending the message");
 AddCondition(6, cf_trigger, "On message from", "Data", "On message from {0}", "Triggered when a message is received from a specific device.", "OnMessageFrom");
+
+// On any leave
+AddCondition(7, cf_trigger, "On any device left", "Signalling", "On any device disconnects", "Triggered when a device leaves the game.", "OnAnyDeviceLeft");
 // =======
 // end Psycho
 // =======
