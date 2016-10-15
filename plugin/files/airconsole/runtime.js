@@ -77,7 +77,9 @@ cr.plugins_.AirConsole = function(runtime)
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
         }
         if (data.message) {
-          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessage, self);
+          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageIs, self);
+		  self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageFrom, self);
+		  self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessage, self);
         }
       }
     };
@@ -175,9 +177,19 @@ cr.plugins_.AirConsole = function(runtime)
   // Conditions
   function Cnds() {};
 
-  Cnds.prototype.OnMessage = function (expected_message_val, object_device_id)
+  Cnds.prototype.OnMessageIs = function (expected_message_val, object_device_id)
   {
     return this.ac_message_data === expected_message_val && this.ac_from_id === object_device_id;
+  };
+  
+  Cnds.prototype.OnMessageFrom = function (object_device_id)
+  {
+    return this.ac_from_id === object_device_id;
+  };
+  
+  Cnds.prototype.OnMessage = function ()
+  {
+    return true;
   };
 
   Cnds.prototype.OnMessageKey = function (sent_message_val, comp1, expected_message_val)

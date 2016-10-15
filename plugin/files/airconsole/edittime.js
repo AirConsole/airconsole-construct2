@@ -3,11 +3,11 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.5.0", //Using airconsole versioning to follow
+    "version": "1.0",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
-    "dependency": "airconsole-1.5.0.js",
+    "dependency": "airconsole-1.3.0.js",
     "category": "Web",        // Prefer to re-use existing categories, but you can set anything here
     "type": "object",        // either "world" (appears in layout and is drawn), else "object"
     "rotatable":  false,         // only used when "type" is "world".  Enables an angle property on the object.
@@ -37,11 +37,11 @@ AddCmpParam("Is", "Compare message data key");
 AddAnyTypeParam("Value", "Compare to this value");
 AddCondition(0, cf_trigger, "On message key", "Data", "On message key is {2}", "Triggered when a message key is received from a device.", "OnMessageKey");
 
-// Receive onMessage
+// Receive onMessageIs
 AddAnyTypeParam("Value", "Compare to this value");
 // AND DEVICE ID IS
 AddAnyTypeParam("Object DeviceID", "The object associated to this device id");
-AddCondition(1, cf_trigger, "On message", "Data", "On message is {0} and from {1}", "Triggered when a message is received from a device.", "OnMessage");
+AddCondition(1, cf_trigger, "On specific message", "Data", "On message is {0} and from {1}", "Triggered when a specific message is received from a device.", "OnMessageIs");
 
 // On Join
 AddCondition(2, cf_trigger, "On device join", "Signalling", "On device join", "Triggered when device joins the game.", "OnDeviceJoin");
@@ -55,6 +55,19 @@ AddAnyTypeParam("DeviceID", "The device id to check the custom state");
 AddAnyTypeParam("Key", "The key of the custom state data");
 AddAnyTypeParam("Value", "Is equal this value");
 AddCondition(4, cf_trigger, "On check device custom state", "Data", "Custom state {1} of device {0} is {2}", "Triggered when custom state data of a device matches a value.", "OnGetCustomDeviceState");
+
+// =======
+// 20161015 Psycho
+// =======
+// Receive onMessage
+AddCondition(5, cf_trigger, "On message", "Data", "On message from any controller", "Triggered when a message is received from a device.", "OnMessage");
+
+// Receive onMessageFrom
+AddAnyTypeParam("DeviceID", "The device id sending the message");
+AddCondition(6, cf_trigger, "On message from", "Data", "On message from {0}", "Triggered when a message is received from a specific device.", "OnMessageFrom");
+// =======
+// end Psycho
+// =======
 
 // ==============================================
 // ACTION
