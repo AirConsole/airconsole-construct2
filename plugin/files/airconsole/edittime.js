@@ -66,8 +66,14 @@ AddCondition(6, cf_trigger, "On message from", "Data", "On message from {0}", "T
 // On any leave
 AddCondition(7, cf_trigger, "On any device left", "Signalling", "On any device disconnects", "Triggered when a device leaves the game.", "OnAnyDeviceLeft");
 
+// Receive Highscores
 AddCondition(8, cf_trigger, "On receiving highscores", "Highscores", "On receiving highscores", "Triggered when highscores received.", "OnHighScores");
+
+// Highscores stored
 AddCondition(9, cf_trigger, "On highscores stored", "Highscores", "On highscores stored", "Triggered when highscores storing is done.", "OnHighScoreStored");
+
+// On too many players
+AddCondition(10, cf_trigger, "On too many players", "Signalling", "On too many players", "Triggered when max players is exceeded.", "OnTooManyPlayers");
 
 // ==============================================
 // ACTION
@@ -125,7 +131,7 @@ ACESDone();
 ////////////////////////////////////////
 
 var property_list = [
-  //new cr.Property(ept_integer,  "Max players",    2,   "Define the maximum amount of players")
+  new cr.Property(ept_integer,  "Max players", 2, "Define the maximum amount of players")
 ];
 
 // Called by IDE when a new object type is to be created

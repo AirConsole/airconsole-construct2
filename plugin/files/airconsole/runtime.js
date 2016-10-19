@@ -52,6 +52,7 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_profile_picture_join = null;
     this.ac_profile_picture = null;
     this.ac_uid = null;
+    this.ac_max_players = null;
 
     // any other properties you need, e.g...
     // this.myValue = 0;
@@ -65,6 +66,7 @@ cr.plugins_.AirConsole = function(runtime)
     var self = this;
     this.air_console = new AirConsole();
     this.air_console.game_ready = false;
+    this.ac_max_players = self.properties[0];
 
     var addDeviceId = function(device_id) {
       self.ac_join_id = device_id;
@@ -76,7 +78,12 @@ cr.plugins_.AirConsole = function(runtime)
 
     this.air_console.onMessage = function(device_id, data) {
       if (data.handshake) {
-        addDeviceId(device_id);
+        if (self.getControllerDeviceIds().length > self.ac_max_players) {
+          self.ac_join_id = device_id;
+          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnTooManyPlayers, self);
+        } else {
+          addDeviceId(device_id);
+        }
       } else {
         self.ac_from_id = device_id;
         self.ac_message_key = data.key;
@@ -254,6 +261,11 @@ cr.plugins_.AirConsole = function(runtime)
   Cnds.prototype.OnHighScoreStored = function (data)
   {
     // TODO implement data support
+    return true;
+  }
+
+  Cnds.prototype.OnTooManyPlayers = function ()
+  {
     return true;
   }
 
