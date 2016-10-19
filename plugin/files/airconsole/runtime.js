@@ -78,7 +78,7 @@ cr.plugins_.AirConsole = function(runtime)
 
     this.air_console.onMessage = function(device_id, data) {
       if (data.handshake) {
-        if (self.getControllerDeviceIds().length > self.ac_max_players) {
+        if (self.air_console.getControllerDeviceIds().length > self.ac_max_players) {
           self.ac_join_id = device_id;
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnTooManyPlayers, self);
         } else {
