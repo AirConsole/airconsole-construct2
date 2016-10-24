@@ -45,8 +45,14 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_join_id = null;
     this.ac_leave_id = null;
     this.ac_from_id = null;
+    this.ac_nickname_join = null;
+    this.ac_nickname = null;
     this.ac_message_key = null;
     this.ac_message_data = null;
+    this.ac_profile_picture_join = null;
+    this.ac_profile_picture = null;
+    this.ac_uid = null;
+    this.ac_max_players = null;
 
     // any other properties you need, e.g...
     // this.myValue = 0;
@@ -60,23 +66,36 @@ cr.plugins_.AirConsole = function(runtime)
     var self = this;
     this.air_console = new AirConsole();
     this.air_console.game_ready = false;
+    this.ac_max_players = self.properties[0];
 
     var addDeviceId = function(device_id) {
       self.ac_join_id = device_id;
+      self.ac_nickname_join = self.air_console.getNickname(device_id);
+      self.ac_profile_picture_join = self.air_console.getProfilePicture(device_id);
+      self.ac_uid = self.air_console.getUID(device_id);
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceJoin, self);
     };
 
     this.air_console.onMessage = function(device_id, data) {
       if (data.handshake) {
-        addDeviceId(device_id);
+        if (self.air_console.getControllerDeviceIds().length > self.ac_max_players) {
+          self.ac_join_id = device_id;
+          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnTooManyPlayers, self);
+        } else {
+          addDeviceId(device_id);
+        }
       } else {
         self.ac_from_id = device_id;
         self.ac_message_key = data.key;
         self.ac_message_data = data.message;
+        self.ac_nickname = self.air_console.getNickname(device_id);
+        self.ac_profile_picture = self.air_console.getProfilePicture(device_id);
         if (data.key) {
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
         }
         if (data.message) {
+          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageIs, self);
+          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageFrom, self);
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessage, self);
         }
       }
@@ -86,11 +105,24 @@ cr.plugins_.AirConsole = function(runtime)
       if (!device_data) {
         self.ac_leave_id = device_id;
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceLeft, self);
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnAnyDeviceLeft, self);
       // Game already started, then we can simply add a device
       } else {
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnGetCustomDeviceState, self);
       }
     };
+
+    this.air_console.onHighScores = function(data) {
+      if (data) {
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnHighScores, self);
+      }
+    }
+
+    this.air_console.onHighScoreStored = function(data) {
+      if (data) {
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnHighScoreStored, self);
+      }
+    }
 
     this.air_console.onReady = function() {};
   };
@@ -175,9 +207,19 @@ cr.plugins_.AirConsole = function(runtime)
   // Conditions
   function Cnds() {};
 
-  Cnds.prototype.OnMessage = function (expected_message_val, object_device_id)
+  Cnds.prototype.OnMessageIs = function (expected_message_val, object_device_id)
   {
     return this.ac_message_data === expected_message_val && this.ac_from_id === object_device_id;
+  };
+  
+  Cnds.prototype.OnMessageFrom = function (object_device_id)
+  {
+    return this.ac_from_id === object_device_id;
+  };
+  
+  Cnds.prototype.OnMessage = function ()
+  {
+    return true;
   };
 
   Cnds.prototype.OnMessageKey = function (sent_message_val, comp1, expected_message_val)
@@ -194,6 +236,11 @@ cr.plugins_.AirConsole = function(runtime)
   {
     return this.ac_leave_id === expected_device_id;
   };
+  
+  Cnds.prototype.OnAnyDeviceLeft = function ()
+  {
+    return true;
+  };
 
   Cnds.prototype.OnGetCustomDeviceState = function (device_id, key, value)
   {
@@ -204,6 +251,23 @@ cr.plugins_.AirConsole = function(runtime)
     }
     return result;
   };
+
+  Cnds.prototype.OnHighScores = function (data)
+  {
+    // TODO implement data support
+    return true;
+  }
+
+  Cnds.prototype.OnHighScoreStored = function (data)
+  {
+    // TODO implement data support
+    return true;
+  }
+
+  Cnds.prototype.OnTooManyPlayers = function ()
+  {
+    return true;
+  }
 
   pluginProto.cnds = new Cnds();
 
@@ -236,6 +300,19 @@ cr.plugins_.AirConsole = function(runtime)
       handshake: true
     });
   };
+
+  Acts.prototype.RequestHighScores = function (level_name, level_version, uids, ranks, total, top)
+  {
+    uids = (uids === 'all') ? '' : uids;
+    var ranksArray = (ranks === 'world') ? [ranks] : ranks.split(',');
+    this.air_console.requestHighScores(level_name, level_version, uids, ranksArray, total, top);
+  }
+
+  Acts.prototype.StoreHighScores = function (level_name, level_version, score, uid, data, score_string)
+  {
+    var uidArray = uid.split(',');
+    this.air_console.storeHighScore(level_name, level_version, score, uidArray, data, score_string);
+  }
 
   pluginProto.acts = new Acts();
 
@@ -270,6 +347,31 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.DeviceIDLeft = function (ret)
   {
     ret.set_string(this.ac_leave_id);
+  };
+  
+  Exps.prototype.NicknameJoin = function (ret)
+  {
+    ret.set_string(this.ac_nickname_join);
+  };
+
+  Exps.prototype.Nickname = function (ret)
+  {
+    ret.set_string(this.ac_nickname);
+  };
+
+  Exps.prototype.ProfilePictureJoin = function (ret)
+  {
+    ret.set_string(this.ac_profile_picture_join);
+  };
+
+  Exps.prototype.ProfilePicture = function (ret)
+  {
+    ret.set_string(this.ac_profile_picture);
+  };
+
+  Exps.prototype.DeviceUID = function (ret)
+  {
+    ret.set_string(this.ac_uid);
   };
 
   pluginProto.exps = new Exps();

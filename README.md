@@ -8,6 +8,21 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.5.0.3
+* Updated to 1.5.0
+* Fixed script loading error due to DOM logic (http://puu.sh/rTEc8.png)
+* Added onTooManyPlayers as well as plugin config
+* Added alpha support for highscores
+* Cosmetic cleanups
+
+## Changes in version 1.3.2
+* Added onAnyDeviceLeft
+
+## Changes in version 1.3.1
+* Renamed onMessage
+* Added proper onMessage
+* Added onMessageFrom
+
 ## Changes in version 1.3
 * Updated to AirConsole Version 1.3 API
 
