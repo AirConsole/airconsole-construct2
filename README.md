@@ -8,6 +8,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.5.0.4
+* Added IsUserLoggedIn support
+
 ## Changes in version 1.5.0.3
 * Updated to 1.5.0
 * Fixed script loading error due to DOM logic (http://puu.sh/rTEc8.png)
