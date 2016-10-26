@@ -269,6 +269,11 @@ cr.plugins_.AirConsole = function(runtime)
     return true;
   }
 
+  Cnds.prototype.IsUserLoggedIn = function (device_id)
+  {
+    return this.air_console.isUserLoggedIn(device_id);
+  }
+
   pluginProto.cnds = new Cnds();
 
   //////////////////////////////////////
