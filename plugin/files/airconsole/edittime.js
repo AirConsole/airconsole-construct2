@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.5", // Keeping airconsole.js version number
+    "version": "1.4.0",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
