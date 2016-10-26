@@ -8,7 +8,7 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
-## Changes in version 1.5.0.3
+## Changes in version 1.4.0
 * Updated to 1.5.0
 * Fixed script loading error due to DOM logic (http://puu.sh/rTEc8.png)
 * Added onTooManyPlayers as well as plugin config
