@@ -90,7 +90,6 @@ cr.plugins_.AirConsole = function(runtime)
         self.ac_message_data = data.message;
         self.ac_nickname = self.air_console.getNickname(device_id);
         self.ac_profile_picture = self.air_console.getProfilePicture(device_id);
-        self.ac_user_logged_in = self.air_console.isUserLoggedIn(device_id);
         if (data.key) {
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
         }
