@@ -3,8 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.0",
-    "description": "Extend your game with local multiplayer fun",
+    "version": "1.4.1",    "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
     "dependency": "https://www.airconsole.com/api/airconsole-1.5.0.js",
@@ -74,6 +73,10 @@ AddCondition(9, cf_trigger, "On highscores stored", "Highscores", "On highscores
 
 // On too many players
 AddCondition(10, cf_trigger, "On too many players", "Signalling", "On too many players", "Triggered when max players is exceeded.", "OnTooManyPlayers");
+
+// Is user logged in
+AddNumberParam("DeviceID", "The device id you want to check if logged in");
+AddCondition(11, 0, "Is user logged in", "Device and user", "Is device id {0} user logged in", "True if the device's user is logged in, false otherwise.", "IsUserLoggedIn");
 
 // ==============================================
 // ACTION
