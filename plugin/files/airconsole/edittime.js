@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
@@ -129,6 +129,7 @@ AddExpression(7, ef_return_string, "", "Data", "Nickname", "The nickname of the 
 AddExpression(8, ef_return_string, "", "Data", "ProfilePicture", "The profile picture of the device the message is from in a message trigger.");
 AddExpression(9, ef_return_string, "", "Data", "ProfilePictureJoin", "The profile picture of the device which joined in OnDeviceJoin event.");
 AddExpression(10, ef_return_string, "", "Data", "DeviceUID", "The UID of the device that joined in OnDeviceJoin event.");
+AddExpression(11, ef_return_string, "", "Data", "ControllerDeviceIDs", "An JSON converted array of all connected devices that have loaded your game.");
 
 ////////////////////////////////////////
 ACESDone();
