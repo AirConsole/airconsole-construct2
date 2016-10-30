@@ -379,6 +379,23 @@ cr.plugins_.AirConsole = function(runtime)
     ret.set_string(this.ac_uid);
   };
 
+  Exps.prototype.ControllerDeviceIDs = function (ret)
+  {
+    var arr = this.air_console.getControllerDeviceIds();
+
+    // Ok, let's create a fake C2 JSON string that is compatible with C2 array load function
+    var jsonStr = new Object();
+    jsonStr['c2array'] = true;
+    jsonStr['size'] = [arr.length, 1, 1];
+    var data = [];
+    for (var i in arr) {
+      data.push([[arr[i]]]);
+    }
+    jsonStr['data'] = data;
+
+    ret.set_string(JSON.stringify(jsonStr));
+  };
+
   pluginProto.exps = new Exps();
 
 }());
