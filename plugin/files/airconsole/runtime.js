@@ -403,9 +403,9 @@ cr.plugins_.AirConsole = function(runtime)
 
   Exps.prototype.MasterControllerDeviceID = function (ret)
   {
-    // getMasterControllerDeviceId can return undefined, so let's return 0 (always SCREEN) in that case
+    // getMasterControllerDeviceId can return undefined, so let's return SCREEN in that case
     var id = (typeof this.air_console.getMasterControllerDeviceId());
-    ret.set_int((id !== 'number') ? 0 : id);
+    ret.set_int((id !== 'number' || isNaN(id)) ? AirConsole.SCREEN : id);
   };
 
   Exps.prototype.ConvertPlayerNumberToDeviceId = function (ret, playerNumber)
