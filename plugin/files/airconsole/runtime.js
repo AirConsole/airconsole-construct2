@@ -396,6 +396,12 @@ cr.plugins_.AirConsole = function(runtime)
     ret.set_string(JSON.stringify(jsonStr));
   };
 
+  Exps.prototype.MasterControllerDeviceID = function (ret)
+  {
+    // getMasterControllerDeviceId can return undefined, so let's return 0 (always SCREEN) in that case
+    ret.set_int((typeof this.air_console.getMasterControllerDeviceId() !== 'number') ? 0 : this.air_console.getMasterControllerDeviceId());
+  };
+
   pluginProto.exps = new Exps();
 
 }());

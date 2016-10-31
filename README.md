@@ -7,6 +7,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.4.3
+* Added getMasterControllerDeviceId. See (http://puu.sh/s1HlV.png) for usage
+
 ## Changes in version 1.4.2
 * Added ControllerDeviceIDs. See (http://puu.sh/s0wNv.png) for usage
 
