@@ -317,7 +317,12 @@ cr.plugins_.AirConsole = function(runtime)
   {
     var uidArray = uid.split(',');
     this.air_console.storeHighScore(level_name, level_version, score, uidArray, data, score_string);
-  }
+  };
+
+  Acts.prototype.SetActivePlayers = function (max_players)
+  {
+    this.air_console.setActivePlayers(max_players);
+  };
 
   pluginProto.acts = new Acts();
 
@@ -399,7 +404,20 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.MasterControllerDeviceID = function (ret)
   {
     // getMasterControllerDeviceId can return undefined, so let's return 0 (always SCREEN) in that case
-    ret.set_int((typeof this.air_console.getMasterControllerDeviceId() !== 'number') ? 0 : this.air_console.getMasterControllerDeviceId());
+    var id = (typeof this.air_console.getMasterControllerDeviceId());
+    ret.set_int((id !== 'number') ? 0 : id);
+  };
+
+  Exps.prototype.ConvertPlayerNumberToDeviceId = function (ret, playerNumber)
+  {
+    var id = this.air_console.convertPlayerNumberToDeviceId(playerNumber);
+    ret.set_int((typeof id !== 'number') ? 0 : id);
+  };
+
+  Exps.prototype.ConvertDeviceIdToPlayerNumber = function (ret, deviceId)
+  {
+    var playerNumber = this.air_console.convertDeviceIdToPlayerNumber(deviceId);
+    ret.set_int((typeof id !== 'number') ? 0 : playerNumber);
   };
 
   pluginProto.exps = new Exps();
