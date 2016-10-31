@@ -115,6 +115,9 @@ AddStringParam("Data", "Custom high score data (e.g. can be used to implement Gh
 AddStringParam("Score string", "A short human readable representation of the score. (e.g. '4 points in 3s'). Defaults to 'X points' where x is the score converted to an integer.", "");
 AddAction(6, af_none, "Store HighScores", "Highscores", "Store highscores", "Stores highscores. OnHighScoreStored triggered when the request is completed.", "StoreHighScores");
 
+AddNumberParam("Max player", "The maximum number of controllers that should get a player number assigned.");
+AddAction(7, af_none, "Set active players", "System", "Set active players", "Takes all currently connected controllers and assigns them a player number. Can only be called by the screen. The assigned player numbers always start with 0 and are consecutive. You can hardcode player numbers, but not device_ids. Once the screen has called setActivePlayers you can get the device_id of the first player by calling convertPlayerNumberToDeviceId(0), the device_id of the second player by using ConvertPlayerNumberToDeviceId(1). You can also convert device_ids to player numbers by using ConvertDeviceIdToPlayerNumber(device_id). You can get all device_ids that are active players by using GetActivePlayerDeviceIds().", "SetActivePlayers");
+
 // ==============================================
 // EXPRESSIONS
 // ==============================================
@@ -131,6 +134,12 @@ AddExpression(9, ef_return_string, "", "Data", "ProfilePictureJoin", "The profil
 AddExpression(10, ef_return_string, "", "Data", "DeviceUID", "The UID of the device that joined in OnDeviceJoin event.");
 AddExpression(11, ef_return_string, "", "Data", "ControllerDeviceIDs", "An JSON converted array of all connected devices that have loaded your game.");
 AddExpression(12, ef_return_number, "", "Data", "MasterControllerDeviceID", "Device ID of the master controller.");
+
+AddNumberParam("PlayerNumer", "Player number");
+AddExpression(13, ef_return_number, "", "Data", "ConvertPlayerNumberToDeviceId", "Returns the device_id of a player, if the player is part of the active players previously set by the screen by using  Set Active Players.");
+
+AddNumberParam("DeviceId", "Device Id");
+AddExpression(14, ef_return_number, "", "Data", "ConvertDeviceIdToPlayerNumber", "Returns the player number for a device_id, if the device_id is part of the active players previously set by the screen by using Set Active Players.");
 
 ////////////////////////////////////////
 ACESDone();
