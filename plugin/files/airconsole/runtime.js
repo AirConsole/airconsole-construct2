@@ -269,6 +269,11 @@ cr.plugins_.AirConsole = function(runtime)
     return true;
   }
 
+  Cnds.prototype.IsUserLoggedIn = function (device_id)
+  {
+    return this.air_console.isUserLoggedIn(device_id);
+  }
+
   pluginProto.cnds = new Cnds();
 
   //////////////////////////////////////
@@ -312,7 +317,12 @@ cr.plugins_.AirConsole = function(runtime)
   {
     var uidArray = uid.split(',');
     this.air_console.storeHighScore(level_name, level_version, score, uidArray, data, score_string);
-  }
+  };
+
+  Acts.prototype.SetActivePlayers = function (max_players)
+  {
+    this.air_console.setActivePlayers(max_players);
+  };
 
   pluginProto.acts = new Acts();
 
@@ -372,6 +382,42 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.DeviceUID = function (ret)
   {
     ret.set_string(this.ac_uid);
+  };
+
+  Exps.prototype.ControllerDeviceIDs = function (ret)
+  {
+    var arr = this.air_console.getControllerDeviceIds();
+
+    // Ok, let's create a fake C2 JSON string that is compatible with C2 array load function
+    var jsonStr = new Object();
+    jsonStr['c2array'] = true;
+    jsonStr['size'] = [arr.length, 1, 1];
+    var data = [];
+    for (var i in arr) {
+      data.push([[arr[i]]]);
+    }
+    jsonStr['data'] = data;
+
+    ret.set_string(JSON.stringify(jsonStr));
+  };
+
+  Exps.prototype.MasterControllerDeviceID = function (ret)
+  {
+    // getMasterControllerDeviceId can return undefined, so let's return SCREEN in that case
+    var id = this.air_console.getMasterControllerDeviceId();
+    ret.set_int((typeof id !== 'number' || isNaN(id)) ? -1 : id);
+  };
+
+  Exps.prototype.ConvertPlayerNumberToDeviceId = function (ret, playerNumber)
+  {
+    var id = this.air_console.convertPlayerNumberToDeviceId(playerNumber);
+    ret.set_int((typeof id !== 'number') ? -1 : id);
+  };
+
+  Exps.prototype.ConvertDeviceIdToPlayerNumber = function (ret, deviceId)
+  {
+    var playerNumber = this.air_console.convertDeviceIdToPlayerNumber(deviceId);
+    ret.set_int((typeof id !== 'number') ? -1 : playerNumber);
   };
 
   pluginProto.exps = new Exps();

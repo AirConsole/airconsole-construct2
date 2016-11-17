@@ -1,12 +1,26 @@
 # AirConsole Construct2
-Construct2 Plugin for AirConsole Version 1.3
-
+Construct2 Plugin for AirConsole Version 1.5.0
 ## Installation
-Clone this repo or [download files as zip](https://github.com/AirConsole/airconsole-construct2/archive/master.zip) and drag and drop the airconsole.c2addon file into the Construct2 application.
+[download the plugin only](airconsole.c2addon) and drag it in to Construct 2 or
+
+[download files as zip](../../archive/master.zip) and drag and drop the airconsole.c2addon file into the Construct2 application.
 
 More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
+
+## Changes in version 1.4.3
+* Added getMasterControllerDeviceId. See (http://puu.sh/s1HlV.png) for usage
+* Added convertDeviceIdToPlayerNumber()
+* Added convertPlayerNumberToDeviceId()
+* Added setActivePlayers()
+* see (http://puu.sh/s1JBd.png) for usage
+
+## Changes in version 1.4.2
+* Added ControllerDeviceIDs. See (http://puu.sh/s0wNv.png) for usage
+
+## Changes in version 1.4.1
+* Added IsUserLoggedIn support
 
 ## Changes in version 1.4.0
 * Updated to 1.5.0
