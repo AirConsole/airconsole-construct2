@@ -405,19 +405,19 @@ cr.plugins_.AirConsole = function(runtime)
   {
     // getMasterControllerDeviceId can return undefined, so let's return SCREEN in that case
     var id = (typeof this.air_console.getMasterControllerDeviceId());
-    ret.set_int((id !== 'number' || isNaN(id)) ? AirConsole.SCREEN : id);
+    ret.set_int((id !== 'number' || isNaN(id)) ? -1 : id);
   };
 
   Exps.prototype.ConvertPlayerNumberToDeviceId = function (ret, playerNumber)
   {
     var id = this.air_console.convertPlayerNumberToDeviceId(playerNumber);
-    ret.set_int((typeof id !== 'number') ? 0 : id);
+    ret.set_int((typeof id !== 'number') ? -1 : id);
   };
 
   Exps.prototype.ConvertDeviceIdToPlayerNumber = function (ret, deviceId)
   {
     var playerNumber = this.air_console.convertDeviceIdToPlayerNumber(deviceId);
-    ret.set_int((typeof id !== 'number') ? 0 : playerNumber);
+    ret.set_int((typeof id !== 'number') ? -1 : playerNumber);
   };
 
   pluginProto.exps = new Exps();
