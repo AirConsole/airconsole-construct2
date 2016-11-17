@@ -79,6 +79,9 @@ AddCondition(10, cf_trigger, "On too many players", "Signalling", "On too many p
 AddNumberParam("DeviceID", "The device id you want to check if logged in");
 AddCondition(11, 0, "Is user logged in", "Device and user", "Is device id {0} user logged in", "True if the device's user is logged in, false otherwise.", "IsUserLoggedIn");
 
+AddCondition(12, cf_trigger, "On ad complete", "Ads", "On ad complete", "Triggered when an advertisement is finished or no advertisement was shown.", "OnAdComplete");
+AddCondition(13, cf_trigger, "On premium", "Ads", "On premium", "Triggered called when a device becomes premium or when a premium device connects.", "OnPremium");
+
 // ==============================================
 // ACTION
 // ==============================================
@@ -118,28 +121,35 @@ AddAction(6, af_none, "Store HighScores", "Highscores", "Store highscores", "Sto
 AddNumberParam("Max player", "The maximum number of controllers that should get a player number assigned.");
 AddAction(7, af_none, "Set active players", "System", "Set active players", "Takes all currently connected controllers and assigns them a player number. Can only be called by the screen. The assigned player numbers always start with 0 and are consecutive. You can hardcode player numbers, but not device_ids. Once the screen has called setActivePlayers you can get the device_id of the first player by calling convertPlayerNumberToDeviceId(0), the device_id of the second player by using ConvertPlayerNumberToDeviceId(1). You can also convert device_ids to player numbers by using ConvertDeviceIdToPlayerNumber(device_id). You can get all device_ids that are active players by using GetActivePlayerDeviceIds().", "SetActivePlayers");
 
+AddAction(8, af_none, "Show ad", "Ads", "Show ad on controllers", "Show ad on every connected controller. onAdComplete is called when showing ad is over", "ShowAd");
+
 // ==============================================
 // EXPRESSIONS
 // ==============================================
-AddExpression(1, ef_return_string, "", "Data", "Message", "The message received in a message trigger.");
-AddExpression(2, ef_return_string, "", "Data", "MessageKey", "The message key received in a message trigger.");
-AddExpression(3, ef_return_number, "", "Data", "DeviceID", "The ID of the device the message is from in a message trigger.");
-AddExpression(4, ef_return_number, "", "Data", "DeviceIDJoin", "The ID of the device which joined in OnDeviceJoin event.");
-AddExpression(5, ef_return_number, "", "Data", "DeviceIDLeft", "The ID of the device which left in OnDeviceLeft event.");
-
-AddExpression(6, ef_return_string, "", "Data", "NicknameJoin", "The nickname of the device which joined in OnDeviceJoin event.");
-AddExpression(7, ef_return_string, "", "Data", "Nickname", "The nickname of the device the message is from in a message trigger.");
-AddExpression(8, ef_return_string, "", "Data", "ProfilePicture", "The profile picture of the device the message is from in a message trigger.");
-AddExpression(9, ef_return_string, "", "Data", "ProfilePictureJoin", "The profile picture of the device which joined in OnDeviceJoin event.");
-AddExpression(10, ef_return_string, "", "Data", "DeviceUID", "The UID of the device that joined in OnDeviceJoin event.");
-AddExpression(11, ef_return_string, "", "Data", "ControllerDeviceIDs", "An JSON converted array of all connected devices that have loaded your game.");
-AddExpression(12, ef_return_number, "", "Data", "MasterControllerDeviceID", "Device ID of the master controller.");
+AddExpression(1, ef_return_string, "Data", "Data", "Message", "The message received in a message trigger.");
+AddExpression(2, ef_return_string, "Data", "Data", "MessageKey", "The message key received in a message trigger.");
+AddExpression(3, ef_return_number, "IDs", "IDs", "DeviceID", "The ID of the device the message is from in a message trigger.");
+AddExpression(4, ef_return_number, "IDs", "IDs", "DeviceIDJoin", "The ID of the device which joined in OnDeviceJoin event.");
+AddExpression(5, ef_return_number, "IDs", "IDs", "DeviceIDLeft", "The ID of the device which left in OnDeviceLeft event.");
+AddExpression(6, ef_return_string, "Profile", "Profile", "NicknameJoin", "The nickname of the device which joined in OnDeviceJoin event.");
+AddExpression(7, ef_return_string, "Profile", "Profile", "Nickname", "The nickname of the device the message is from in a message trigger.");
+AddExpression(8, ef_return_string, "Profile", "Profile", "ProfilePicture", "The profile picture of the device the message is from in a message trigger.");
+AddExpression(9, ef_return_string, "Profile", "Profile", "ProfilePictureJoin", "The profile picture of the device which joined in OnDeviceJoin event.");
+AddExpression(10, ef_return_string, "Data", "Data", "DeviceUID", "The UID of the device that joined in OnDeviceJoin event.");
+AddExpression(11, ef_return_string, "IDs", "IDs", "ControllerDeviceIDs", "A JSON converted array of all connected devices that have loaded your game.");
+AddExpression(12, ef_return_number, "IDs", "IDs", "MasterControllerDeviceID", "Device ID of the master controller.");
 
 AddNumberParam("PlayerNumer", "Player number");
-AddExpression(13, ef_return_number, "", "Data", "ConvertPlayerNumberToDeviceId", "Returns the device_id of a player, if the player is part of the active players previously set by the screen by using  Set Active Players.");
+AddExpression(13, ef_return_number, "Functions", "Functions", "ConvertPlayerNumberToDeviceId", "Returns the device_id of a player, if the player is part of the active players previously set by the screen by using  Set Active Players.");
 
 AddNumberParam("DeviceId", "Device Id");
-AddExpression(14, ef_return_number, "", "Data", "ConvertDeviceIdToPlayerNumber", "Returns the player number for a device_id, if the device_id is part of the active players previously set by the screen by using Set Active Players.");
+AddExpression(14, ef_return_number, "Functions", "Functions", "ConvertDeviceIdToPlayerNumber", "Returns the player number for a device_id, if the device_id is part of the active players previously set by the screen by using Set Active Players.");
+
+AddExpression(15, ef_return_number, "Premium", "Premium", "IsPremiumJoin", "Returns 1 if the device which joined in onDeviceJoin is premium else 0.");
+AddExpression(16, ef_return_number, "Premium", "Premium", "IsPremiumMessage", "Returns 1 if the device is premium in a message trigger else 0.");
+
+AddNumberParam("DeviceId", "Device Id");
+AddExpression(17, ef_return_number, "Premium", "Premium", "IsPremium", "Returns 1 if the device is premium else 0.");
 
 ////////////////////////////////////////
 ACESDone();

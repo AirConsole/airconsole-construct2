@@ -53,6 +53,8 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_profile_picture = null;
     this.ac_uid = null;
     this.ac_max_players = null;
+    this.ac_is_premium_message = null;
+    this.ac_is_premium_join = null;
 
     // any other properties you need, e.g...
     // this.myValue = 0;
@@ -74,6 +76,13 @@ cr.plugins_.AirConsole = function(runtime)
       self.ac_profile_picture_join = self.air_console.getProfilePicture(device_id);
       self.ac_uid = self.air_console.getUID(device_id);
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceJoin, self);
+      if (self.air_console.isPremium(device_id)) {
+        self.is_premium_join = 1;
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPremium, self);
+      }
+      else {
+        self.is_premium_join = 0;
+      }
     };
 
     this.air_console.onMessage = function(device_id, data) {
@@ -90,6 +99,7 @@ cr.plugins_.AirConsole = function(runtime)
         self.ac_message_data = data.message;
         self.ac_nickname = self.air_console.getNickname(device_id);
         self.ac_profile_picture = self.air_console.getProfilePicture(device_id);
+        self.is_premium_message = (self.air_console.isPremium(device_id) !== false) ? 1 : 0;
         if (data.key) {
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
         }
@@ -122,6 +132,10 @@ cr.plugins_.AirConsole = function(runtime)
       if (data) {
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnHighScoreStored, self);
       }
+    }
+
+    this.air_console.onAdComplete = function(complete) {
+      self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnAdComplete, self);
     }
 
     this.air_console.onReady = function() {};
@@ -274,6 +288,16 @@ cr.plugins_.AirConsole = function(runtime)
     return this.air_console.isUserLoggedIn(device_id);
   }
 
+  Cnds.prototype.OnAdComplete = function (complete)
+  {
+    return true;
+  }
+
+  Cnds.prototype.OnPremium = function ()
+  {
+    return true;
+  }
+
   pluginProto.cnds = new Cnds();
 
   //////////////////////////////////////
@@ -323,6 +347,11 @@ cr.plugins_.AirConsole = function(runtime)
   {
     this.air_console.setActivePlayers(max_players);
   };
+
+  Acts.prototype.ShowAd = function ()
+  {
+    this.air_console.showAd();
+  }
 
   pluginProto.acts = new Acts();
 
@@ -419,6 +448,21 @@ cr.plugins_.AirConsole = function(runtime)
     var playerNumber = this.air_console.convertDeviceIdToPlayerNumber(deviceId);
     ret.set_int((typeof id !== 'number') ? -1 : playerNumber);
   };
+
+  Exps.prototype.IsPremiumJoin = function (ret)
+  {
+    ret.set_int(this.is_premium_join);
+  }
+
+  Exps.prototype.IsPremiumMessage = function (ret)
+  {
+    ret.set_int(this.is_premium_message);
+  }
+
+  Exps.prototype.IsPremium = function (ret, deviceId)
+  {
+    ret.set_int((this.air_console.isPremium(devideId) !== false) ? 1 : 0);
+  }
 
   pluginProto.exps = new Exps();
 

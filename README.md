@@ -11,6 +11,13 @@ http://developers.airconsole.com/#/guides/construct2
 
 ## Changes in version 1.4.4
 * Update to API 1.6.0
+* Added OnAdComplete
+* Added OnPremium
+* Added ShowAd
+* Added IsPremiumJoin
+* Added IsPremiumMessage
+* Added IsPremium
+* Cleaned and reordered expressions: (https://puu.sh/slyWo.png)
 
 ## Changes in version 1.4.3
 * Added getMasterControllerDeviceId. See (http://puu.sh/s1HlV.png) for usage
