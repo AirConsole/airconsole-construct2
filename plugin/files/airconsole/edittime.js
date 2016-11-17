@@ -3,11 +3,11 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
-    "dependency": "https://www.airconsole.com/api/airconsole-1.5.0.js",
+    "dependency": "https://www.airconsole.com/api/airconsole-1.6.0.js",
     "category": "Web",             // Prefer to re-use existing categories, but you can set anything here
     "type": "object",              // either "world" (appears in layout and is drawn), else "object"
     "rotatable":  false,           // only used when "type" is "world".  Enables an angle property on the object.
