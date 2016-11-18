@@ -138,7 +138,8 @@ cr.plugins_.AirConsole = function(runtime)
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnAdComplete, self);
     }
 
-    this.air_console.onPremium = function(complete) {
+    this.air_console.onPremium = function(device_id) {
+      self.ac_from_id = device_id;
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPremium, self);
     }
 
