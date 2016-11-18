@@ -138,6 +138,10 @@ cr.plugins_.AirConsole = function(runtime)
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnAdComplete, self);
     }
 
+    this.air_console.onPremium = function(complete) {
+      self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPremium, self);
+    }
+
     this.air_console.onReady = function() {};
   };
 
@@ -461,7 +465,7 @@ cr.plugins_.AirConsole = function(runtime)
 
   Exps.prototype.IsPremium = function (ret, deviceId)
   {
-    ret.set_int((this.air_console.isPremium(devideId) !== false) ? 1 : 0);
+    ret.set_int((this.air_console.isPremium(deviceId) !== false) ? 1 : 0);
   }
 
   pluginProto.exps = new Exps();
