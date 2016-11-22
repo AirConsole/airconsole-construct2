@@ -1,5 +1,5 @@
 # AirConsole Construct2
-Construct2 Plugin for AirConsole Version 1.5.0
+Construct2 Plugin for AirConsole Version 1.6.0
 ## Installation
 [download the plugin only](airconsole.c2addon) and drag it in to Construct 2 or
 
@@ -8,6 +8,16 @@ Construct2 Plugin for AirConsole Version 1.5.0
 More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
+
+## Changes in version 1.4.4
+* Update to API 1.6.0
+* Added OnAdComplete
+* Added OnPremium
+* Added ShowAd
+* Added IsPremiumJoin
+* Added IsPremiumMessage
+* Added IsPremium
+* Cleaned and reordered expressions: (https://puu.sh/slyWo.png)
 
 ## Changes in version 1.4.3
 * Added getMasterControllerDeviceId. See (http://puu.sh/s1HlV.png) for usage
