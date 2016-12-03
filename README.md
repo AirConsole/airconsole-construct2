@@ -1,13 +1,16 @@
 # AirConsole Construct2
 Construct2 Plugin for AirConsole Version 1.6.0
-## Installation
-[download the plugin only](airconsole.c2addon) and drag it in to Construct 2 or
 
-[download files as zip](../../archive/master.zip) and drag and drop the airconsole.c2addon file into the Construct2 application.
+## Installation
+[Download the plugin only](airconsole.c2addon) and drag it in to Construct 2 or
+[Download files as zip](../../archive/master.zip) and drag and drop the airconsole.c2addon file into the Construct2 application.
 
 More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
+
+## Changes in version 1.4.5
+* Implemented action NavigateHome: requesting all devices to open AirConsole store
 
 ## Changes in version 1.4.4
 * Update to API 1.6.0

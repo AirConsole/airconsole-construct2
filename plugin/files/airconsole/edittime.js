@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
@@ -122,6 +122,8 @@ AddNumberParam("Max player", "The maximum number of controllers that should get 
 AddAction(7, af_none, "Set active players", "System", "Set active players", "Takes all currently connected controllers and assigns them a player number. Can only be called by the screen. The assigned player numbers always start with 0 and are consecutive. You can hardcode player numbers, but not device_ids. Once the screen has called setActivePlayers you can get the device_id of the first player by calling convertPlayerNumberToDeviceId(0), the device_id of the second player by using ConvertPlayerNumberToDeviceId(1). You can also convert device_ids to player numbers by using ConvertDeviceIdToPlayerNumber(device_id). You can get all device_ids that are active players by using GetActivePlayerDeviceIds().", "SetActivePlayers");
 
 AddAction(8, af_none, "Show ad", "Ads", "Show ad on controllers and screen", "Show ad on every connected controller and screen. onAdComplete is called when showing ad is over", "ShowAd");
+
+AddAction(9, af_none, "Navigate home", "Browser", "Navigate home", "Request that all devices return to the AirConsole store.", "NavigateHome");
 
 // ==============================================
 // EXPRESSIONS
