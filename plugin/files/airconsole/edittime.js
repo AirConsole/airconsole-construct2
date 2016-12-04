@@ -125,6 +125,9 @@ AddAction(8, af_none, "Show ad", "Ads", "Show ad on controllers and screen", "Sh
 
 AddAction(9, af_none, "Navigate home", "Browser", "Navigate home", "Request that all devices return to the AirConsole store.", "NavigateHome");
 
+AddStringParam("url", "The base url of the game to navigate to (excluding screen.html or controller.html).", '""');
+AddAction(10, af_none, "Navigate to", "Browser", "Navigate to {0}", "Request that all devices load a game by url.", "NavigateTo");
+
 // ==============================================
 // EXPRESSIONS
 // ==============================================
