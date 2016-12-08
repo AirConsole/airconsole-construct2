@@ -358,6 +358,16 @@ cr.plugins_.AirConsole = function(runtime)
     this.air_console.showAd();
   }
 
+  Acts.prototype.NavigateHome = function ()
+  {
+    this.air_console.navigateHome();
+  }
+
+  Acts.prototype.NavigateTo = function (url)
+  {
+    this.air_console.navigateTo(url);
+  }
+
   pluginProto.acts = new Acts();
 
   //////////////////////////////////////
