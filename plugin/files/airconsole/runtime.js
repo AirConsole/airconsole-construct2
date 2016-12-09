@@ -77,11 +77,11 @@ cr.plugins_.AirConsole = function(runtime)
       self.ac_uid = self.air_console.getUID(device_id);
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnDeviceJoin, self);
       if (self.air_console.isPremium(device_id)) {
-        self.is_premium_join = 1;
+        self.ac_is_premium_join = 1;
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPremium, self);
       }
       else {
-        self.is_premium_join = 0;
+        self.ac_is_premium_join = 0;
       }
     };
 
@@ -99,7 +99,7 @@ cr.plugins_.AirConsole = function(runtime)
         self.ac_message_data = data.message;
         self.ac_nickname = self.air_console.getNickname(device_id);
         self.ac_profile_picture = self.air_console.getProfilePicture(device_id);
-        self.is_premium_message = (self.air_console.isPremium(device_id) !== false) ? 1 : 0;
+        self.ac_is_premium_message = (self.air_console.isPremium(device_id) !== false) ? 1 : 0;
         if (data.key) {
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
         }
@@ -466,12 +466,12 @@ cr.plugins_.AirConsole = function(runtime)
 
   Exps.prototype.IsPremiumJoin = function (ret)
   {
-    ret.set_int(this.is_premium_join);
+    ret.set_int(this.ac_is_premium_join);
   }
 
   Exps.prototype.IsPremiumMessage = function (ret)
   {
-    ret.set_int(this.is_premium_message);
+    ret.set_int(this.ac_is_premium_message);
   }
 
   Exps.prototype.IsPremium = function (ret, deviceId)
