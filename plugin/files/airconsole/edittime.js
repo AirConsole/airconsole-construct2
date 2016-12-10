@@ -86,10 +86,10 @@ AddCondition(13, cf_trigger, "On premium", "Ads", "On premium", "Triggered when 
 AddCondition(14, cf_trigger, "On message key", "Data", "On any message key other than 'message'", "Triggered when a message key other than 'message' is received from any device.", "OnNewMessageKey");
 
 AddAnyTypeParam("Key name", "The only key name you are awaiting");
-AddCondition(15, cf_trigger, "On message key is", "Data", "On message key is {0}", "Triggered when a specific message key is received from any device.", "OnNewMessageKeyIs");
+AddCondition(15, cf_trigger, "On message key is", "Data", "On message key is {0}", "Triggered when a specific message key is received from any device. Triggers if only one key is received", "OnNewMessageKeyIs");
 
 AddAnyTypeParam("Key name", "The key name you are awaiting");
-AddCondition(16, cf_trigger, "On message key contains", "Data", "On message key contains {0}", "Triggered when a specific message key is received from any device.", "OnNewMessageKeyContains");
+AddCondition(16, cf_trigger, "On message keys contain", "Data", "On message keys contain {0}", "Triggered when a specific message key is received from any device.", "OnNewMessageKeyContains");
 // Dropped the idea to add more triggers like checking if a message has a property with a given value and from a specific device etc etc. This can all be made using expressions in C2 then
 // Waiting on a community return if some more triggers needed, I for myself don't think we need others for message properties
 
@@ -167,10 +167,15 @@ AddExpression(16, ef_return_number, "Premium", "Premium", "IsPremiumMessage", "R
 AddNumberParam("DeviceId", "Device Id");
 AddExpression(17, ef_return_number, "Premium", "Premium", "IsPremium", "Returns 1 if the device is premium else 0.");
 
-AddExpression(18, ef_return_string, "Data", "Data", "GetMessageProperties", "Returns a recursive C2 dictionary of the keys with values sent in the last message.");
+AddExpression(18, ef_return_string, "Message properties", "Message properties", "GetMessageProperties", "Returns a recursive C2 dictionary of the keys with values sent in the last message.");
 
 AddStringParam("Property name", "Property name");
-AddExpression(19, ef_return_string, "Data", "Data", "GetMessageProperty", "Returns the value of the specified key sent in the last message.");
+AddExpression(19, ef_return_string, "Message properties", "Message properties", "GetMessageProperty", "Returns the value of the specified key sent in the last message.");
+
+AddExpression(20, ef_return_number, "Message properties", "Message properties", "GetMessagePropertiesCount", "Returns how many keys were declared in the last message.");
+
+AddStringParam("Property name", "Property name")
+AddExpression(21, ef_return_number, "Message properties", "Message properties", "IsMessagePropertySet", "Returns 1 if the specified key was declared in the last message.");
 
 ////////////////////////////////////////
 ACESDone();

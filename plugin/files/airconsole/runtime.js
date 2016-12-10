@@ -528,6 +528,16 @@ cr.plugins_.AirConsole = function(runtime)
     }
   }
 
+  Exps.prototype.GetMessagePropertiesCount = function (ret)
+  {
+    ret.set_int(this.ac_message_keys_count);
+  }
+
+  Exps.prototype.IsMessagePropertySet = function (ret, property)
+  {
+    ret.set_int(this.as_message_keys.hasOwnProperty(property) ? 1 : 0);
+  }
+
   function getProperties(object) {
     var data = new Object();
     $.each(object, function(property, value) {

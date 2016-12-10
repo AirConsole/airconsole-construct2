@@ -16,6 +16,8 @@ http://developers.airconsole.com/#/guides/construct2
 * Adding onMessageKeyContains
 * Adding (AirConsole).GetMessageProperties
 * Adding (AirConsole).GetMessageProperty
+* Adding (AirConsole).GetMessagePropertiesCount
+* Adding (AirConsole).IsMessagePropertySet
 
 ## Changes in version 1.4.5
 * Implemented action NavigateHome: requesting all devices to open AirConsole store
