@@ -169,6 +169,9 @@ AddExpression(17, ef_return_number, "Premium", "Premium", "IsPremium", "Returns 
 
 AddExpression(18, ef_return_string, "Data", "Data", "GetMessageProperties", "Returns a recursive C2 dictionary of the keys with values sent in the last message.");
 
+AddStringParam("Property name", "Property name");
+AddExpression(19, ef_return_string, "Data", "Data", "GetMessageProperty", "Returns the value of the specified key sent in the last message.");
+
 ////////////////////////////////////////
 ACESDone();
 ////////////////////////////////////////

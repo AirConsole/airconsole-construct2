@@ -518,20 +518,24 @@ cr.plugins_.AirConsole = function(runtime)
     var c2Dictionary = new Object();
     c2Dictionary['c2dictionary'] = true;
     c2Dictionary['data'] = getProperties(this.ac_message_keys);
-    //console.log(c2Dictionary);
     ret.set_string(JSON.stringify(c2Dictionary));
+  }
+
+  Exps.prototype.GetMessageProperty = function (ret, property)
+  {
+    if (this.ac_message_keys !== null && this.ac_message_keys.hasOwnProperty(property)) {
+      ret.set_string(this.ac_message_keys[property]);
+    }
   }
 
   function getProperties(object) {
     var data = new Object();
     $.each(object, function(property, value) {
-      //console.log('Property: ' + property + " Value: " + value);
       if (typeof value === 'object') {
-        //console.log('Property: ' + property.valueOf() + " Value: " + value);
         var c2Dictionary = new Object();
         c2Dictionary['c2dictionary'] = true;
         c2Dictionary['data'] = getProperties(value);
-        data[property] = c2Dictionary;
+        data[property] = JSON.stringify(c2Dictionary);
       }
       else {
         data[property] = value;
