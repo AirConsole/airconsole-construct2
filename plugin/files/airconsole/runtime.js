@@ -47,7 +47,9 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_from_id = null;
     this.ac_nickname_join = null;
     this.ac_nickname = null;
+    // @deprecated Use ac_message_keys instead
     this.ac_message_key = null;
+    //
     this.ac_message_data = null;
     this.ac_profile_picture_join = null;
     this.ac_profile_picture = null;
@@ -55,6 +57,8 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_max_players = null;
     this.ac_is_premium_message = null;
     this.ac_is_premium_join = null;
+    this.ac_message_keys = null;
+    this.ac_message_keys_count = null;
 
     // any other properties you need, e.g...
     // this.myValue = 0;
@@ -95,18 +99,32 @@ cr.plugins_.AirConsole = function(runtime)
         }
       } else {
         self.ac_from_id = device_id;
-        self.ac_message_key = data.key;
+        self.ac_message_key = data.key; //@deprecated
         self.ac_message_data = data.message;
         self.ac_nickname = self.air_console.getNickname(device_id);
         self.ac_profile_picture = self.air_console.getProfilePicture(device_id);
         self.ac_is_premium_message = (self.air_console.isPremium(device_id) !== false) ? 1 : 0;
-        if (data.key) {
-          self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
-        }
         if (data.message) {
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageIs, self);
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageFrom, self);
           self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessage, self);
+        }
+        else {
+          // We allow multiple object properties to be received, should work with the actual controller generator
+          self.ac_message_keys_count = 0;
+          $.each(data, function ()  {
+            self.ac_message_keys_count++;
+          });
+          if (data.key && self.ac_message_keys_count === 1) { // Just for the sake of backward compatibility... Flagged the condition as deprecated TODO remove me {
+            self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
+          }
+          else if (self.ac_message_keys_count > 0) {
+            // Do not work this out yet, just save data and we'll work that later if the user wants the keys-values dictionary
+            self.ac_message_keys = data;
+            self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnNewMessageKey, self);
+            self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnNewMessageKeyIs, self);
+            self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnNewMessageKeyContains, self);
+          }
         }
       }
     };
@@ -241,9 +259,25 @@ cr.plugins_.AirConsole = function(runtime)
     return true;
   };
 
+  // @deprecated
   Cnds.prototype.OnMessageKey = function (sent_message_val, comp1, expected_message_val)
   {
     return sent_message_val === expected_message_val;
+  };
+
+  Cnds.prototype.OnNewMessageKey = function ()
+  {
+    return true;
+  };
+
+  Cnds.prototype.OnNewMessageKeyIs = function (expected_key)
+  {
+    return (this.ac_message_keys !== null && this.ac_message_keys_count === 1 && this.ac_message_keys.hasOwnProperty(expected_key));
+  };
+
+  Cnds.prototype.OnNewMessageKeyContains = function (expected_key)
+  {
+    return (this.ac_message_keys !== null && this.ac_message_keys.hasOwnProperty(expected_key));
   };
 
   Cnds.prototype.OnDeviceJoin = function (myparam)
@@ -477,6 +511,47 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.IsPremium = function (ret, deviceId)
   {
     ret.set_int((this.air_console.isPremium(deviceId) !== false) ? 1 : 0);
+  }
+
+  Exps.prototype.GetMessageProperties = function (ret)
+  {
+    var c2Dictionary = new Object();
+    c2Dictionary['c2dictionary'] = true;
+    c2Dictionary['data'] = getProperties(this.ac_message_keys);
+    ret.set_string(JSON.stringify(c2Dictionary));
+  }
+
+  Exps.prototype.GetMessageProperty = function (ret, property)
+  {
+    if (this.ac_message_keys !== null && this.ac_message_keys.hasOwnProperty(property)) {
+      ret.set_string(this.ac_message_keys[property]);
+    }
+  }
+
+  Exps.prototype.GetMessagePropertiesCount = function (ret)
+  {
+    ret.set_int(this.ac_message_keys_count);
+  }
+
+  Exps.prototype.IsMessagePropertySet = function (ret, property)
+  {
+    ret.set_int(this.as_message_keys.hasOwnProperty(property) ? 1 : 0);
+  }
+
+  function getProperties(object) {
+    var data = new Object();
+    $.each(object, function(property, value) {
+      if (typeof value === 'object') {
+        var c2Dictionary = new Object();
+        c2Dictionary['c2dictionary'] = true;
+        c2Dictionary['data'] = getProperties(value);
+        data[property] = JSON.stringify(c2Dictionary);
+      }
+      else {
+        data[property] = value;
+      }
+    });
+    return data;
   }
 
   pluginProto.exps = new Exps();

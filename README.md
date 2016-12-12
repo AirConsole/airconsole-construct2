@@ -9,6 +9,16 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.4.6
+* Deprecating onMessageKey
+* Adding new onMessageKey
+* Adding onMessageKeyIs
+* Adding onMessageKeyContains
+* Adding (AirConsole).GetMessageProperties
+* Adding (AirConsole).GetMessageProperty
+* Adding (AirConsole).GetMessagePropertiesCount
+* Adding (AirConsole).IsMessagePropertySet
+
 ## Changes in version 1.4.5
 * Implemented action NavigateHome: requesting all devices to open AirConsole store
 * Implemented action NavigateTo: requesting all devices to load a game by url
