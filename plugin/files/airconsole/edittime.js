@@ -80,7 +80,7 @@ AddNumberParam("DeviceID", "The device id you want to check if logged in");
 AddCondition(11, 0, "Is user logged in", "Device and user", "Is device id {0} user logged in", "True if the device's user is logged in, false otherwise.", "IsUserLoggedIn");
 
 AddCondition(12, cf_trigger, "On ad complete", "Ads", "On ad complete", "Triggered when an advertisement is finished or no advertisement was shown.", "OnAdComplete");
-AddCondition(13, cf_trigger, "On premium", "Ads", "On premium", "Triggered called when a device becomes premium or when a premium device connects.", "OnPremium");
+AddCondition(13, cf_trigger, "On premium", "Ads", "On premium", "Triggered when a device becomes premium or when a premium device connects.", "OnPremium");
 
 // ==============================================
 // ACTION
