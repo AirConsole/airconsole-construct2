@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
@@ -31,11 +31,12 @@ function GetPluginSettings()
 // ==============================================
 // CONDITION
 // ==============================================
+// Deprecated
 // Receive onMessageKey
 AddAnyTypeParam("Message Key", "Data of the message key AirConsole.MessageKey");
 AddCmpParam("Is", "Compare message data key");
 AddAnyTypeParam("Value", "Compare to this value");
-AddCondition(0, cf_trigger, "On message key", "Data", "On message key is {2}", "Triggered when a message key is received from a device.", "OnMessageKey");
+AddCondition(0, cf_deprecated, "On specific message key", "Data", "On message key {0} is {2}", "Triggered when a message key is received from a device.", "OnMessageKey");
 
 // Receive onMessageIs
 AddAnyTypeParam("Value", "Compare to this value");
@@ -81,6 +82,16 @@ AddCondition(11, 0, "Is user logged in", "Device and user", "Is device id {0} us
 
 AddCondition(12, cf_trigger, "On ad complete", "Ads", "On ad complete", "Triggered when an advertisement is finished or no advertisement was shown.", "OnAdComplete");
 AddCondition(13, cf_trigger, "On premium", "Ads", "On premium", "Triggered when a device becomes premium or when a premium device connects.", "OnPremium");
+
+AddCondition(14, cf_trigger, "On message key", "Data", "On any message key other than 'message'", "Triggered when a message key other than 'message' is received from any device.", "OnNewMessageKey");
+
+AddAnyTypeParam("Key name", "The only key name you are awaiting");
+AddCondition(15, cf_trigger, "On message key is", "Data", "On message key is {0}", "Triggered when a specific message key is received from any device. Triggers if only one key is received", "OnNewMessageKeyIs");
+
+AddAnyTypeParam("Key name", "The key name you are awaiting");
+AddCondition(16, cf_trigger, "On message keys contain", "Data", "On message keys contain {0}", "Triggered when a specific message key is received from any device.", "OnNewMessageKeyContains");
+// Dropped the idea to add more triggers like checking if a message has a property with a given value and from a specific device etc etc. This can all be made using expressions in C2 then
+// Waiting on a community return if some more triggers needed, I for myself don't think we need others for message properties
 
 // ==============================================
 // ACTION
@@ -132,7 +143,7 @@ AddAction(10, af_none, "Navigate to", "Browser", "Navigate to {0}", "Request tha
 // EXPRESSIONS
 // ==============================================
 AddExpression(1, ef_return_string, "Data", "Data", "Message", "The message received in a message trigger.");
-AddExpression(2, ef_return_string, "Data", "Data", "MessageKey", "The message key received in a message trigger.");
+AddExpression(2, ef_deprecated, "Data", "Data", "MessageKey", "The message key received in a message trigger.");
 AddExpression(3, ef_return_number, "IDs", "IDs", "DeviceID", "The ID of the device the message is from in a message trigger.");
 AddExpression(4, ef_return_number, "IDs", "IDs", "DeviceIDJoin", "The ID of the device which joined in OnDeviceJoin event.");
 AddExpression(5, ef_return_number, "IDs", "IDs", "DeviceIDLeft", "The ID of the device which left in OnDeviceLeft event.");
@@ -155,6 +166,16 @@ AddExpression(16, ef_return_number, "Premium", "Premium", "IsPremiumMessage", "R
 
 AddNumberParam("DeviceId", "Device Id");
 AddExpression(17, ef_return_number, "Premium", "Premium", "IsPremium", "Returns 1 if the device is premium else 0.");
+
+AddExpression(18, ef_return_string, "Message properties", "Message properties", "GetMessageProperties", "Returns a recursive C2 dictionary of the keys with values sent in the last message.");
+
+AddStringParam("Property name", "Property name");
+AddExpression(19, ef_return_string, "Message properties", "Message properties", "GetMessageProperty", "Returns the value of the specified key sent in the last message.");
+
+AddExpression(20, ef_return_number, "Message properties", "Message properties", "GetMessagePropertiesCount", "Returns how many keys were declared in the last message.");
+
+AddStringParam("Property name", "Property name")
+AddExpression(21, ef_return_number, "Message properties", "Message properties", "IsMessagePropertySet", "Returns 1 if the specified key was declared in the last message.");
 
 ////////////////////////////////////////
 ACESDone();
