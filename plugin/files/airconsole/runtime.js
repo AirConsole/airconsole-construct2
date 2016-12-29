@@ -548,6 +548,10 @@ cr.plugins_.AirConsole = function(runtime)
         data[property] = JSON.stringify(c2Dictionary);
       }
       else {
+        // Thanks to C2 non boolean compliance, let's transform them to ints
+        if (typeof value === 'boolean') {
+          value = (!value) ? 0 : 1;
+        }
         data[property] = value;
       }
     });

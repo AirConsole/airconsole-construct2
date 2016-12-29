@@ -8,7 +8,9 @@ Construct2 Plugin for AirConsole Version 1.6.0
 More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
-
+## Changes in version 1.4.6.1
+* Hotfix for generated controllers and Construct2 Dictionaries 
+non compliance to booleans
 ## Changes in version 1.4.6
 * Deprecating onMessageKey
 * Adding new onMessageKey
