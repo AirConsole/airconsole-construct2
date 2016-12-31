@@ -161,6 +161,16 @@ cr.plugins_.AirConsole = function(runtime)
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPremium, self);
     }
 
+    this.air_console.onPersistentDataLoaded = function(data) {
+      if (data) {
+        self.runtime.trigger(cr.plugin_.AirConsole.prototype.cnds.OnPersistentDataLoaded, self);
+      }
+    }
+
+    this.air_console.onPersistentDataStored() = function(uid) {
+      self.runtime.trigger(cr.plugin_.AirConsole.prototype.cnds.OnPersistentDataStored, self);
+    }
+
     this.air_console.onReady = function() {};
   };
 
@@ -337,6 +347,17 @@ cr.plugins_.AirConsole = function(runtime)
     return true;
   }
 
+  Cnds.prototype.OnPersistentDataLoaded = function (data)
+  {
+    // TODO handle data, will do very soon
+    return true;
+  }
+
+  Cnds.prototype.OnPersistentDataStored = function ()
+  {
+    return true;
+  }
+
   pluginProto.cnds = new Cnds();
 
   //////////////////////////////////////
@@ -400,6 +421,18 @@ cr.plugins_.AirConsole = function(runtime)
   Acts.prototype.NavigateTo = function (url)
   {
     this.air_console.navigateTo(url);
+  }
+
+  Acts.prototype.RequestPersistentData = function (uids)
+  {
+    // TODO handle uids, will do very soon
+    this.air_console.requestPersistentData();
+  }
+
+  Acts.prototype.StorePersistentData = function (key, value, uid)
+  {
+    // TODO handle data<, will do very soon
+    this.air_console.storePersistentData(key, value, uid);
   }
 
   pluginProto.acts = new Acts();
