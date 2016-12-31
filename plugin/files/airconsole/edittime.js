@@ -145,7 +145,7 @@ AddAction(11, af_none, "Request persistent data", "Persistent data", "Request pe
 
 AddStringParam("key", "The key of the data entry.", '""');
 AddStringParam("value", "The value of the data entry.", '""');
-AddStringParam("uid", "	The uid for which the data should be stored. Default is the uid of this device.", '""');
+AddStringParam("uid", "The uid for which the data should be stored. Default is the uid of this device.", '""');
 AddAction(12, af_none, "Store persistent data", "Persistent data", "Store persistent data {0} = {1} for uid {2}", "Stores a key-value pair persistently on the AirConsole servers. Storage is per game. Total storage can not exceed 1 MB per game and uid. Storage is public, not secure and anyone can request and tamper with it. Do not store sensitive data.", "StorePersistentData");
 
 // ==============================================
@@ -164,7 +164,7 @@ AddExpression(10, ef_return_string, "Data", "Data", "DeviceUID", "The UID of the
 AddExpression(11, ef_return_string, "IDs", "IDs", "ControllerDeviceIDs", "A JSON converted array of all connected devices that have loaded your game.");
 AddExpression(12, ef_return_number, "IDs", "IDs", "MasterControllerDeviceID", "Device ID of the master controller.");
 
-AddNumberParam("PlayerNumer", "Player number");
+AddNumberParam("PlayerNumber", "Player number");
 AddExpression(13, ef_return_number, "Functions", "Functions", "ConvertPlayerNumberToDeviceId", "Returns the device_id of a player, if the player is part of the active players previously set by the screen by using  Set Active Players.");
 
 AddNumberParam("DeviceId", "Device Id");
@@ -183,7 +183,7 @@ AddExpression(19, ef_return_string, "Message properties", "Message properties", 
 
 AddExpression(20, ef_return_number, "Message properties", "Message properties", "GetMessagePropertiesCount", "Returns how many keys were declared in the last message.");
 
-AddStringParam("Property name", "Property name")
+AddStringParam("Property name", "Property name");
 AddExpression(21, ef_return_number, "Message properties", "Message properties", "IsMessagePropertySet", "Returns 1 if the specified key was declared in the last message.");
 
 ////////////////////////////////////////
