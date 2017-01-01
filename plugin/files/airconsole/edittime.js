@@ -186,6 +186,8 @@ AddExpression(20, ef_return_number, "Message properties", "Message properties", 
 AddStringParam("Property name", "Property name");
 AddExpression(21, ef_return_number, "Message properties", "Message properties", "IsMessagePropertySet", "Returns 1 if the specified key was declared in the last message.");
 
+AddExpression(22, ef_return_string, "Persistent data", "Persistent data", "PersistentData", "Returns a JSON string representation of the persistent data loaded by the last requestPersistentData.");
+
 ////////////////////////////////////////
 ACESDone();
 ////////////////////////////////////////

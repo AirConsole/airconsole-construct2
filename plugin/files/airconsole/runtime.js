@@ -59,6 +59,7 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_is_premium_join = null;
     this.ac_message_keys = null;
     this.ac_message_keys_count = null;
+    this.ac_persistent_data = null;
 
     // any other properties you need, e.g...
     // this.myValue = 0;
@@ -163,6 +164,7 @@ cr.plugins_.AirConsole = function(runtime)
 
     this.air_console.onPersistentDataLoaded = function(data) {
       if (data) {
+        self.ac_persistent_data = data;
         self.runtime.trigger(cr.plugin_.AirConsole.prototype.cnds.OnPersistentDataLoaded, self);
       }
     }
@@ -569,6 +571,14 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.IsMessagePropertySet = function (ret, property)
   {
     ret.set_int(this.as_message_keys.hasOwnProperty(property) ? 1 : 0);
+  }
+
+  Exps.prototype.PersistentData = function (ret)
+  {
+    var c2Dictionary = new Object();
+    c2Dictionary['c2dictionary'] = true;
+    c2Dictionary['data'] = getProperties(this.ac_persistent_data);
+    ret.set_string(JSON.stringify(c2Dictionary));
   }
 
   function getProperties(object) {
