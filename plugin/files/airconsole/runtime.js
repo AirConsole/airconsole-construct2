@@ -427,13 +427,12 @@ cr.plugins_.AirConsole = function(runtime)
 
   Acts.prototype.RequestPersistentData = function (uids)
   {
-    // TODO handle uids, will do very soon
-    this.air_console.requestPersistentData();
+    var uidsArray = (uids.indexOf(',') > -1) ? uids.split(',') : [uids];
+    this.air_console.requestPersistentData(uidsArray);
   }
 
   Acts.prototype.StorePersistentData = function (key, value, uid)
   {
-    // TODO handle data<, will do very soon
     this.air_console.storePersistentData(key, value, uid);
   }
 
