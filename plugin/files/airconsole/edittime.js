@@ -188,6 +188,8 @@ AddExpression(21, ef_return_number, "Message properties", "Message properties", 
 
 AddExpression(22, ef_return_string, "Persistent data", "Persistent data", "PersistentData", "Returns a JSON string representation of the persistent data loaded by the last requestPersistentData.");
 
+AddExpression(23, ef_return_string, "Highscores data", "Highscores", "Highscores", "Returns a JSON string representation of the highscores loaded by the last requestHighScores.");
+
 ////////////////////////////////////////
 ACESDone();
 ////////////////////////////////////////
