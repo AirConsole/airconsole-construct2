@@ -168,7 +168,7 @@ cr.plugins_.AirConsole = function(runtime)
       }
     }
 
-    this.air_console.onPersistentDataStored() = function(uid) {
+    this.air_console.onPersistentDataStored = function(uid) {
       self.runtime.trigger(cr.plugin_.AirConsole.prototype.cnds.OnPersistentDataStored, self);
     }
 
