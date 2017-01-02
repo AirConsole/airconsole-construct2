@@ -164,12 +164,12 @@ cr.plugins_.AirConsole = function(runtime)
     this.air_console.onPersistentDataLoaded = function(data) {
       if (data) {
         self.ac_persistent_data = data;
-        self.runtime.trigger(cr.plugin_.AirConsole.prototype.cnds.OnPersistentDataLoaded, self);
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPersistentDataLoaded, self);
       }
     }
 
     this.air_console.onPersistentDataStored = function(uid) {
-      self.runtime.trigger(cr.plugin_.AirConsole.prototype.cnds.OnPersistentDataStored, self);
+      self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPersistentDataStored, self);
     }
 
     this.air_console.onReady = function() {};
