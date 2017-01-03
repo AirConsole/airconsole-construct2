@@ -60,13 +60,19 @@
     });
   });
 
+  $("#up").on(up_event, function () {
+    air_console.message(AirConsole.SCREEN, {
+      message: 'stop'
+    });
+  });
+  
   $("#down").on(down_event, function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'down'
     });
   });
-
-  $("#up").on(up_event, function () {
+  
+  $("#down").on(up_event, function () {
     air_console.message(AirConsole.SCREEN, {
       message: 'stop'
     });
