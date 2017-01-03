@@ -190,6 +190,9 @@ AddExpression(22, ef_return_string, "Persistent data", "Persistent data", "Persi
 
 AddExpression(23, ef_return_string, "Highscores data", "Highscores", "Highscores", "Returns a JSON string representation of the highscores loaded by the last requestHighScores.");
 
+AddNumberParam("DeviceId", "Device Id");
+AddExpression(24, ef_return_string, "Functions", "Functions", "GetUID", "Returns the globally unique id of a device.");
+
 ////////////////////////////////////////
 ACESDone();
 ////////////////////////////////////////

@@ -586,6 +586,11 @@ cr.plugins_.AirConsole = function(runtime)
     ret.set_string(JSON.stringify(c2Dictionary));
   }
 
+  Exps.prototype.GetUID = function (ret, deviceId)
+  {
+    ret.set_string(this.air_console.getUID(deviceId));
+  }
+
   function getProperties(object) {
     var data = new Object();
     $.each(object, function(property, value) {

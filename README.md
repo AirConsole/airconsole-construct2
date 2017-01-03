@@ -12,6 +12,7 @@ http://developers.airconsole.com/#/guides/construct2
 ## Changes in version 1.4.7
 * Implemented persistent data support
 * Completed highscores support
+* Added (AirConsole).GetUID(deviceId) returning you the device's UID based on its deviceId
 
 ## Changes in version 1.4.6.1
 * Hotfix for generated controllers and Construct2 Dictionaries 
