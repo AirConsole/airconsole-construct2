@@ -141,7 +141,7 @@ cr.plugins_.AirConsole = function(runtime)
 
     this.air_console.onHighScores = function(data) {
       if (data) {
-        self.ac_highscore_data = data;
+        self.ac_highscores_data = data;
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnHighScores, self);
       }
     }
