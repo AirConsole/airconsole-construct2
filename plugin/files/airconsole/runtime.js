@@ -59,9 +59,8 @@ cr.plugins_.AirConsole = function(runtime)
     this.ac_is_premium_join = null;
     this.ac_message_keys = null;
     this.ac_message_keys_count = null;
-
-    // any other properties you need, e.g...
-    // this.myValue = 0;
+    this.ac_persistent_data = null;
+    this.ac_highscores_data = null;
   };
 
   var instanceProto = pluginProto.Instance.prototype;
@@ -115,7 +114,7 @@ cr.plugins_.AirConsole = function(runtime)
           $.each(data, function ()  {
             self.ac_message_keys_count++;
           });
-          if (data.key && self.ac_message_keys_count === 1) { // Just for the sake of backward compatibility... Flagged the condition as deprecated TODO remove me {
+          if (data.key && self.ac_message_keys_count === 1) { // Just for the sake of backward compatibility... Flagged the condition as deprecated TODO remove me
             self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
           }
           else if (self.ac_message_keys_count > 0) {
@@ -142,6 +141,7 @@ cr.plugins_.AirConsole = function(runtime)
 
     this.air_console.onHighScores = function(data) {
       if (data) {
+        self.ac_highscore_data = data;
         self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnHighScores, self);
       }
     }
@@ -159,6 +159,17 @@ cr.plugins_.AirConsole = function(runtime)
     this.air_console.onPremium = function(device_id) {
       self.ac_from_id = device_id;
       self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPremium, self);
+    }
+
+    this.air_console.onPersistentDataLoaded = function(data) {
+      if (data) {
+        self.ac_persistent_data = data;
+        self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPersistentDataLoaded, self);
+      }
+    }
+
+    this.air_console.onPersistentDataStored = function(uid) {
+      self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnPersistentDataStored, self);
     }
 
     this.air_console.onReady = function() {};
@@ -307,13 +318,11 @@ cr.plugins_.AirConsole = function(runtime)
 
   Cnds.prototype.OnHighScores = function (data)
   {
-    // TODO implement data support
     return true;
   }
 
   Cnds.prototype.OnHighScoreStored = function (data)
   {
-    // TODO implement data support
     return true;
   }
 
@@ -333,6 +342,16 @@ cr.plugins_.AirConsole = function(runtime)
   }
 
   Cnds.prototype.OnPremium = function ()
+  {
+    return true;
+  }
+
+  Cnds.prototype.OnPersistentDataLoaded = function (data)
+  {
+    return true;
+  }
+
+  Cnds.prototype.OnPersistentDataStored = function ()
   {
     return true;
   }
@@ -371,6 +390,7 @@ cr.plugins_.AirConsole = function(runtime)
 
   Acts.prototype.RequestHighScores = function (level_name, level_version, uids, ranks, total, top)
   {
+    this.ac_highscore_data = null;
     uids = (uids === 'all') ? '' : uids;
     var ranksArray = (ranks === 'world') ? [ranks] : ranks.split(',');
     this.air_console.requestHighScores(level_name, level_version, uids, ranksArray, total, top);
@@ -400,6 +420,18 @@ cr.plugins_.AirConsole = function(runtime)
   Acts.prototype.NavigateTo = function (url)
   {
     this.air_console.navigateTo(url);
+  }
+
+  Acts.prototype.RequestPersistentData = function (uids)
+  {
+    this.ac_persisent_data = null;
+    var uidsArray = (uids.indexOf(',') > -1) ? uids.split(',') : [uids];
+    this.air_console.requestPersistentData(uidsArray);
+  }
+
+  Acts.prototype.StorePersistentData = function (key, value, uid)
+  {
+    this.air_console.storePersistentData(key, value, uid);
   }
 
   pluginProto.acts = new Acts();
@@ -536,6 +568,27 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.IsMessagePropertySet = function (ret, property)
   {
     ret.set_int(this.as_message_keys.hasOwnProperty(property) ? 1 : 0);
+  }
+
+  Exps.prototype.PersistentData = function (ret)
+  {
+    var c2Dictionary = new Object();
+    c2Dictionary['c2dictionary'] = true;
+    c2Dictionary['data'] = getProperties(this.ac_persistent_data);
+    ret.set_string(JSON.stringify(c2Dictionary));
+  }
+
+  Exps.prototype.HighscoresData = function (ret)
+  {
+    var c2Dictionary = new Object();
+    c2Dictionary['c2dictionary'] = true;
+    c2Dictionary['data'] = getProperties(this.ac_highscores_data);
+    ret.set_string(JSON.stringify(c2Dictionary));
+  }
+
+  Exps.prototype.GetUID = function (ret, deviceId)
+  {
+    ret.set_string(this.air_console.getUID(deviceId));
   }
 
   function getProperties(object) {
