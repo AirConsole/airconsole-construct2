@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.7.1",
+    "version": "1.4.8",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
@@ -192,6 +192,12 @@ AddExpression(23, ef_return_string, "Highscores data", "Highscores", "Highscores
 
 AddNumberParam("DeviceId", "Device Id");
 AddExpression(24, ef_return_string, "Functions", "Functions", "GetUID", "Returns the globally unique id of a device.");
+
+AddNumberParam("DeviceId", "Device Id");
+AddExpression(25, ef_return_string, "Functions", "Functions", "GetNickname", "Returns the nickname of a device.");
+
+AddNumberParam("DeviceId", "Device Id");
+AddExpression(26, ef_return_string, "Functions", "Functions", "GetProfilePicture", "Returns the profile picture of a device.");
 
 ////////////////////////////////////////
 ACESDone();
