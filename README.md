@@ -9,6 +9,10 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.4.8
+* Implemented GetNickname
+* Implemented GetProfilePicture
+
 ## Changes in version 1.4.7.1
 * Hotfix for Highscores data
 

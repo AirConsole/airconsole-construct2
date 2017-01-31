@@ -591,6 +591,16 @@ cr.plugins_.AirConsole = function(runtime)
     ret.set_string(this.air_console.getUID(deviceId));
   }
 
+  Exps.prototype.GetNickname = function (ret, deviceId)
+  {
+    ret.set_string(this.air_console.getNickname(deviceId));
+  }
+
+  Exps.prototype.GetProfilePicture = function (ret, deviceId)
+  {
+    ret.set_string(this.air_console.getProfilePicture(deviceId));
+  }
+
   function getProperties(object) {
     var data = new Object();
     $.each(object, function(property, value) {
