@@ -9,6 +9,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Change in version 1.4.8.1
+* Fixed 'Cannot use in operator to search for'
+
 ## Changes in version 1.4.8
 * Implemented GetNickname
 * Implemented GetProfilePicture
