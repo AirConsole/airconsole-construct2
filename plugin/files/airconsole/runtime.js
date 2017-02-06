@@ -111,9 +111,11 @@ cr.plugins_.AirConsole = function(runtime)
         else {
           // We allow multiple object properties to be received, should work with the actual controller generator
           self.ac_message_keys_count = 0;
-          $.each(data, function ()  {
-            self.ac_message_keys_count++;
-          });
+          if (typeof data === 'object') {
+            for(var propertyName in data) {
+              self.ac_message_keys_count++;
+            }
+          }
           if (data.key && self.ac_message_keys_count === 1) { // Just for the sake of backward compatibility... Flagged the condition as deprecated TODO remove me
             self.runtime.trigger(cr.plugins_.AirConsole.prototype.cnds.OnMessageKey, self);
           }
