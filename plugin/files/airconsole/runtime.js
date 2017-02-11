@@ -13,6 +13,30 @@ cr.plugins_.AirConsole = function(runtime)
   this.runtime = runtime;
 };
 
+function AirConsoleOffline() {
+  AirConsoleOffline.prototype.getNickname = function() {return 'undefined when offline'};
+  AirConsoleOffline.prototype.getProfilePicture = function() {return 'undefined when offline'};
+  AirConsoleOffline.prototype.getUID = function() {return -9999};
+  AirConsoleOffline.prototype.isPremium = function() {return false};
+  AirConsoleOffline.prototype.getControllerDeviceIds = function() {return []};
+  AirConsoleOffline.prototype.getCustomDeviceState = function() {return null};
+  AirConsoleOffline.prototype.isUserLoggedIn = function() {return false};
+  AirConsoleOffline.prototype.message = function() {};
+  AirConsoleOffline.prototype.broadcast = function() {};
+  AirConsoleOffline.prototype.requestHighScores = function() {};
+  AirConsoleOffline.prototype.storeHighScore = function() {};
+  AirConsoleOffline.prototype.setActivePlayers = function() {};
+  AirConsoleOffline.prototype.showAd = function() {};
+  AirConsoleOffline.prototype.navigateHome = function() {};
+  AirConsoleOffline.prototype.navigateTo = function() {};
+  AirConsoleOffline.prototype.requestPersistentData = function() {};
+  AirConsoleOffline.prototype.storePersistentData = function() {};
+  AirConsoleOffline.prototype.getControllerDeviceIds = function() {return []};
+  AirConsoleOffline.prototype.getMasterControllerDeviceId = function() {return -9999};
+  AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {};
+  AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {};
+};
+
 (function ()
 {
   /////////////////////////////////////
@@ -69,7 +93,13 @@ cr.plugins_.AirConsole = function(runtime)
   instanceProto.onCreate = function()
   {
     var self = this;
-    this.air_console = new AirConsole();
+    if (typeof AirConsole !== 'undefined') {
+      this.air_console = new AirConsole();
+    }
+    else {
+      this.air_console = new AirConsoleOffline();
+    }
+    
     this.air_console.game_ready = false;
     this.ac_max_players = self.properties[0];
 
