@@ -98,6 +98,7 @@ function AirConsoleOffline() {
     }
     else {
       this.air_console = new AirConsoleOffline();
+      console.warning('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock.');
     }
     
     this.air_console.game_ready = false;

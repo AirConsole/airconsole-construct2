@@ -9,6 +9,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.4.9.1
+* Added console warning when using offline mode
+
 ## Changes in version 1.4.9
 * If C2 is run while being offline, the JS scripts tries to get AirConsole() but logically fails. The script then returns undefined and this crashes the game preview. This implements a simple way to let Construct 2 project using AirConsole plugin still run while being offline 
 
