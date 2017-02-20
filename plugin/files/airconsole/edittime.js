@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name": "AirConsole",
     "id": "AirConsole",
-    "version": "1.4.8.1",
+    "version": "1.4.9.2",
     "description": "Extend your game with local multiplayer fun",
     "author": "N-Dream AG",
     "help url": "http://developers.airconsole.com",
@@ -93,6 +93,8 @@ AddCondition(16, cf_trigger, "On message keys contain", "Data", "On message keys
 
 AddCondition(17, cf_trigger, "On persistent data loaded", "Persistent data", "On persistent data loaded", "Gets called when persistent data was loaded from requestPersistentData().", "OnPersistentDataLoaded");
 AddCondition(18, cf_trigger, "On persistent data stored", "Persistent data", "On persistent data stored", "Gets called when persistent data was stored from storePersistentData().", "OnPersistentDataStored");
+
+AddCondition(19, cf_none, "is plugin offline", "AirConsole", "Is plugin offline", "If you try using AirConsole while being offline, this condition would be true.", "IsPluginOffline");
 
 // ==============================================
 // ACTION

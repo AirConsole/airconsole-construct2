@@ -13,6 +13,31 @@ cr.plugins_.AirConsole = function(runtime)
   this.runtime = runtime;
 };
 
+function AirConsoleOffline() {
+  console.warning('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock.');
+  AirConsoleOffline.prototype.getNickname = function() {return 'undefined when offline'};
+  AirConsoleOffline.prototype.getProfilePicture = function() {return 'undefined when offline'};
+  AirConsoleOffline.prototype.getUID = function() {return -9999};
+  AirConsoleOffline.prototype.isPremium = function() {return false};
+  AirConsoleOffline.prototype.getControllerDeviceIds = function() {return []};
+  AirConsoleOffline.prototype.getCustomDeviceState = function() {return null};
+  AirConsoleOffline.prototype.isUserLoggedIn = function() {return false};
+  AirConsoleOffline.prototype.message = function() {};
+  AirConsoleOffline.prototype.broadcast = function() {};
+  AirConsoleOffline.prototype.requestHighScores = function() {};
+  AirConsoleOffline.prototype.storeHighScore = function() {};
+  AirConsoleOffline.prototype.setActivePlayers = function() {};
+  AirConsoleOffline.prototype.showAd = function() {};
+  AirConsoleOffline.prototype.navigateHome = function() {};
+  AirConsoleOffline.prototype.navigateTo = function() {};
+  AirConsoleOffline.prototype.requestPersistentData = function() {};
+  AirConsoleOffline.prototype.storePersistentData = function() {};
+  AirConsoleOffline.prototype.getControllerDeviceIds = function() {return []};
+  AirConsoleOffline.prototype.getMasterControllerDeviceId = function() {return -9999};
+  AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {};
+  AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {};
+};
+
 (function ()
 {
   /////////////////////////////////////
@@ -69,7 +94,15 @@ cr.plugins_.AirConsole = function(runtime)
   instanceProto.onCreate = function()
   {
     var self = this;
-    this.air_console = new AirConsole();
+    if (typeof AirConsole !== 'undefined') {
+      this.runningOffline = false;
+      this.air_console = new AirConsole();
+    }
+    else {
+      this.runningOffline = true;
+      this.air_console = new AirConsoleOffline();
+    }
+
     this.air_console.game_ready = false;
     this.ac_max_players = self.properties[0];
 
@@ -261,12 +294,12 @@ cr.plugins_.AirConsole = function(runtime)
   {
     return this.ac_message_data === expected_message_val && this.ac_from_id === object_device_id;
   };
-  
+
   Cnds.prototype.OnMessageFrom = function (object_device_id)
   {
     return this.ac_from_id === object_device_id;
   };
-  
+
   Cnds.prototype.OnMessage = function ()
   {
     return true;
@@ -302,7 +335,7 @@ cr.plugins_.AirConsole = function(runtime)
   {
     return this.ac_leave_id === expected_device_id;
   };
-  
+
   Cnds.prototype.OnAnyDeviceLeft = function ()
   {
     return true;
@@ -321,42 +354,47 @@ cr.plugins_.AirConsole = function(runtime)
   Cnds.prototype.OnHighScores = function (data)
   {
     return true;
-  }
+  };
 
   Cnds.prototype.OnHighScoreStored = function (data)
   {
     return true;
-  }
+  };
 
   Cnds.prototype.OnTooManyPlayers = function ()
   {
     return true;
-  }
+  };
 
   Cnds.prototype.IsUserLoggedIn = function (device_id)
   {
     return this.air_console.isUserLoggedIn(device_id);
-  }
+  };
 
   Cnds.prototype.OnAdComplete = function (complete)
   {
     return true;
-  }
+  };
 
   Cnds.prototype.OnPremium = function ()
   {
     return true;
-  }
+  };
 
   Cnds.prototype.OnPersistentDataLoaded = function (data)
   {
     return true;
-  }
+  };
 
   Cnds.prototype.OnPersistentDataStored = function ()
   {
     return true;
-  }
+  };
+
+  Cnds.prototype.IsPluginOffline = function ()
+  {
+    return this.runningOffline;
+  };
 
   pluginProto.cnds = new Cnds();
 
@@ -396,7 +434,7 @@ cr.plugins_.AirConsole = function(runtime)
     uids = (uids === 'all') ? '' : uids;
     var ranksArray = (ranks === 'world') ? [ranks] : ranks.split(',');
     this.air_console.requestHighScores(level_name, level_version, uids, ranksArray, total, top);
-  }
+  };
 
   Acts.prototype.StoreHighScores = function (level_name, level_version, score, uid, data, score_string)
   {
@@ -412,29 +450,29 @@ cr.plugins_.AirConsole = function(runtime)
   Acts.prototype.ShowAd = function ()
   {
     this.air_console.showAd();
-  }
+  };
 
   Acts.prototype.NavigateHome = function ()
   {
     this.air_console.navigateHome();
-  }
+  };
 
   Acts.prototype.NavigateTo = function (url)
   {
     this.air_console.navigateTo(url);
-  }
+  };
 
   Acts.prototype.RequestPersistentData = function (uids)
   {
     this.ac_persisent_data = null;
     var uidsArray = (uids.indexOf(',') > -1) ? uids.split(',') : [uids];
     this.air_console.requestPersistentData(uidsArray);
-  }
+  };
 
   Acts.prototype.StorePersistentData = function (key, value, uid)
   {
     this.air_console.storePersistentData(key, value, uid);
-  }
+  };
 
   pluginProto.acts = new Acts();
 
@@ -470,7 +508,7 @@ cr.plugins_.AirConsole = function(runtime)
   {
     ret.set_string(this.ac_leave_id);
   };
-  
+
   Exps.prototype.NicknameJoin = function (ret)
   {
     ret.set_string(this.ac_nickname_join);
@@ -535,17 +573,17 @@ cr.plugins_.AirConsole = function(runtime)
   Exps.prototype.IsPremiumJoin = function (ret)
   {
     ret.set_int(this.ac_is_premium_join);
-  }
+  };
 
   Exps.prototype.IsPremiumMessage = function (ret)
   {
     ret.set_int(this.ac_is_premium_message);
-  }
+  };
 
   Exps.prototype.IsPremium = function (ret, deviceId)
   {
     ret.set_int((this.air_console.isPremium(deviceId) !== false) ? 1 : 0);
-  }
+  };
 
   Exps.prototype.GetMessageProperties = function (ret)
   {
@@ -553,24 +591,24 @@ cr.plugins_.AirConsole = function(runtime)
     c2Dictionary['c2dictionary'] = true;
     c2Dictionary['data'] = getProperties(this.ac_message_keys);
     ret.set_string(JSON.stringify(c2Dictionary));
-  }
+  };
 
   Exps.prototype.GetMessageProperty = function (ret, property)
   {
     if (this.ac_message_keys !== null && this.ac_message_keys.hasOwnProperty(property)) {
       ret.set_string(this.ac_message_keys[property]);
     }
-  }
+  };
 
   Exps.prototype.GetMessagePropertiesCount = function (ret)
   {
     ret.set_int(this.ac_message_keys_count);
-  }
+  };
 
   Exps.prototype.IsMessagePropertySet = function (ret, property)
   {
     ret.set_int(this.as_message_keys.hasOwnProperty(property) ? 1 : 0);
-  }
+  };
 
   Exps.prototype.PersistentData = function (ret)
   {
@@ -578,7 +616,7 @@ cr.plugins_.AirConsole = function(runtime)
     c2Dictionary['c2dictionary'] = true;
     c2Dictionary['data'] = getProperties(this.ac_persistent_data);
     ret.set_string(JSON.stringify(c2Dictionary));
-  }
+  };
 
   Exps.prototype.HighscoresData = function (ret)
   {
@@ -586,22 +624,22 @@ cr.plugins_.AirConsole = function(runtime)
     c2Dictionary['c2dictionary'] = true;
     c2Dictionary['data'] = getProperties(this.ac_highscores_data);
     ret.set_string(JSON.stringify(c2Dictionary));
-  }
+  };
 
   Exps.prototype.GetUID = function (ret, deviceId)
   {
     ret.set_string(this.air_console.getUID(deviceId));
-  }
+  };
 
   Exps.prototype.GetNickname = function (ret, deviceId)
   {
     ret.set_string(this.air_console.getNickname(deviceId));
-  }
+  };
 
   Exps.prototype.GetProfilePicture = function (ret, deviceId)
   {
     ret.set_string(this.air_console.getProfilePicture(deviceId));
-  }
+  };
 
   function getProperties(object) {
     var data = new Object();
