@@ -76,8 +76,8 @@ function AirConsoleOffline() {
     this.ac_message_key = null;
     //
     this.ac_message_data = null;
-    this.ac_profile_picture_join = null;
-    this.ac_profile_picture = null;
+    this.ac_profile_picture_join = "";
+    this.ac_profile_picture = "";
     this.ac_uid = null;
     this.ac_max_players = null;
     this.ac_is_premium_message = null;
@@ -638,7 +638,8 @@ function AirConsoleOffline() {
 
   Exps.prototype.GetProfilePicture = function (ret, deviceId)
   {
-    ret.set_string(this.air_console.getProfilePicture(deviceId));
+    var pic = this.air_console.getProfilePicture(deviceId) || "";
+    ret.set_string(pic);
   };
 
   function getProperties(object) {
