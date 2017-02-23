@@ -9,7 +9,10 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
-## Change in version 1.4.9.2
+## Changes in version 1.4.9.4
+* GetProfilePicture, GetNickname, GetUID can return undefined and that's bad... Setting some default values
+
+## Changes in version 1.4.9.2
 * Added condition "Is plugin offline" for offline mode detection
 
 ## Changes in version 1.4.9.1

@@ -78,7 +78,7 @@ function AirConsoleOffline() {
     this.ac_message_data = null;
     this.ac_profile_picture_join = "";
     this.ac_profile_picture = "";
-    this.ac_uid = null;
+    this.ac_uid = "";
     this.ac_max_players = null;
     this.ac_is_premium_message = null;
     this.ac_is_premium_join = null;
@@ -628,17 +628,19 @@ function AirConsoleOffline() {
 
   Exps.prototype.GetUID = function (ret, deviceId)
   {
-    ret.set_string(this.air_console.getUID(deviceId));
+    var uid = this.air_console.getUID(deviceId) || "Unknown UID";
+    ret.set_string(uid);
   };
 
   Exps.prototype.GetNickname = function (ret, deviceId)
   {
-    ret.set_string(this.air_console.getNickname(deviceId));
+    var nickname = this.air_console.getNickname(deviceId) || "Unknown player";
+    ret.set_string(nickname);
   };
 
   Exps.prototype.GetProfilePicture = function (ret, deviceId)
   {
-    var pic = this.air_console.getProfilePicture(deviceId) || "";
+    var pic = this.air_console.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
     ret.set_string(pic);
   };
 
