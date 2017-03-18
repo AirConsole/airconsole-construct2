@@ -9,6 +9,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Changes in version 1.5.0
+* Updated to API 1.7.0
+
 ## Changes in version 1.4.9.4
 * GetProfilePicture, GetNickname, GetUID can return undefined and that's bad... Setting some default values
 
