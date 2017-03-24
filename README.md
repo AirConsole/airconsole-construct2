@@ -1,5 +1,5 @@
 # AirConsole Construct2
-Construct2 Plugin for AirConsole Version 1.6.0
+Construct2 Plugin for AirConsole Version 1.7.0
 
 ## Installation
 [Download the plugin only](airconsole.c2addon) and drag it in to Construct 2 or
