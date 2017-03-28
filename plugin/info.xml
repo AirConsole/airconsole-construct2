@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <c2addon>
-	<!-- One of: plugin, behavior, effect -->
 	<type>plugin</type>
-
-	<name>AirConsole</name>
-	<version>1.5.0</version>
-	<author>N-Dream AG</author>
-	<website>http://www.n-dream.com</website>
-	<documentation>http://developers.airconsole.com/#/guides/construct2</documentation>
-	<description>AirConsole enables you to use smartphones as gamepads to control your game.</description>
+	
+	<name>AirConsole2</name>	
+	<version>1.7.0.5</version>
+	<author>Psychokiller1888 for N-Dreams AG</author>
+	<website>https://www.airconsole.com/</website>
+	<documentation>https://github.com/AirConsole/airconsole-construct2-v2/wiki</documentation>
+	<description>Extend your game with local multiplayer fun</description>
 </c2addon>
