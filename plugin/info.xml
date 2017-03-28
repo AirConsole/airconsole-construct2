@@ -6,6 +6,6 @@
 	<version>1.7.0.5</version>
 	<author>Psychokiller1888 for N-Dreams AG</author>
 	<website>https://www.airconsole.com/</website>
-	<documentation>https://github.com/AirConsole/airconsole-construct2-v2/wiki</documentation>
+	<documentation>https://github.com/AirConsole/airconsole-construct2/wiki</documentation>
 	<description>Extend your game with local multiplayer fun</description>
 </c2addon>

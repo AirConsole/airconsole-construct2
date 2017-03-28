@@ -6,7 +6,7 @@
 		"version":		"1.7.0.5",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
-		"help url":		"https://github.com/AirConsole/airconsole-construct2-v2/wiki",
+		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
 		"dependency": 	"https://www.airconsole.com/api/airconsole-1.7.0.js",
 		"category":		"Web",					// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
