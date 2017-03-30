@@ -3,7 +3,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.5",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.6",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -199,9 +199,9 @@ AddExpression(7, ef_return_string, "Profile", "Profile", "GetNickname", "Returns
 AddNumberParam("Device id", "Device id");
 AddExpression(8, ef_return_string, "Profile", "Profile", "GetUID", "Returns UID of the specified device id");
 
-AddExpression(9, ef_return_number, "Ids", "Ids", "GetMessagePropertiesCount", "Returns how many properties the last received message contains");
+AddExpression(9, ef_return_number, "Data", "Data", "GetMessagePropertiesCount", "Returns how many properties the last received message contains");
 
-AddExpression(10, ef_return_number, "Ids", "Ids", "GetMasterControllerDeviceID", "Returns the device id of the master controller");
+AddExpression(10, ef_return_number, "Ids", "Ids", "GetMasterControllerDeviceId", "Returns the device id of the master controller");
 
 AddNumberParam("Player number", "Player number");
 AddExpression(11, ef_return_number, "Ids", "Ids", "ConvertPlayerNumberToDeviceId", "Converts the specified player number into its attributed device id");
@@ -209,10 +209,10 @@ AddExpression(11, ef_return_number, "Ids", "Ids", "ConvertPlayerNumberToDeviceId
 AddNumberParam("Device id", "Device id");
 AddExpression(12, ef_return_number, "Ids", "Ids", "ConvertDeviceIdToPlayerNumber", "Converts the specified device id into its attributed player number");
 
-AddExpression(13, ef_return_string, "Ids", "Ids", "GetControllerDeviceIDs", "Returns a JSON converted C2Array of all the device ids that have loaded your game");
+AddExpression(13, ef_return_string, "Ids", "Ids", "GetControllerDeviceIds", "Returns a JSON converted C2Array of all the device ids that have loaded your game");
 
 AddNumberParam("Device id", "Device id");
-AddExpression(14, ef_return_number, "Ids", "Ids", "IsPremium", "Returns 1 if the specified device id is premium, else 0");
+AddExpression(14, ef_return_number, "Profile", "Profile", "IsPremium", "Returns 1 if the specified device id is premium, else 0");
 
 AddExpression(15, ef_return_number, "Persistent data", "Persistent data", "GetPersistentData", "Returns a JSON converted C2Dictionary of the last loaded persistent data");
 

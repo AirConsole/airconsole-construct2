@@ -8,6 +8,8 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.6
+* Fixed illogic expressions order and naming
 
 ## Version 1.7.0.5
 * Updated documentation links and website links

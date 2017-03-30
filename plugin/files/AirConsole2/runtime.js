@@ -438,7 +438,7 @@ function AirConsoleOffline() {
 		}
 	};
 
-	Exps.prototype.MasterControllerDeviceID = function (ret) {
+	Exps.prototype.MasterControllerDeviceId = function (ret) {
 		var id = this.airConsole.getMasterControllerDeviceId();
 		ret.set_int((typeof id !== 'number' || isNaN(id)) ? -1 : id);
 	};
@@ -457,7 +457,7 @@ function AirConsoleOffline() {
 		ret.set_int((this.airConsole.isPremium(deviceId) !== false) ? 1 : 0);
 	};
 
-	Exps.prototype.GetControllerDeviceIDs = function (ret) {
+	Exps.prototype.GetControllerDeviceIds = function (ret) {
 		var arr = this.airConsole.getControllerDeviceIds();
 
 		var c2array = new Object();
