@@ -8,6 +8,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.7
+* Fixed GetMasterControllerDeviceId
+
 ## Version 1.7.0.6
 * Fixed illogic expressions order and naming
 
