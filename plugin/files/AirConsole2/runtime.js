@@ -438,7 +438,7 @@ function AirConsoleOffline() {
 		}
 	};
 
-	Exps.prototype.MasterControllerDeviceId = function (ret) {
+	Exps.prototype.GetMasterControllerDeviceId = function (ret) {
 		var id = this.airConsole.getMasterControllerDeviceId();
 		ret.set_int((typeof id !== 'number' || isNaN(id)) ? -1 : id);
 	};
