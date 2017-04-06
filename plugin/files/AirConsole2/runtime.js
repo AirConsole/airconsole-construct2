@@ -170,7 +170,7 @@ function AirConsoleOffline() {
 
 		this.airConsole.onDeviceProfileChange = function (deviceId) {
 			self.deviceId = deviceId;
-			self.runtime,trigger(pluginProto.cnds.OnDeviceProfileChange, self);
+			self.runtime.trigger(pluginProto.cnds.OnDeviceProfileChange, self);
 		};
 	};
 

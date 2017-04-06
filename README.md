@@ -8,6 +8,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.8
+* Fixed onDeviceProfileChange (trigger not defined)
+
 ## Version 1.7.0.7
 * Fixed GetMasterControllerDeviceId
 
