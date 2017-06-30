@@ -226,6 +226,7 @@ AddNumberParam("DeviceId", "Device Id");
 AddNumberParam("Size", "size of pic");
 AddExpression(19, ef_return_string, "Profile", "Profile", "GetProfilePictureBySize", "The picture of a device, by device ID and size");
 
+AddExpression(20, ef_return_number, "Data", "Data", "AdShown", "1 if ad was shown, 0 otherwise...only after onAdCOmplete");
 
 ////////////////////////////////////////
 ACESDone();

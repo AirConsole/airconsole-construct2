@@ -477,6 +477,13 @@ function AirConsoleOffline() {
 		ret.set_string(JSON.stringify(c2array));
 	};
 
+    Exps.prototype.AdShown = function (ret)
+    {
+        var adShownInt = this.adCompleted;
+        ret.set_int((typeof adShownInt !== 'number' || isNaN(adShownInt)) ? -1 : adShownInt);
+    };
+  
+  
 	Exps.prototype.GetPersistentData = function (ret) {
 		if (this.persistentData != null) {
 			var c2Dictionary = new Object();
