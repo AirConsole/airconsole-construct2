@@ -418,6 +418,11 @@ function AirConsoleOffline() {
 		var pic = this.airConsole.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
+        
+	Exps.prototype.GetProfilePictureBySize = function(ret, deviceId, sizeOfPic) {
+		var pic = this.airConsole.getProfilePicture(deviceId, sizeOfPic) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
+		ret.set_string(pic);
+	};
 
 	Exps.prototype.GetNickname = function(ret, deviceId) {
 		var nickname = this.airConsole.getNickname(deviceId) || "Nickname not found";
