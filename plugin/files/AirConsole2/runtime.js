@@ -418,6 +418,11 @@ function AirConsoleOffline() {
 		var pic = this.airConsole.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
+        
+	Exps.prototype.GetProfilePictureBySize = function(ret, deviceId, sizeOfPic) {
+		var pic = this.airConsole.getProfilePicture(deviceId, sizeOfPic) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
+		ret.set_string(pic);
+	};
 
 	Exps.prototype.GetNickname = function(ret, deviceId) {
 		var nickname = this.airConsole.getNickname(deviceId) || "Nickname not found";
@@ -472,6 +477,13 @@ function AirConsoleOffline() {
 		ret.set_string(JSON.stringify(c2array));
 	};
 
+    Exps.prototype.AdShown = function (ret)
+    {
+        var adShownInt = this.adCompleted;
+        ret.set_int((typeof adShownInt !== 'number' || isNaN(adShownInt)) ? -1 : adShownInt);
+    };
+  
+  
 	Exps.prototype.GetPersistentData = function (ret) {
 		if (this.persistentData != null) {
 			var c2Dictionary = new Object();
