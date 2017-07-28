@@ -3,7 +3,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.8",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.9",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -214,9 +214,9 @@ AddExpression(13, ef_return_string, "Ids", "Ids", "GetControllerDeviceIds", "Ret
 AddNumberParam("Device id", "Device id");
 AddExpression(14, ef_return_number, "Profile", "Profile", "IsPremium", "Returns 1 if the specified device id is premium, else 0");
 
-AddExpression(15, ef_return_number, "Persistent data", "Persistent data", "GetPersistentData", "Returns a JSON converted C2Dictionary of the last loaded persistent data");
+AddExpression(15, ef_return_string, "Persistent data", "Persistent data", "GetPersistentData", "Returns a JSON converted C2Dictionary of the last loaded persistent data");
 
-AddExpression(16, ef_return_number, "Highscores", "Highscores", "GetHighscores", "Returns a JSON converted C2Dictionary of the last loaded highscores");
+AddExpression(16, ef_return_string, "Highscores", "Highscores", "GetHighscores", "Returns a JSON converted C2Dictionary of the last loaded highscores");
 
 AddExpression(17, ef_return_number, "Plugin", "Plugin", "IsPluginOffline", "Returns 1 if the plugin loaded as offline, else 0");
 
