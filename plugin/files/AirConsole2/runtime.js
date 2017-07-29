@@ -33,7 +33,7 @@ function AirConsoleOffline() {
 	AirConsoleOffline.prototype.getActivePlayerDeviceIds = function() {return []};
 	AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {};
 	AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {};
-};
+}
 
 (function ()
 {
@@ -124,7 +124,7 @@ function AirConsoleOffline() {
 		this.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
 			self.deviceId = deviceId;
 			self.customData = customData;
-			self.runtime,trigger(pluginProto.cnds.OnCustomDeviceStateChange, self);
+			self.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, self);
 		};
 
 		this.airConsole.onHighscores = function (highscores) {
@@ -186,7 +186,7 @@ function AirConsoleOffline() {
 
 	//////////////////////////////////////
 	// Conditions
-	function Cnds() {};
+	function Cnds() {}
 
 	Cnds.prototype.OnConnect = function () {
 		return true;
@@ -284,7 +284,7 @@ function AirConsoleOffline() {
 
 	//////////////////////////////////////
 	// Actions
-	function Acts() {};
+	function Acts() {}
 
 	Acts.prototype.GameReady = function () {
 		this.gameReady = true;
@@ -311,7 +311,7 @@ function AirConsoleOffline() {
 	Acts.prototype.RequestHighScores = function (level_name, level_version, uids, ranks, total, top) {
 		this.highscores = null;
 		var uidsArray;
-		if (uids == 'all') {
+		if (uids === 'all') {
 			uidsArray = '';
 		}
 		else if (uids.indexOf(',') > -1) {
@@ -359,7 +359,7 @@ function AirConsoleOffline() {
 
 	//////////////////////////////////////
 	// Expressions
-	function Exps() {};
+	function Exps() {}
 	//ret.set_int(1337);			// return our value
 	// ret.set_float(0.5);			// for returning floats
 	// ret.set_string("Hello");		// for ef_return_string
@@ -390,7 +390,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.IsMultipartMessage = function(ret) {
-		if (this.message != null && typeof this.message === 'object' && Object.keys(this.message).length > 1) {
+		if (this.message !== null && typeof this.message === 'object' && Object.keys(this.message).length > 1) {
 			ret.set_int(1);
 		}
 		else {
@@ -399,7 +399,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.MessageHasProperty = function(ret, property) {
-		if (this.message != null && typeof this.message === 'object' && this.message.hasOwnProperty(property)) {
+		if (this.message !== null && typeof this.message === 'object' && this.message.hasOwnProperty(property)) {
 			ret.set_int(1);
 		}
 		else {
@@ -430,7 +430,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.GetMessagePropertiesCount = function (ret) {
-		if (this.message != null && typeof this.message === 'object') {
+		if (this.message !== null && typeof this.message === 'object') {
 			ret.set_int(Object.keys(this.message).length);
 		}
 		else {
@@ -450,7 +450,7 @@ function AirConsoleOffline() {
 
 	Exps.prototype.ConvertDeviceIdToPlayerNumber = function (ret, deviceId) {
 		var playerNumber = this.airConsole.convertDeviceIdToPlayerNumber(deviceId);
-		ret.set_int((typeof id !== 'number') ? -1 : playerNumber);
+		ret.set_int((typeof playerNumber !== 'number') ? -1 : playerNumber);
 	};
 
 	Exps.prototype.IsPremium = function (ret, deviceId) {
@@ -473,7 +473,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.GetPersistentData = function (ret) {
-		if (this.persistentData != null) {
+		if (this.persistentData !== null) {
 			var c2Dictionary = new Object();
 			c2Dictionary['c2dictionary'] = true;
 			c2Dictionary['data'] = getProperties(this.persistentData);
@@ -486,7 +486,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.GetHighscores = function (ret) {
-		if (this.highscores != null) {
+		if (this.highscores !== null) {
 			var c2Dictionary = new Object();
 			c2Dictionary['c2dictionary'] = true;
 			c2Dictionary['data'] = getProperties(this.highscores);
@@ -541,6 +541,6 @@ function AirConsoleOffline() {
 			}
 		});
 		return data;
-	};
+	}
 
 }());

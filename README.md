@@ -7,6 +7,13 @@ Construct2 plugin second generation for AirConsole version 1.7.0
 More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
+
+## Version 1.7.0.10
+* Fixed OnCustomDeviceStateChange trigger
+* Fixed ConvertDeviceIdToPlayerNumber expression
+* Comparison fix
+* Cleanup
+
 ## Version 1.7.0.9
 * Fixed GetPersistentData and GetHighscores expressions wrong return type
 
