@@ -1,3 +1,5 @@
+⚠️ We also have a [Construct3 plugin](https://github.com/AirConsole/airconsole-construct3/)
+
 # AirConsole Construct2
 Construct2 plugin second generation for AirConsole version 1.7.0
 
