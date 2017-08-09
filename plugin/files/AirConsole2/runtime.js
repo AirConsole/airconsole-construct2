@@ -63,6 +63,7 @@ function AirConsoleOffline() {
 		this.deviceId;
 		this.message;
 		this.adCompleted = 0;
+		this.adShowing = 0;
 		this.persistentData = null;
 		this.highscores = null;
 		this.emailAddress = null;
@@ -143,10 +144,12 @@ function AirConsoleOffline() {
 
 		this.airConsole.onAdComplete = function (adWasShown) {
 			self.adCompleted = (adWasShown) ? 1 : 0;
+			self.adShowing = 0;
 			self.runtime.trigger(pluginProto.cnds.OnAdComplete, self);
 		};
 
 		this.airConsole.onAdShow = function () {
+			self.adShowing = 1;
 			self.runtime.trigger(pluginProto.cnds.OnAdShow, self);
 		};
 
@@ -278,6 +281,14 @@ function AirConsoleOffline() {
 
 	Cnds.prototype.IsMultipartMessage = function () {
 		return Object.keys(this.message).length > 1;
+	};
+	
+	Cnds.prototype.AdShown = function () {
+		return this.adCompleted === 1;
+	};
+
+	Cnds.prototype.IsAdShowing = function () {
+		return this.adShowing === 1;
 	};
 
 	pluginProto.cnds = new Cnds();
@@ -418,6 +429,11 @@ function AirConsoleOffline() {
 		var pic = this.airConsole.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
+	
+	Exps.prototype.GetProfilePictureWithSize = function(ret, deviceId, pictureSize) {
+		var pic = this.airConsole.getProfilePicture(deviceId, pictureSize) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
+		ret.set_string(pic);
+	};
 
 	Exps.prototype.GetNickname = function(ret, deviceId) {
 		var nickname = this.airConsole.getNickname(deviceId) || "Nickname not found";
@@ -520,6 +536,14 @@ function AirConsoleOffline() {
 		c2array['data'] = data;
 
 		ret.set_string(JSON.stringify(c2array));
+	};
+	
+	Exps.prototype.IsAddShowing = function (ret) {
+		ret.set_int(this.adShowing);
+	};
+
+	Exps.prototype.AdShown = function (ret) {
+		ret.set_int(this.adCompleted);
 	};
 
 	pluginProto.exps = new Exps();

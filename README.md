@@ -10,6 +10,15 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.11
+* Added expression airconsole.AdShown()
+* Added expression airconsole.IsAdShowing()
+* Added expression airconsole.GetProfilePictureWithSize(deviceId, picturesize)
+* Deprecated expression airconsole.GetProfilePicture()
+* Added condition AdShown()
+* Added condition IsAdShowing()
+* Fixed N-Dream naming in plugin infos....
+
 ## Version 1.7.0.10
 * Fixed OnCustomDeviceStateChange trigger
 * Fixed ConvertDeviceIdToPlayerNumber expression

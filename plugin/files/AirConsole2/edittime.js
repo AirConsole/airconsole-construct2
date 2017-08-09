@@ -3,7 +3,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.10",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.11",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -102,6 +102,10 @@ AddCondition(20, 0, "Is plugin offline", "Plugin", "Is plugin offline", "True if
 
 AddCondition(21, 0, "Is multipart message", "Messaging", "Is multipart message", "True if the last received message has more than one property set, false otherwise", "IsMultipartMessage");
 
+AddCondition(22, 0, "Ad shown", "Ads", "Ad shown", "True if an ad was shown.", "AdShown");
+
+AddCondition(23, 0, "Is ad showing", "Ads", "Is ad showing", "True if an ad is currently showing.", "IsAdShowing");
+
 ////////////////////////////////////////
 // Actions
 
@@ -191,7 +195,7 @@ AddExpression(4, ef_return_number, "Data", "Data", "MessageHasProperty", "Return
 AddExpression(5, ef_return_string, "Data", "Data", "MessageAsJSON", "Returns a JSON string representation of the last message received");
 
 AddNumberParam("Device id", "Device id");
-AddExpression(6, ef_return_string, "Profile", "Profile", "GetProfilePicture", "Returns the profile picture url of the specified device id");
+AddExpression(6, ef_deprecated, "Profile", "Profile", "GetProfilePicture", "Returns the profile picture url of the specified device id");
 
 AddNumberParam("Device id", "Device id");
 AddExpression(7, ef_return_string, "Profile", "Profile", "GetNickname", "Returns the nickname of the specified device id");
@@ -221,6 +225,14 @@ AddExpression(16, ef_return_string, "Highscores", "Highscores", "GetHighscores",
 AddExpression(17, ef_return_number, "Plugin", "Plugin", "IsPluginOffline", "Returns 1 if the plugin loaded as offline, else 0");
 
 AddExpression(18, ef_return_string, "Ids", "Ids", "GetActivePlayerDeviceIds", "Returns an array of device_ids of the active players previously set by the screen by calling setActivePlayers. The first device_id in the array is the first player, the second device_id in the array is the second player etc.");
+
+AddNumberParam("Device id", "Device id");
+AddNumberParam("Picture size", "Picture size", "64");
+AddExpression(19, ef_return_string, "Profile", "Profile", "GetProfilePictureWithSize", "Returns the profile picture url of the specified device id");
+
+AddExpression(20, ef_return_number, "Ads", "Ads", "AdShown", "Returns 1 if ads were shown, else 0");
+
+AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if ads are currently showing, else 0.");
 
 ////////////////////////////////////////
 ACESDone();
