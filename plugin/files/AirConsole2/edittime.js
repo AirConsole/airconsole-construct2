@@ -195,7 +195,7 @@ AddExpression(4, ef_return_number, "Data", "Data", "MessageHasProperty", "Return
 AddExpression(5, ef_return_string, "Data", "Data", "MessageAsJSON", "Returns a JSON string representation of the last message received");
 
 AddNumberParam("Device id", "Device id");
-AddExpression(6, ef_deprecated, "Profile", "Profile", "GetProfilePicture", "Returns the profile picture url of the specified device id");
+AddExpression(6, ef_return_string | ef_deprecated, "Profile", "Profile", "GetProfilePicture", "Returns the profile picture url of the specified device id");
 
 AddNumberParam("Device id", "Device id");
 AddExpression(7, ef_return_string, "Profile", "Profile", "GetNickname", "Returns the nickname of the specified device id");
