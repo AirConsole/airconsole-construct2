@@ -10,6 +10,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.12
+* Fixed wrong usage of "deprecated", thanks Mad_Spy and Toby R for bringing this up
+
 ## Version 1.7.0.11
 * Added expression airconsole.AdShown()
 * Added expression airconsole.IsAdShowing()
