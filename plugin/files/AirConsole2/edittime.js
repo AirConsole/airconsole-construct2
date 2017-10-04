@@ -3,7 +3,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.12",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.13",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -167,6 +167,18 @@ AddStringParam("Property", "Persistent data property name.", '""');
 AddStringParam("Value", "Persistent data property value.", '""');
 AddStringParam("uid", "The uid for which the data should be stored.", '""');
 AddAction(11, af_none, "Store persistent data", "Persistent data", "Store persistent data {0} = {1} for uid {2}", "Stores a property-value pair persistently on the AirConsole servers. Storage is per game. Total storage can not exceed 1 MB per game and uid. Storage is public, not secure and anyone can request and tamper with it. Do not store sensitive data.", "StorePersistentData");
+
+AddNumberParam("Device id", "Device id to send the message to.");
+AddAction(12, af_none, "Send preset message", "Preset message", "Send preset message to device id {0}.", "Sends a previously set message to a specific device", "SendPresetMessage");
+
+AddAction(13, af_none, "Broadcast preset message", "Preset message", "Send preset message to all connected devices.", "Sends a previously set message to all connected devices", "BroadcastPresetMessage");
+
+AddStringParam("Property", "The message property.");
+AddAnyTypeParam("Value", "The property value.");
+AddAction(14, af_none, "Set message property", "Preset message", "Set <i>{0}</i> property to <i>{1}</i>", "Set message property", "SetPresetMessage");
+
+AddAction(15, af_none, "Clear preset message", "Preset message", "Clear the preset message.", "Clear the preset message", "ClearPresetMessage");
+
 
 ////////////////////////////////////////
 // Expressions

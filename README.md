@@ -10,6 +10,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.13
+* Added preset message support, on an idea by Toby R
+
 ## Version 1.7.0.12
 * Fixed wrong usage of "deprecated", thanks Mad_Spy and Toby R for bringing this up
 

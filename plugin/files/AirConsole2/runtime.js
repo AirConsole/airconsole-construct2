@@ -68,6 +68,7 @@ function AirConsoleOffline() {
 		this.highscores = null;
 		this.emailAddress = null;
 		this.customData = null;
+		this.presetMessage = {};
 	};
 
 	var instanceProto = pluginProto.Instance.prototype;
@@ -364,6 +365,26 @@ function AirConsoleOffline() {
 
 	Acts.prototype.StorePersistentData = function (key, value, uid) {
 		this.airConsole.storePersistentData(key, value, uid);
+	};
+
+	Acts.prototype.SendPresetMessage = function(deviceId) {
+		if (this.runningOffline) return;
+
+		this.airConsole.message(deviceId, this.presetMessage);
+		this.presetMessage = {};
+	};
+
+	Acts.prototype.BroadcastPresetMessage = function () {
+		this.airConsole.broadcast(this.presetMessage);
+		this.presetMessage = {};
+	};
+
+	Acts.prototype.SetPresetMessage = function(key, value) {
+		this.presetMessage[key] = value;
+	};
+
+	Acts.prototype.ClearPresetMessage = function() {
+		this.presetMessage = {};
 	};
 
 	pluginProto.acts = new Acts();
