@@ -11,7 +11,7 @@ cr.plugins_.AirConsole2 = function(runtime) {
 };
 
 function AirConsoleOffline() {
-	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock.');
+	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock-up.');
 	AirConsoleOffline.prototype.getNickname = function() {return 'undefined when offline'};
 	AirConsoleOffline.prototype.getProfilePicture = function() {return 'undefined when offline'};
 	AirConsoleOffline.prototype.getUID = function() {return -9999};
@@ -79,7 +79,23 @@ function AirConsoleOffline() {
 		var self = this;
 		if (typeof AirConsole !== 'undefined') {
 			this.runningOffline = false;
-			this.airConsole = new AirConsole();
+			if (self.properties[1] === 1) {
+				var config = {orientation: 'AirConsole.ORIENTATION_LANDSCAPE', synchronize_time: false, setup_document: true, device_motion: false};
+				if (self.properties[2] === 1) {
+					config.orientation = 'AirConsole.ORIENTATION_PORTRAIT';
+				}
+				if (self.properties[3] === 0) {
+					config.synchronize_time = true;
+				}
+				if (self.properties[4] > 0) {
+					config.device_motion = self.properties[4];
+				}
+
+				this.airConsole = new AirConsole(config);
+			}
+			else {
+				this.airConsole = new AirConsole();
+			}
 		}
 		else {
 			this.runningOffline = true;
