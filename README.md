@@ -1,3 +1,5 @@
+⚠️ We also have a [Construct3 plugin](https://github.com/AirConsole/airconsole-construct3/)
+
 # AirConsole Construct2
 Construct2 plugin second generation for AirConsole version 1.7.0
 
@@ -7,6 +9,34 @@ Construct2 plugin second generation for AirConsole version 1.7.0
 More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
+
+## Version 1.7.0.14
+* Added controller mode support
+* Brought API mock-up from C3 to C2 plugin
+
+## Version 1.7.0.13
+* Added preset message support, on an idea by Toby R
+
+## Version 1.7.0.12
+* Fixed wrong usage of "deprecated", thanks Mad_Spy and Toby R for bringing this up
+
+## Version 1.7.0.11
+* Added expression airconsole.AdShown()
+* Added expression airconsole.IsAdShowing()
+* Added expression airconsole.GetProfilePictureWithSize(deviceId, picturesize)
+* Deprecated expression airconsole.GetProfilePicture()
+* Added condition AdShown()
+* Added condition IsAdShowing()
+* Fixed N-Dream naming in plugin infos....
+
+## Version 1.7.0.10
+* Fixed OnCustomDeviceStateChange trigger
+* Fixed ConvertDeviceIdToPlayerNumber expression
+* Comparison fix
+* Cleanup
+
+## Version 1.7.0.9
+* Fixed GetPersistentData and GetHighscores expressions wrong return type
 
 ## Version 1.7.0.8
 * Fixed onDeviceProfileChange (trigger not defined)

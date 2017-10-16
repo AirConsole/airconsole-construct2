@@ -1,9 +1,8 @@
-﻿function GetPluginSettings()
-{
+﻿function GetPluginSettings() {
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.9",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.14",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -26,7 +25,7 @@
 					//  | pf_predraw			// set for any plugin which draws and is not a sprite (i.e. does not simply draw
 												// a single non-tiling image the size of the object) - required for effects to work properly
 	};
-};
+}
 
 ////////////////////////////////////////
 // Parameter types:
@@ -102,6 +101,10 @@ AddCondition(20, 0, "Is plugin offline", "Plugin", "Is plugin offline", "True if
 
 AddCondition(21, 0, "Is multipart message", "Messaging", "Is multipart message", "True if the last received message has more than one property set, false otherwise", "IsMultipartMessage");
 
+AddCondition(22, 0, "Ad shown", "Ads", "Ad shown", "True if an ad was shown.", "AdShown");
+
+AddCondition(23, 0, "Is ad showing", "Ads", "Is ad showing", "True if an ad is currently showing.", "IsAdShowing");
+
 ////////////////////////////////////////
 // Actions
 
@@ -164,6 +167,18 @@ AddStringParam("Value", "Persistent data property value.", '""');
 AddStringParam("uid", "The uid for which the data should be stored.", '""');
 AddAction(11, af_none, "Store persistent data", "Persistent data", "Store persistent data {0} = {1} for uid {2}", "Stores a property-value pair persistently on the AirConsole servers. Storage is per game. Total storage can not exceed 1 MB per game and uid. Storage is public, not secure and anyone can request and tamper with it. Do not store sensitive data.", "StorePersistentData");
 
+AddNumberParam("Device id", "Device id to send the message to.");
+AddAction(12, af_none, "Send preset message", "Preset message", "Send preset message to device id {0}.", "Sends a previously set message to a specific device", "SendPresetMessage");
+
+AddAction(13, af_none, "Broadcast preset message", "Preset message", "Send preset message to all connected devices.", "Sends a previously set message to all connected devices", "BroadcastPresetMessage");
+
+AddStringParam("Property", "The message property.");
+AddAnyTypeParam("Value", "The property value.");
+AddAction(14, af_none, "Set message property", "Preset message", "Set <i>{0}</i> property to <i>{1}</i>", "Set message property", "SetPresetMessage");
+
+AddAction(15, af_none, "Clear preset message", "Preset message", "Clear the preset message.", "Clear the preset message", "ClearPresetMessage");
+
+
 ////////////////////////////////////////
 // Expressions
 
@@ -191,7 +206,7 @@ AddExpression(4, ef_return_number, "Data", "Data", "MessageHasProperty", "Return
 AddExpression(5, ef_return_string, "Data", "Data", "MessageAsJSON", "Returns a JSON string representation of the last message received");
 
 AddNumberParam("Device id", "Device id");
-AddExpression(6, ef_return_string, "Profile", "Profile", "GetProfilePicture", "Returns the profile picture url of the specified device id");
+AddExpression(6, ef_return_string | ef_deprecated, "Profile", "Profile", "GetProfilePicture", "Returns the profile picture url of the specified device id");
 
 AddNumberParam("Device id", "Device id");
 AddExpression(7, ef_return_string, "Profile", "Profile", "GetNickname", "Returns the nickname of the specified device id");
@@ -214,19 +229,21 @@ AddExpression(13, ef_return_string, "Ids", "Ids", "GetControllerDeviceIds", "Ret
 AddNumberParam("Device id", "Device id");
 AddExpression(14, ef_return_number, "Profile", "Profile", "IsPremium", "Returns 1 if the specified device id is premium, else 0");
 
-AddExpression(15, ef_return_number, "Persistent data", "Persistent data", "GetPersistentData", "Returns a JSON converted C2Dictionary of the last loaded persistent data");
+AddExpression(15, ef_return_string, "Persistent data", "Persistent data", "GetPersistentData", "Returns a JSON converted C2Dictionary of the last loaded persistent data");
 
-AddExpression(16, ef_return_number, "Highscores", "Highscores", "GetHighscores", "Returns a JSON converted C2Dictionary of the last loaded highscores");
+AddExpression(16, ef_return_string, "Highscores", "Highscores", "GetHighscores", "Returns a JSON converted C2Dictionary of the last loaded highscores");
 
 AddExpression(17, ef_return_number, "Plugin", "Plugin", "IsPluginOffline", "Returns 1 if the plugin loaded as offline, else 0");
 
 AddExpression(18, ef_return_string, "Ids", "Ids", "GetActivePlayerDeviceIds", "Returns an array of device_ids of the active players previously set by the screen by calling setActivePlayers. The first device_id in the array is the first player, the second device_id in the array is the second player etc.");
 
-AddNumberParam("DeviceId", "Device Id");
-AddNumberParam("Size", "size of pic");
-AddExpression(19, ef_return_string, "Profile", "Profile", "GetProfilePictureBySize", "The picture of a device, by device ID and size");
+AddNumberParam("Device id", "Device id");
+AddNumberParam("Picture size", "Picture size", "64");
+AddExpression(19, ef_return_string, "Profile", "Profile", "GetProfilePictureWithSize", "Returns the profile picture url of the specified device id");
 
-AddExpression(20, ef_return_number, "Data", "Data", "AdShown", "1 if ad was shown, 0 otherwise...only after onAdCOmplete");
+AddExpression(20, ef_return_number, "Ads", "Ads", "AdShown", "Returns 1 if ads were shown, else 0");
+
+AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if ads are currently showing, else 0.");
 
 ////////////////////////////////////////
 ACESDone();
@@ -242,30 +259,31 @@ ACESDone();
 // new cr.Property(ept_link,		name,	link_text,		description, "firstonly")		// has no associated value; simply calls "OnPropertyChanged" on click
 
 var property_list = [
-	new cr.Property(ept_integer,  "Max players", 4, "Define the maximum amount of players")
+	new cr.Property(ept_integer, "Max players", 4, "Define the maximum amount of players"),
+	new cr.Property(ept_combo, "Type", "Screen", "Is this project intended to be a controller?", "Screen|Controller"),
+	new cr.Property(ept_section, "Controller only", "These properties only take effect if 'Is controller' is checked"),
+	new cr.Property(ept_combo, "Orientation", "Landscape", "CONTROLLER ONLY - Sets this controller in either PORTRAIT or LANDSCAPE mode", "Landscape|Portrait"),
+	new cr.Property(ept_combo, "Synchronize time", "false", "CONTROLLER ONLY - Enable time synchronization with server. This is needed for 'getServerTime()'", "false|true"),
+	new cr.Property(ept_integer, "Device motion", 0, "CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every 'Device motion' milliseconds with the data from the accelerometer and gyroscope")
 ];
 	
 // Called by IDE when a new object type is to be created
-function CreateIDEObjectType()
-{
+function CreateIDEObjectType() {
 	return new IDEObjectType();
 }
 
 // Class representing an object type in the IDE
-function IDEObjectType()
-{
+function IDEObjectType() {
 	assert2(this instanceof arguments.callee, "Constructor called as a function");
 }
 
 // Called by IDE when a new object instance of this type is to be created
-IDEObjectType.prototype.CreateInstance = function(instance)
-{
+IDEObjectType.prototype.CreateInstance = function(instance) {
 	return new IDEInstance(instance);
-}
+};
 
 // Class representing an individual instance of an object in the IDE
-function IDEInstance(instance, type)
-{
+function IDEInstance(instance, type) {
 	assert2(this instanceof arguments.callee, "Constructor called as a function");
 	
 	// Save the constructor parameters
@@ -283,31 +301,19 @@ function IDEInstance(instance, type)
 }
 
 // Called when inserted via Insert Object Dialog for the first time
-IDEInstance.prototype.OnInserted = function()
-{
-}
+IDEInstance.prototype.OnInserted = function() {};
 
 // Called when double clicked in layout
-IDEInstance.prototype.OnDoubleClicked = function()
-{
-}
+IDEInstance.prototype.OnDoubleClicked = function() {};
 
 // Called after a property has been changed in the properties bar
-IDEInstance.prototype.OnPropertyChanged = function(property_name)
-{
-}
+IDEInstance.prototype.OnPropertyChanged = function(property_name) {};
 
 // For rendered objects to load fonts or textures
-IDEInstance.prototype.OnRendererInit = function(renderer)
-{
-}
+IDEInstance.prototype.OnRendererInit = function(renderer) {};
 
 // Called to draw self in the editor if a layout object
-IDEInstance.prototype.Draw = function(renderer)
-{
-}
+IDEInstance.prototype.Draw = function(renderer) {};
 
 // For rendered objects to release fonts or textures
-IDEInstance.prototype.OnRendererReleased = function(renderer)
-{
-}
+IDEInstance.prototype.OnRendererReleased = function(renderer) {};

@@ -11,29 +11,56 @@ cr.plugins_.AirConsole2 = function(runtime) {
 };
 
 function AirConsoleOffline() {
-	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock.');
-	AirConsoleOffline.prototype.getNickname = function() {return 'undefined when offline'};
-	AirConsoleOffline.prototype.getProfilePicture = function() {return 'undefined when offline'};
-	AirConsoleOffline.prototype.getUID = function() {return -9999};
-	AirConsoleOffline.prototype.isPremium = function() {return false};
-	AirConsoleOffline.prototype.getControllerDeviceIds = function() {return []};
-	AirConsoleOffline.prototype.getCustomDeviceState = function() {return null};
-	AirConsoleOffline.prototype.isUserLoggedIn = function() {return false};
-	AirConsoleOffline.prototype.message = function() {};
-	AirConsoleOffline.prototype.broadcast = function() {};
-	AirConsoleOffline.prototype.requestHighScores = function() {};
-	AirConsoleOffline.prototype.storeHighScore = function() {};
-	AirConsoleOffline.prototype.setActivePlayers = function() {};
-	AirConsoleOffline.prototype.showAd = function() {};
-	AirConsoleOffline.prototype.navigateHome = function() {};
-	AirConsoleOffline.prototype.navigateTo = function() {};
-	AirConsoleOffline.prototype.requestPersistentData = function() {};
-	AirConsoleOffline.prototype.storePersistentData = function() {};
-	AirConsoleOffline.prototype.getMasterControllerDeviceId = function() {return -9999};
-	AirConsoleOffline.prototype.getActivePlayerDeviceIds = function() {return []};
-	AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {};
-	AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {};
-};
+	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock-up.');
+	AirConsoleOffline.prototype.getNickname = function() {
+		console.log('AirConsole mock-up: Getting nickname');
+		return 'undefined when offline';
+	};
+	AirConsoleOffline.prototype.getProfilePicture = function() {
+		console.log('AirConsole mock-up: Getting profile picture');
+		return 'undefined when offline';
+	};
+	AirConsoleOffline.prototype.getUID = function() {
+		console.log('AirConsole mock-up: Getting UID');
+		return -9999;
+	};
+	AirConsoleOffline.prototype.isPremium = function() {
+		console.log('AirConsole mock-up: Checking if premium');
+		return false;
+	};
+	AirConsoleOffline.prototype.getControllerDeviceIds = function() {
+		console.log('AirConsole mock-up: Getting controller device ids');
+		return [];
+	};
+	AirConsoleOffline.prototype.getCustomDeviceState = function() {
+		console.log('AirConsole mock-up: Getting custom device state');
+		return null;
+	};
+	AirConsoleOffline.prototype.isUserLoggedIn = function() {
+		console.log('AirConsole mock-up: Checking if user is logged in');
+		return false;
+	};
+	AirConsoleOffline.prototype.message = function() {console.log('AirConsole mock-up: Sending a message')};
+	AirConsoleOffline.prototype.broadcast = function() {console.log('AirConsole mock-up: Broadcasting a message')};
+	AirConsoleOffline.prototype.requestHighScores = function() {console.log('AirConsole mock-up: Requesting highscores')};
+	AirConsoleOffline.prototype.storeHighScore = function() {console.log('AirConsole mock-up: Storing highscores')};
+	AirConsoleOffline.prototype.setActivePlayers = function() {console.log('AirConsole mock-up: Setting active players')};
+	AirConsoleOffline.prototype.showAd = function() {console.log('AirConsole mock-up: Showing ad')};
+	AirConsoleOffline.prototype.navigateHome = function() {console.log('AirConsole mock-up: Navigating home')};
+	AirConsoleOffline.prototype.navigateTo = function() {console.log('AirConsole mock-up: Navigating to given url')};
+	AirConsoleOffline.prototype.requestPersistentData = function() {console.log('AirConsole mock-up: Requesting persistent data')};
+	AirConsoleOffline.prototype.storePersistentData = function() {console.log('AirConsole mock-up: Storing persistent data')};
+	AirConsoleOffline.prototype.getMasterControllerDeviceId = function() {
+		console.log('AirConsole mock-up: Getting master controller device id');
+		return -9999;
+	};
+	AirConsoleOffline.prototype.getActivePlayerDeviceIds = function() {
+		console.log('AirConsole mock-up: Getting active player device ids');
+		return [];
+	};
+	AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {console.log('AirConsole mock-up: Converting player number to device id')};
+	AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {console.log('AirConsole mock-up: Converting device id to player number')};
+}
 
 (function ()
 {
@@ -63,10 +90,12 @@ function AirConsoleOffline() {
 		this.deviceId;
 		this.message;
 		this.adCompleted = 0;
+		this.adShowing = 0;
 		this.persistentData = null;
 		this.highscores = null;
 		this.emailAddress = null;
 		this.customData = null;
+		this.presetMessage = {};
 	};
 
 	var instanceProto = pluginProto.Instance.prototype;
@@ -77,7 +106,24 @@ function AirConsoleOffline() {
 		var self = this;
 		if (typeof AirConsole !== 'undefined') {
 			this.runningOffline = false;
-			this.airConsole = new AirConsole();
+			if (self.properties[1] === 1) {
+				this.gameReady = true;
+				var config = {orientation: 'AirConsole.ORIENTATION_LANDSCAPE', synchronize_time: false, setup_document: true, device_motion: false};
+				if (self.properties[2] === 1) {
+					config.orientation = 'AirConsole.ORIENTATION_PORTRAIT';
+				}
+				if (self.properties[3] === 0) {
+					config.synchronize_time = true;
+				}
+				if (self.properties[4] > 0) {
+					config.device_motion = self.properties[4];
+				}
+
+				this.airConsole = new AirConsole(config);
+			}
+			else {
+				this.airConsole = new AirConsole();
+			}
 		}
 		else {
 			this.runningOffline = true;
@@ -85,6 +131,14 @@ function AirConsoleOffline() {
 		}
 
 		this.maxPlayers = self.properties[0];
+
+		if (self.properties[1] === 1) {
+			this.airConsole.onReady = function () {
+				self.airConsole.message(AirConsole.SCREEN, {
+					handshake: true
+				})
+			}
+		}
 
 		this.airConsole.onConnect = function (deviceId) {
 			if (self.gameReady) {
@@ -118,13 +172,12 @@ function AirConsoleOffline() {
 			}
 		};
 
-		this.airConsole.onDeviceStateChange = function (deviceId, data) {
-		};
+		this.airConsole.onDeviceStateChange = function (deviceId, data) {};
 
 		this.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
 			self.deviceId = deviceId;
 			self.customData = customData;
-			self.runtime,trigger(pluginProto.cnds.OnCustomDeviceStateChange, self);
+			self.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, self);
 		};
 
 		this.airConsole.onHighscores = function (highscores) {
@@ -143,10 +196,12 @@ function AirConsoleOffline() {
 
 		this.airConsole.onAdComplete = function (adWasShown) {
 			self.adCompleted = (adWasShown) ? 1 : 0;
+			self.adShowing = 0;
 			self.runtime.trigger(pluginProto.cnds.OnAdComplete, self);
 		};
 
 		this.airConsole.onAdShow = function () {
+			self.adShowing = 1;
 			self.runtime.trigger(pluginProto.cnds.OnAdShow, self);
 		};
 
@@ -175,18 +230,16 @@ function AirConsoleOffline() {
 	};
 
 	// only called if a layout object - draw to a canvas 2D context
-	instanceProto.draw = function(ctx) {
-	};
+	instanceProto.draw = function(ctx) {};
 
 	// only called if a layout object in WebGL mode - draw to the WebGL context
 	// 'glw' is not a WebGL context, it's a wrapper - you can find its methods in GLWrap.js in the install
 	// directory or just copy what other plugins do.
-	instanceProto.drawGL = function (glw) {
-	};
+	instanceProto.drawGL = function (glw) {};
 
 	//////////////////////////////////////
 	// Conditions
-	function Cnds() {};
+	function Cnds() {}
 
 	Cnds.prototype.OnConnect = function () {
 		return true;
@@ -280,11 +333,19 @@ function AirConsoleOffline() {
 		return Object.keys(this.message).length > 1;
 	};
 
+	Cnds.prototype.AdShown = function () {
+		return this.adCompleted === 1;
+	};
+
+	Cnds.prototype.IsAdShowing = function () {
+		return this.adShowing === 1;
+	};
+
 	pluginProto.cnds = new Cnds();
 
 	//////////////////////////////////////
 	// Actions
-	function Acts() {};
+	function Acts() {}
 
 	Acts.prototype.GameReady = function () {
 		this.gameReady = true;
@@ -295,12 +356,10 @@ function AirConsoleOffline() {
 	};
 
 	Acts.prototype.Message = function (deviceId, property, value) {
-		//this.airConsole.postMessage_({ action: property, to: deviceId, data: value });
 		this.airConsole.message(deviceId, value);
 	};
 
 	Acts.prototype.Broadcast = function (property, message) {
-		//this.airConsole.postMessage_({ action: property, to: undefined, data: message });
 		this.airConsole.broadcast(message);
 	};
 
@@ -311,7 +370,7 @@ function AirConsoleOffline() {
 	Acts.prototype.RequestHighScores = function (level_name, level_version, uids, ranks, total, top) {
 		this.highscores = null;
 		var uidsArray;
-		if (uids == 'all') {
+		if (uids === 'all') {
 			uidsArray = '';
 		}
 		else if (uids.indexOf(',') > -1) {
@@ -355,11 +414,31 @@ function AirConsoleOffline() {
 		this.airConsole.storePersistentData(key, value, uid);
 	};
 
+	Acts.prototype.SendPresetMessage = function(deviceId) {
+		if (this.runningOffline) return;
+
+		this.airConsole.message(deviceId, this.presetMessage);
+		this.presetMessage = {};
+	};
+
+	Acts.prototype.BroadcastPresetMessage = function () {
+		this.airConsole.broadcast(this.presetMessage);
+		this.presetMessage = {};
+	};
+
+	Acts.prototype.SetPresetMessage = function(key, value) {
+		this.presetMessage[key] = value;
+	};
+
+	Acts.prototype.ClearPresetMessage = function() {
+		this.presetMessage = {};
+	};
+
 	pluginProto.acts = new Acts();
 
 	//////////////////////////////////////
 	// Expressions
-	function Exps() {};
+	function Exps() {}
 	//ret.set_int(1337);			// return our value
 	// ret.set_float(0.5);			// for returning floats
 	// ret.set_string("Hello");		// for ef_return_string
@@ -378,6 +457,9 @@ function AirConsoleOffline() {
 				ret.set_string(JSON.stringify(this.message));
 			}
 		}
+		else {
+			ret.set_string(this.message);
+		}
 	};
 
 	Exps.prototype.MessageAtProperty = function (ret, property) {
@@ -390,7 +472,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.IsMultipartMessage = function(ret) {
-		if (this.message != null && typeof this.message === 'object' && Object.keys(this.message).length > 1) {
+		if (this.message !== null && typeof this.message === 'object' && Object.keys(this.message).length > 1) {
 			ret.set_int(1);
 		}
 		else {
@@ -399,7 +481,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.MessageHasProperty = function(ret, property) {
-		if (this.message != null && typeof this.message === 'object' && this.message.hasOwnProperty(property)) {
+		if (this.message !== null && typeof this.message === 'object' && this.message.hasOwnProperty(property)) {
 			ret.set_int(1);
 		}
 		else {
@@ -418,9 +500,9 @@ function AirConsoleOffline() {
 		var pic = this.airConsole.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
-        
-	Exps.prototype.GetProfilePictureBySize = function(ret, deviceId, sizeOfPic) {
-		var pic = this.airConsole.getProfilePicture(deviceId, sizeOfPic) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
+
+	Exps.prototype.GetProfilePictureWithSize = function(ret, deviceId, pictureSize) {
+		var pic = this.airConsole.getProfilePicture(deviceId, pictureSize) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
 
@@ -435,7 +517,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.GetMessagePropertiesCount = function (ret) {
-		if (this.message != null && typeof this.message === 'object') {
+		if (this.message !== null && typeof this.message === 'object') {
 			ret.set_int(Object.keys(this.message).length);
 		}
 		else {
@@ -455,7 +537,7 @@ function AirConsoleOffline() {
 
 	Exps.prototype.ConvertDeviceIdToPlayerNumber = function (ret, deviceId) {
 		var playerNumber = this.airConsole.convertDeviceIdToPlayerNumber(deviceId);
-		ret.set_int((typeof id !== 'number') ? -1 : playerNumber);
+		ret.set_int((typeof playerNumber !== 'number') ? -1 : playerNumber);
 	};
 
 	Exps.prototype.IsPremium = function (ret, deviceId) {
@@ -477,15 +559,8 @@ function AirConsoleOffline() {
 		ret.set_string(JSON.stringify(c2array));
 	};
 
-    Exps.prototype.AdShown = function (ret)
-    {
-        var adShownInt = this.adCompleted;
-        ret.set_int((typeof adShownInt !== 'number' || isNaN(adShownInt)) ? -1 : adShownInt);
-    };
-  
-  
 	Exps.prototype.GetPersistentData = function (ret) {
-		if (this.persistentData != null) {
+		if (this.persistentData !== null) {
 			var c2Dictionary = new Object();
 			c2Dictionary['c2dictionary'] = true;
 			c2Dictionary['data'] = getProperties(this.persistentData);
@@ -498,7 +573,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.GetHighscores = function (ret) {
-		if (this.highscores != null) {
+		if (this.highscores !== null) {
 			var c2Dictionary = new Object();
 			c2Dictionary['c2dictionary'] = true;
 			c2Dictionary['data'] = getProperties(this.highscores);
@@ -534,6 +609,14 @@ function AirConsoleOffline() {
 		ret.set_string(JSON.stringify(c2array));
 	};
 
+	Exps.prototype.IsAddShowing = function (ret) {
+		ret.set_int(this.adShowing);
+	};
+
+	Exps.prototype.AdShown = function (ret) {
+		ret.set_int(this.adCompleted);
+	};
+
 	pluginProto.exps = new Exps();
 
 	function getProperties(object) {
@@ -553,6 +636,6 @@ function AirConsoleOffline() {
 			}
 		});
 		return data;
-	};
+	}
 
 }());
