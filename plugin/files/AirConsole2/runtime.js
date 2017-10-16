@@ -11,7 +11,7 @@ cr.plugins_.AirConsole2 = function(runtime) {
 };
 
 function AirConsoleOffline() {
-	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock.');
+	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock-up.');
 	AirConsoleOffline.prototype.getNickname = function() {return 'undefined when offline'};
 	AirConsoleOffline.prototype.getProfilePicture = function() {return 'undefined when offline'};
 	AirConsoleOffline.prototype.getUID = function() {return -9999};
@@ -79,7 +79,24 @@ function AirConsoleOffline() {
 		var self = this;
 		if (typeof AirConsole !== 'undefined') {
 			this.runningOffline = false;
-			this.airConsole = new AirConsole();
+			if (self.properties[1] === 1) {
+				this.gameReady = true;
+				var config = {orientation: 'AirConsole.ORIENTATION_LANDSCAPE', synchronize_time: false, setup_document: true, device_motion: false};
+				if (self.properties[2] === 1) {
+					config.orientation = 'AirConsole.ORIENTATION_PORTRAIT';
+				}
+				if (self.properties[3] === 0) {
+					config.synchronize_time = true;
+				}
+				if (self.properties[4] > 0) {
+					config.device_motion = self.properties[4];
+				}
+
+				this.airConsole = new AirConsole(config);
+			}
+			else {
+				this.airConsole = new AirConsole();
+			}
 		}
 		else {
 			this.runningOffline = true;
@@ -87,6 +104,14 @@ function AirConsoleOffline() {
 		}
 
 		this.maxPlayers = self.properties[0];
+
+		if (self.properties[1] === 1) {
+			this.airConsole.onReady = function () {
+				self.airConsole.message(AirConsole.SCREEN, {
+					handshake: true
+				})
+			}
+		}
 
 		this.airConsole.onConnect = function (deviceId) {
 			if (self.gameReady) {
@@ -120,8 +145,7 @@ function AirConsoleOffline() {
 			}
 		};
 
-		this.airConsole.onDeviceStateChange = function (deviceId, data) {
-		};
+		this.airConsole.onDeviceStateChange = function (deviceId, data) {};
 
 		this.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
 			self.deviceId = deviceId;
@@ -179,14 +203,12 @@ function AirConsoleOffline() {
 	};
 
 	// only called if a layout object - draw to a canvas 2D context
-	instanceProto.draw = function(ctx) {
-	};
+	instanceProto.draw = function(ctx) {};
 
 	// only called if a layout object in WebGL mode - draw to the WebGL context
 	// 'glw' is not a WebGL context, it's a wrapper - you can find its methods in GLWrap.js in the install
 	// directory or just copy what other plugins do.
-	instanceProto.drawGL = function (glw) {
-	};
+	instanceProto.drawGL = function (glw) {};
 
 	//////////////////////////////////////
 	// Conditions
@@ -283,7 +305,7 @@ function AirConsoleOffline() {
 	Cnds.prototype.IsMultipartMessage = function () {
 		return Object.keys(this.message).length > 1;
 	};
-	
+
 	Cnds.prototype.AdShown = function () {
 		return this.adCompleted === 1;
 	};
@@ -307,12 +329,10 @@ function AirConsoleOffline() {
 	};
 
 	Acts.prototype.Message = function (deviceId, property, value) {
-		//this.airConsole.postMessage_({ action: property, to: deviceId, data: value });
 		this.airConsole.message(deviceId, value);
 	};
 
 	Acts.prototype.Broadcast = function (property, message) {
-		//this.airConsole.postMessage_({ action: property, to: undefined, data: message });
 		this.airConsole.broadcast(message);
 	};
 
@@ -410,6 +430,9 @@ function AirConsoleOffline() {
 				ret.set_string(JSON.stringify(this.message));
 			}
 		}
+		else {
+			ret.set_string(this.message);
+		}
 	};
 
 	Exps.prototype.MessageAtProperty = function (ret, property) {
@@ -450,7 +473,7 @@ function AirConsoleOffline() {
 		var pic = this.airConsole.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
-	
+
 	Exps.prototype.GetProfilePictureWithSize = function(ret, deviceId, pictureSize) {
 		var pic = this.airConsole.getProfilePicture(deviceId, pictureSize) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
@@ -558,7 +581,7 @@ function AirConsoleOffline() {
 
 		ret.set_string(JSON.stringify(c2array));
 	};
-	
+
 	Exps.prototype.IsAddShowing = function (ret) {
 		ret.set_int(this.adShowing);
 	};
