@@ -104,6 +104,14 @@ function AirConsoleOffline() {
 
 		this.maxPlayers = self.properties[0];
 
+		if (self.properties[1] === 1) {
+			this.airConsole.onReady = function () {
+				self.airConsole.message(AirConsole.SCREEN, {
+					handshake: true
+				})
+			}
+		}
+
 		this.airConsole.onConnect = function (deviceId) {
 			if (self.gameReady) {
 				self.deviceId = deviceId;
