@@ -10,6 +10,10 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.14
+* Added controller mode support
+* Brought API mock-up from C3 to C2 plugin
+
 ## Version 1.7.0.13
 * Added preset message support, on an idea by Toby R
 
