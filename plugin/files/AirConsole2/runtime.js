@@ -80,6 +80,7 @@ function AirConsoleOffline() {
 		if (typeof AirConsole !== 'undefined') {
 			this.runningOffline = false;
 			if (self.properties[1] === 1) {
+				this.gameReady = true;
 				var config = {orientation: 'AirConsole.ORIENTATION_LANDSCAPE', synchronize_time: false, setup_document: true, device_motion: false};
 				if (self.properties[2] === 1) {
 					config.orientation = 'AirConsole.ORIENTATION_PORTRAIT';
@@ -144,8 +145,7 @@ function AirConsoleOffline() {
 			}
 		};
 
-		this.airConsole.onDeviceStateChange = function (deviceId, data) {
-		};
+		this.airConsole.onDeviceStateChange = function (deviceId, data) {};
 
 		this.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
 			self.deviceId = deviceId;
@@ -305,7 +305,7 @@ function AirConsoleOffline() {
 	Cnds.prototype.IsMultipartMessage = function () {
 		return Object.keys(this.message).length > 1;
 	};
-	
+
 	Cnds.prototype.AdShown = function () {
 		return this.adCompleted === 1;
 	};
@@ -329,12 +329,10 @@ function AirConsoleOffline() {
 	};
 
 	Acts.prototype.Message = function (deviceId, property, value) {
-		//this.airConsole.postMessage_({ action: property, to: deviceId, data: value });
 		this.airConsole.message(deviceId, value);
 	};
 
 	Acts.prototype.Broadcast = function (property, message) {
-		//this.airConsole.postMessage_({ action: property, to: undefined, data: message });
 		this.airConsole.broadcast(message);
 	};
 
@@ -432,6 +430,9 @@ function AirConsoleOffline() {
 				ret.set_string(JSON.stringify(this.message));
 			}
 		}
+		else {
+			ret.set_string(this.message);
+		}
 	};
 
 	Exps.prototype.MessageAtProperty = function (ret, property) {
@@ -472,7 +473,7 @@ function AirConsoleOffline() {
 		var pic = this.airConsole.getProfilePicture(deviceId) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
 	};
-	
+
 	Exps.prototype.GetProfilePictureWithSize = function(ret, deviceId, pictureSize) {
 		var pic = this.airConsole.getProfilePicture(deviceId, pictureSize) || "https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y";
 		ret.set_string(pic);
@@ -580,7 +581,7 @@ function AirConsoleOffline() {
 
 		ret.set_string(JSON.stringify(c2array));
 	};
-	
+
 	Exps.prototype.IsAddShowing = function (ret) {
 		ret.set_int(this.adShowing);
 	};

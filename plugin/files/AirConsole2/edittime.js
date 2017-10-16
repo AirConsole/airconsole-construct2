@@ -1,5 +1,4 @@
-﻿function GetPluginSettings()
-{
+﻿function GetPluginSettings() {
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
@@ -26,7 +25,7 @@
 					//  | pf_predraw			// set for any plugin which draws and is not a sprite (i.e. does not simply draw
 												// a single non-tiling image the size of the object) - required for effects to work properly
 	};
-};
+}
 
 ////////////////////////////////////////
 // Parameter types:
