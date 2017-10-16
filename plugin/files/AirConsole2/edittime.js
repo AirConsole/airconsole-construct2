@@ -3,7 +3,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.13",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.14",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -260,30 +260,31 @@ ACESDone();
 // new cr.Property(ept_link,		name,	link_text,		description, "firstonly")		// has no associated value; simply calls "OnPropertyChanged" on click
 
 var property_list = [
-	new cr.Property(ept_integer,  "Max players", 4, "Define the maximum amount of players")
+	new cr.Property(ept_integer, "Max players", 4, "Define the maximum amount of players"),
+	new cr.Property(ept_combo, "Type", "Screen", "Is this project intended to be a controller?", "Screen|Controller"),
+	new cr.Property(ept_section, "Controller only", "These properties only take effect if 'Is controller' is checked"),
+	new cr.Property(ept_combo, "Orientation", "Landscape", "CONTROLLER ONLY - Sets this controller in either PORTRAIT or LANDSCAPE mode", "Landscape|Portrait"),
+	new cr.Property(ept_combo, "Synchronize time", "false", "CONTROLLER ONLY - Enable time synchronization with server. This is needed for 'getServerTime()'", "false|true"),
+	new cr.Property(ept_integer, "Device motion", 0, "CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every 'Device motion' milliseconds with the data from the accelerometer and gyroscope")
 ];
 	
 // Called by IDE when a new object type is to be created
-function CreateIDEObjectType()
-{
+function CreateIDEObjectType() {
 	return new IDEObjectType();
 }
 
 // Class representing an object type in the IDE
-function IDEObjectType()
-{
+function IDEObjectType() {
 	assert2(this instanceof arguments.callee, "Constructor called as a function");
 }
 
 // Called by IDE when a new object instance of this type is to be created
-IDEObjectType.prototype.CreateInstance = function(instance)
-{
+IDEObjectType.prototype.CreateInstance = function(instance) {
 	return new IDEInstance(instance);
-}
+};
 
 // Class representing an individual instance of an object in the IDE
-function IDEInstance(instance, type)
-{
+function IDEInstance(instance, type) {
 	assert2(this instanceof arguments.callee, "Constructor called as a function");
 	
 	// Save the constructor parameters
@@ -301,31 +302,19 @@ function IDEInstance(instance, type)
 }
 
 // Called when inserted via Insert Object Dialog for the first time
-IDEInstance.prototype.OnInserted = function()
-{
-}
+IDEInstance.prototype.OnInserted = function() {};
 
 // Called when double clicked in layout
-IDEInstance.prototype.OnDoubleClicked = function()
-{
-}
+IDEInstance.prototype.OnDoubleClicked = function() {};
 
 // Called after a property has been changed in the properties bar
-IDEInstance.prototype.OnPropertyChanged = function(property_name)
-{
-}
+IDEInstance.prototype.OnPropertyChanged = function(property_name) {};
 
 // For rendered objects to load fonts or textures
-IDEInstance.prototype.OnRendererInit = function(renderer)
-{
-}
+IDEInstance.prototype.OnRendererInit = function(renderer) {};
 
 // Called to draw self in the editor if a layout object
-IDEInstance.prototype.Draw = function(renderer)
-{
-}
+IDEInstance.prototype.Draw = function(renderer) {};
 
 // For rendered objects to release fonts or textures
-IDEInstance.prototype.OnRendererReleased = function(renderer)
-{
-}
+IDEInstance.prototype.OnRendererReleased = function(renderer) {};
