@@ -434,6 +434,13 @@ function AirConsoleOffline() {
 		this.presetMessage = {};
 	};
 
+    /*
+        EditProfile should only be used from the controller.
+    */
+    Acts.prototype.EditProfile = function () {
+		this.airconsole.editProfile();
+	};
+    
 	pluginProto.acts = new Acts();
 
 	//////////////////////////////////////

@@ -178,6 +178,7 @@ AddAction(14, af_none, "Set message property", "Preset message", "Set <i>{0}</i>
 
 AddAction(15, af_none, "Clear preset message", "Preset message", "Clear the preset message.", "Clear the preset message", "ClearPresetMessage");
 
+AddAction(16, af_none, "Edit profile", "Controller Actions", "(Controller only) Edit the player profile", "Edit profile.", "EditProfile");
 
 ////////////////////////////////////////
 // Expressions
