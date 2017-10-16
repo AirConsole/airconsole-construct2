@@ -195,14 +195,12 @@ function AirConsoleOffline() {
 	};
 
 	// only called if a layout object - draw to a canvas 2D context
-	instanceProto.draw = function(ctx) {
-	};
+	instanceProto.draw = function(ctx) {};
 
 	// only called if a layout object in WebGL mode - draw to the WebGL context
 	// 'glw' is not a WebGL context, it's a wrapper - you can find its methods in GLWrap.js in the install
 	// directory or just copy what other plugins do.
-	instanceProto.drawGL = function (glw) {
-	};
+	instanceProto.drawGL = function (glw) {};
 
 	//////////////////////////////////////
 	// Conditions
