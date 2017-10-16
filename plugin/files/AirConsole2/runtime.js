@@ -434,13 +434,6 @@ function AirConsoleOffline() {
 		this.presetMessage = {};
 	};
 
-    /*
-        EditProfile should only be used from the controller.
-    */
-    Acts.prototype.EditProfile = function () {
-		this.airconsole.editProfile();
-	};
-    
 	pluginProto.acts = new Acts();
 
 	//////////////////////////////////////
@@ -453,11 +446,6 @@ function AirConsoleOffline() {
 
 	Exps.prototype.DeviceId = function (ret) {
 		ret.set_int(this.deviceId);
-	};
-    
-    
-	Exps.prototype.GetThisDeviceId = function (ret) {
-		ret.set_int(this.AirConsole.getDeviceId());
 	};
 
 	Exps.prototype.Message = function (ret) {

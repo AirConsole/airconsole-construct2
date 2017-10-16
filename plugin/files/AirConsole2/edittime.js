@@ -178,7 +178,6 @@ AddAction(14, af_none, "Set message property", "Preset message", "Set <i>{0}</i>
 
 AddAction(15, af_none, "Clear preset message", "Preset message", "Clear the preset message.", "Clear the preset message", "ClearPresetMessage");
 
-AddAction(16, af_none, "Edit profile", "Controller Actions", "(Controller only) Edit the player profile", "Edit profile.", "EditProfile");
 
 ////////////////////////////////////////
 // Expressions
@@ -245,10 +244,6 @@ AddExpression(19, ef_return_string, "Profile", "Profile", "GetProfilePictureWith
 AddExpression(20, ef_return_number, "Ads", "Ads", "AdShown", "Returns 1 if ads were shown, else 0");
 
 AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if ads are currently showing, else 0.");
-
-
-AddExpression(22, ef_return_number, "Profile", "Profile", "GetThisDeviceId", "Returns the current device id from which this function is called (meant to be used from a controller).");
-
 
 ////////////////////////////////////////
 ACESDone();
