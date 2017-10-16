@@ -10,6 +10,11 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.15
+* Added ability to get device ID that is currently being used (Controller function)
+* Added Edit Profile
+
+
 ## Version 1.7.0.14
 * Added controller mode support
 * Brought API mock-up from C3 to C2 plugin

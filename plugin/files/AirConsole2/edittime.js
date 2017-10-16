@@ -2,7 +2,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.14",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.15",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -179,6 +179,9 @@ AddAction(14, af_none, "Set message property", "Preset message", "Set <i>{0}</i>
 AddAction(15, af_none, "Clear preset message", "Preset message", "Clear the preset message.", "Clear the preset message", "ClearPresetMessage");
 
 
+AddAction(16, af_none, "Edit profile", "Airconsole Profile", "(Controller only) Edit the player profile", "Edit profile.", "EditProfile");
+
+
 ////////////////////////////////////////
 // Expressions
 
@@ -245,6 +248,7 @@ AddExpression(20, ef_return_number, "Ads", "Ads", "AdShown", "Returns 1 if ads w
 
 AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if ads are currently showing, else 0.");
 
+AddExpression(22, ef_return_number, "Profile", "Profile", "GetThisDeviceId", "Returns the current device id from which this function is called (meant to be used from a controller).");
 ////////////////////////////////////////
 ACESDone();
 
