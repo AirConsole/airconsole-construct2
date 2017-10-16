@@ -12,27 +12,54 @@ cr.plugins_.AirConsole2 = function(runtime) {
 
 function AirConsoleOffline() {
 	console.warn('You are currently offline or AirConsole could not be loaded. Plugin fallback to AirConsole mock-up.');
-	AirConsoleOffline.prototype.getNickname = function() {return 'undefined when offline'};
-	AirConsoleOffline.prototype.getProfilePicture = function() {return 'undefined when offline'};
-	AirConsoleOffline.prototype.getUID = function() {return -9999};
-	AirConsoleOffline.prototype.isPremium = function() {return false};
-	AirConsoleOffline.prototype.getControllerDeviceIds = function() {return []};
-	AirConsoleOffline.prototype.getCustomDeviceState = function() {return null};
-	AirConsoleOffline.prototype.isUserLoggedIn = function() {return false};
-	AirConsoleOffline.prototype.message = function() {};
-	AirConsoleOffline.prototype.broadcast = function() {};
-	AirConsoleOffline.prototype.requestHighScores = function() {};
-	AirConsoleOffline.prototype.storeHighScore = function() {};
-	AirConsoleOffline.prototype.setActivePlayers = function() {};
-	AirConsoleOffline.prototype.showAd = function() {};
-	AirConsoleOffline.prototype.navigateHome = function() {};
-	AirConsoleOffline.prototype.navigateTo = function() {};
-	AirConsoleOffline.prototype.requestPersistentData = function() {};
-	AirConsoleOffline.prototype.storePersistentData = function() {};
-	AirConsoleOffline.prototype.getMasterControllerDeviceId = function() {return -9999};
-	AirConsoleOffline.prototype.getActivePlayerDeviceIds = function() {return []};
-	AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {};
-	AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {};
+	AirConsoleOffline.prototype.getNickname = function() {
+		console.log('AirConsole mock-up: Getting nickname');
+		return 'undefined when offline';
+	};
+	AirConsoleOffline.prototype.getProfilePicture = function() {
+		console.log('AirConsole mock-up: Getting profile picture');
+		return 'undefined when offline';
+	};
+	AirConsoleOffline.prototype.getUID = function() {
+		console.log('AirConsole mock-up: Getting UID');
+		return -9999;
+	};
+	AirConsoleOffline.prototype.isPremium = function() {
+		console.log('AirConsole mock-up: Checking if premium');
+		return false;
+	};
+	AirConsoleOffline.prototype.getControllerDeviceIds = function() {
+		console.log('AirConsole mock-up: Getting controller device ids');
+		return [];
+	};
+	AirConsoleOffline.prototype.getCustomDeviceState = function() {
+		console.log('AirConsole mock-up: Getting custom device state');
+		return null;
+	};
+	AirConsoleOffline.prototype.isUserLoggedIn = function() {
+		console.log('AirConsole mock-up: Checking if user is logged in');
+		return false;
+	};
+	AirConsoleOffline.prototype.message = function() {console.log('AirConsole mock-up: Sending a message')};
+	AirConsoleOffline.prototype.broadcast = function() {console.log('AirConsole mock-up: Broadcasting a message')};
+	AirConsoleOffline.prototype.requestHighScores = function() {console.log('AirConsole mock-up: Requesting highscores')};
+	AirConsoleOffline.prototype.storeHighScore = function() {console.log('AirConsole mock-up: Storing highscores')};
+	AirConsoleOffline.prototype.setActivePlayers = function() {console.log('AirConsole mock-up: Setting active players')};
+	AirConsoleOffline.prototype.showAd = function() {console.log('AirConsole mock-up: Showing ad')};
+	AirConsoleOffline.prototype.navigateHome = function() {console.log('AirConsole mock-up: Navigating home')};
+	AirConsoleOffline.prototype.navigateTo = function() {console.log('AirConsole mock-up: Navigating to given url')};
+	AirConsoleOffline.prototype.requestPersistentData = function() {console.log('AirConsole mock-up: Requesting persistent data')};
+	AirConsoleOffline.prototype.storePersistentData = function() {console.log('AirConsole mock-up: Storing persistent data')};
+	AirConsoleOffline.prototype.getMasterControllerDeviceId = function() {
+		console.log('AirConsole mock-up: Getting master controller device id');
+		return -9999;
+	};
+	AirConsoleOffline.prototype.getActivePlayerDeviceIds = function() {
+		console.log('AirConsole mock-up: Getting active player device ids');
+		return [];
+	};
+	AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {console.log('AirConsole mock-up: Converting player number to device id')};
+	AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {console.log('AirConsole mock-up: Converting device id to player number')};
 }
 
 (function ()
