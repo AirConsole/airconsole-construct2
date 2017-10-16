@@ -246,6 +246,10 @@ AddExpression(20, ef_return_number, "Ads", "Ads", "AdShown", "Returns 1 if ads w
 
 AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if ads are currently showing, else 0.");
 
+
+AddExpression(22, ef_return_number, "Profile", "Profile", "GetThisDeviceId", "Returns the current device id from which this function is called (meant to be used from a controller).");
+
+
 ////////////////////////////////////////
 ACESDone();
 

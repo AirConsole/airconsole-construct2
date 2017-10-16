@@ -454,6 +454,11 @@ function AirConsoleOffline() {
 	Exps.prototype.DeviceId = function (ret) {
 		ret.set_int(this.deviceId);
 	};
+    
+    
+	Exps.prototype.GetThisDeviceId = function (ret) {
+		ret.set_int(this.AirConsole.getDeviceId());
+	};
 
 	Exps.prototype.Message = function (ret) {
 		if (typeof this.message === 'object') {
