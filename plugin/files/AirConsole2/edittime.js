@@ -2,7 +2,7 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.15",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.7.0.16",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
@@ -44,7 +44,6 @@
 
 ////////////////////////////////////////
 // Conditions
-// TODO "onGettingPremium"
 
 // Signalling
 AddCondition(0, cf_trigger, "On connect", "Signalling", "On new connection", "Triggered when a device connects to the game.", "OnConnect");
@@ -105,6 +104,8 @@ AddCondition(22, 0, "Ad shown", "Ads", "Ad shown", "True if an ad was shown.", "
 
 AddCondition(23, 0, "Is ad showing", "Ads", "Is ad showing", "True if an ad is currently showing.", "IsAdShowing");
 
+AddCondition(24, 0, "On device motion", "Controller only", "On device motion", "Triggered every X millisecond if the plugin property has the 'Device motion' property set higher than 0. This only works for controllers.", "OnDeviceMotion");
+
 ////////////////////////////////////////
 // Actions
 
@@ -121,11 +122,11 @@ AddCondition(23, 0, "Is ad showing", "Ads", "Is ad showing", "True if an ad is c
 AddAction(0, af_none, "Game ready", "Game", "Set the game as ready", "Sets the game as ready. This will trigger OnConnect for all already connected devices", "GameReady");
 
 AddNumberParam("Device id", "Device id to send the message to.");
-AddStringParam("Property name", "Message property name.", '"message"');
+AddStringParam("Property name", "Message property name. (can only be 'message' for now)", '"message"');
 AddStringParam("Message", "Message to send");
 AddAction(1, af_none, "Message", "Messaging", "Send <i>{1}: {2}</i> to device id {0}.", "Sends a message to a specific device", "Message");
 
-AddStringParam("Property name", "Message property name.", '"message"');
+AddStringParam("Property name", "Message property name. (can only be 'message' for now)", '"message"');
 AddStringParam("Message", "Message to send");
 AddAction(2, af_none, "Broadcast", "Messaging", "Send <i>{0}: {1}</i> to all connected devices.", "Sends a message to all connected devices", "Broadcast");
 
@@ -179,6 +180,11 @@ AddAction(14, af_none, "Set message property", "Preset message", "Set <i>{0}</i>
 AddAction(15, af_none, "Clear preset message", "Preset message", "Clear the preset message.", "Clear the preset message", "ClearPresetMessage");
 
 AddAction(16, af_none, "Edit profile", "Profile", "(Controller only) Edit the player profile", "Edit profile", "EditProfile");
+
+AddAction(17, af_none, "Get premium", "Profile", "(Controller only) Offers the user to become a premium member. Can only be called from controllers. If you call getPremium in development mode, the device becomes premium immediately", "Get Premium", "GetPremium");
+
+AddNumberParam("Time", "Duration, in milliseconds, of the vibration.");
+AddAction(18, af_none, "Vibrate", "Device", "(Controller only) Vibrate the controller for {0} millisecond", "Vibrate", "Vibrate");
 
 
 ////////////////////////////////////////
@@ -247,7 +253,9 @@ AddExpression(20, ef_return_number, "Ads", "Ads", "AdShown", "Returns 1 if ads w
 
 AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if ads are currently showing, else 0.");
 
-AddExpression(22, ef_return_number, "Profile", "Profile", "GetThisDeviceId", "Returns the current device id from which this function is called (meant to be used from a controller).");
+AddExpression(22, ef_return_number, "Profile", "Profile", "GetThisDeviceId", "Returns the current device id from which this function is called.");
+
+AddExpression(23, ef_return_number, "Controller only", "Controller only", "MotionData", "Returns a JSON converted C2Dictionary containing the device motion data. This works for controllers only, and the plugin should have it's 'Device motion' property set higher than 0");
 ////////////////////////////////////////
 ACESDone();
 

@@ -96,6 +96,7 @@ function AirConsoleOffline() {
 		this.emailAddress = null;
 		this.customData = null;
 		this.presetMessage = {};
+		this.motionData = {};
 	};
 
 	var instanceProto = pluginProto.Instance.prototype;
@@ -227,6 +228,11 @@ function AirConsoleOffline() {
 			self.deviceId = deviceId;
 			self.runtime.trigger(pluginProto.cnds.OnDeviceProfileChange, self);
 		};
+
+		this.airConsole.onDeviceMotion = function (data) {
+			self.motionData = data;
+			self.runtime.trigger(pluginProto.cnds.OnDeviceMotion, self);
+		}
 	};
 
 	// only called if a layout object - draw to a canvas 2D context
@@ -341,6 +347,10 @@ function AirConsoleOffline() {
 		return this.adShowing === 1;
 	};
 
+	Cnds.prototype.OnDeviceMotion = function () {
+		return true;
+	};
+
 	pluginProto.cnds = new Cnds();
 
 	//////////////////////////////////////
@@ -434,10 +444,19 @@ function AirConsoleOffline() {
 		this.presetMessage = {};
 	};
 
-	// EditProfile should only be used from the controller.
     Acts.prototype.EditProfile = function () {
 		this.airConsole.editProfile();
 	};
+
+    Acts.prototype.GetPremium = function () {
+    	this.airConsole.getPremium();
+    };
+
+    Acts.prototype.Vibrate = function(time) {
+    	if (this.properties[1] === 1 && time > 0) {
+    		this.airConsole.vibrate(time);
+	    }
+    };
     
 	pluginProto.acts = new Acts();
 
@@ -451,10 +470,6 @@ function AirConsoleOffline() {
 
 	Exps.prototype.DeviceId = function (ret) {
 		ret.set_int(this.deviceId);
-	};
-
-	Exps.prototype.GetThisDeviceId = function (ret) {
-		ret.set_int(this.airConsole.getDeviceId());
 	};
     
 	Exps.prototype.Message = function (ret) {
@@ -624,6 +639,27 @@ function AirConsoleOffline() {
 
 	Exps.prototype.AdShown = function (ret) {
 		ret.set_int(this.adCompleted);
+	};
+
+	Exps.prototype.GetThisDeviceId = function (ret) {
+		if (this.properties[1] === 1) {
+			ret.set_int(this.airConsole.getDeviceId());
+		}
+		else {
+			ret.set_int(0);
+		}
+	};
+
+	Exps.prototype.MotionData = function (ret) {
+		if (this.motionData !== null) {
+			var c2Dictionary = new Object();
+			c2Dictionary['c2dictionary'] = true;
+			c2Dictionary['data'] = getProperties(this.motionData);
+			ret.set_string(JSON.stringify(c2Dictionary));
+		}
+		else {
+			ret.set_string('');
+		}
 	};
 
 	pluginProto.exps = new Exps();
