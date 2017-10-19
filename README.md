@@ -77,3 +77,6 @@ http://developers.airconsole.com/#/guides/construct2
 
 ## Version 1.7.0.1
 * Initial plugin release
+
+## About this Plugin
+This plugin was created and is maintained by Psychokiller1888 and not by the AirConsole Team. It has become so popular that the AirConsole Team has decided to host it in the official AirConsole GitHub account.
