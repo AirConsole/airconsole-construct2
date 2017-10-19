@@ -109,9 +109,9 @@ function AirConsoleOffline() {
 			this.runningOffline = false;
 			if (self.properties[1] === 1) {
 				this.gameReady = true;
-				var config = {orientation: 'AirConsole.ORIENTATION_LANDSCAPE', synchronize_time: false, setup_document: true, device_motion: false};
+				var config = {orientation: AirConsole.ORIENTATION_LANDSCAPE, synchronize_time: false, setup_document: true, device_motion: false};
 				if (self.properties[2] === 1) {
-					config.orientation = 'AirConsole.ORIENTATION_PORTRAIT';
+					config.orientation = AirConsole.ORIENTATION_PORTRAIT;
 				}
 				if (self.properties[3] === 0) {
 					config.synchronize_time = true;

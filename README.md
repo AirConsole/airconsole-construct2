@@ -13,6 +13,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.17
+* Fixed controller orientation
+
 ## Version 1.7.0.16
 * Added OnDeviceMotion trigger
 * Added GetPremium action
