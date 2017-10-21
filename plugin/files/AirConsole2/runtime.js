@@ -276,7 +276,7 @@ function AirConsoleOffline() {
 	};
 
 	Cnds.prototype.OnMessageIs = function (property, value) {
-		if (typeof this.message === 'string' && property === 'message') {
+		if (typeof this.message === 'string') {
 			return this.message === value;
 		}
 		else {
@@ -285,7 +285,7 @@ function AirConsoleOffline() {
 	};
 
 	Cnds.prototype.OnMessageFromIs = function (property, value, deviceId) {
-		if (typeof this.message === 'string' && property === 'message') {
+		if (typeof this.message === 'string') {
 			return (this.message === value && this.deviceId === deviceId);
 		}
 		else {
@@ -346,7 +346,7 @@ function AirConsoleOffline() {
 	};
 
 	Cnds.prototype.IsMultipartMessage = function () {
-		return Object.keys(this.message).length > 1;
+		return (this.message !== null && typeof this.message === 'object' && Object.keys(this.message).length > 1);
 	};
 
 	Cnds.prototype.AdShown = function () {
@@ -376,6 +376,15 @@ function AirConsoleOffline() {
 	};
 
 	Acts.prototype.Message = function (deviceId, property, value) {
+		if (property !== 'message') {
+			console.warn('Property other than "message" isn\'t currently supported');
+		}
+
+		var obj = parseJSON(value);
+		if (obj !== false) {
+			value = obj;
+		}
+
 		this.airConsole.message(deviceId, value);
 	};
 
@@ -454,20 +463,20 @@ function AirConsoleOffline() {
 		this.presetMessage = {};
 	};
 
-    Acts.prototype.EditProfile = function () {
+	Acts.prototype.EditProfile = function () {
 		this.airConsole.editProfile();
 	};
 
-    Acts.prototype.GetPremium = function () {
-    	this.airConsole.getPremium();
-    };
+	Acts.prototype.GetPremium = function () {
+		this.airConsole.getPremium();
+	};
 
-    Acts.prototype.Vibrate = function(time) {
-    	if (this.properties[1] === 1 && time > 0) {
-    		this.airConsole.vibrate(time);
-	    }
-    };
-    
+	Acts.prototype.Vibrate = function(time) {
+		if (this.properties[1] === 1 && time > 0) {
+			this.airConsole.vibrate(time);
+		}
+	};
+
 	pluginProto.acts = new Acts();
 
 	//////////////////////////////////////
@@ -481,7 +490,7 @@ function AirConsoleOffline() {
 	Exps.prototype.DeviceId = function (ret) {
 		ret.set_int(this.deviceId);
 	};
-    
+
 	Exps.prototype.Message = function (ret) {
 		if (typeof this.message === 'object') {
 			if (Object.keys(this.message).length === 1) {
@@ -691,6 +700,21 @@ function AirConsoleOffline() {
 			}
 		});
 		return data;
+	}
+
+	/**
+	 * Check if a given string is JSON or not
+	 * @param string
+	 * @return false or the parsed object
+	 */
+	function parseJSON(string) {
+		try {
+			var obj = JSON.parse(string);
+		}
+		catch (e) {
+			return false;
+		}
+		return obj;
 	}
 
 }());
