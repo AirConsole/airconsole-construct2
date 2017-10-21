@@ -13,6 +13,9 @@ More information about the plugin:
 
 http://developers.airconsole.com/#/guides/construct2
 
+## Version 1.7.0.18
+* Fixing all messenging functions for controller mode
+
 ## Version 1.7.0.17
 * Fixed controller orientation
 
