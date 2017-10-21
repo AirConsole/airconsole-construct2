@@ -183,15 +183,15 @@ function AirConsoleOffline() {
 
 		this.airConsole.onHighscores = function (highscores) {
 			if (highscores) {
-				self.highscores = highscore;
-				self.runtime.trigger(pluginProto.cnds.OnHighscores, self);
+				self.highscores = highscores;
+				self.runtime.trigger(pluginProto.cnds.OnHighScores, self);
 			}
 		};
 
-		this.airConsole.onHighscoreStored = function (highscore) {
-			if (highscore) {
-				self.highscores = highscore;
-				self.runtime.trigger(pluginProto.cnds.OnHighscoreStored, self);
+		this.airConsole.onHighscoreStored = function (highscores) {
+			if (highscores) {
+				self.highscores = highscores;
+				self.runtime.trigger(pluginProto.cnds.OnHighScoreStored, self);
 			}
 		};
 
@@ -276,11 +276,21 @@ function AirConsoleOffline() {
 	};
 
 	Cnds.prototype.OnMessageIs = function (property, value) {
-		return (this.message.hasOwnProperty(property) && this.message[property] == value);
+		if (typeof this.message === 'string' && property === 'message') {
+			return this.message === value;
+		}
+		else {
+			return (this.message.hasOwnProperty(property) && this.message[property] == value);
+		}
 	};
 
 	Cnds.prototype.OnMessageFromIs = function (property, value, deviceId) {
-		return (this.message.hasOwnProperty(property) && this.message[property] == value && this.deviceId === deviceId);
+		if (typeof this.message === 'string' && property === 'message') {
+			return (this.message === value && this.deviceId === deviceId);
+		}
+		else {
+			return (this.message.hasOwnProperty(property) && this.message[property] == value && this.deviceId === deviceId);
+		}
 	};
 
 	Cnds.prototype.OnMessageHasProperty = function (property) {
