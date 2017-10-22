@@ -104,7 +104,7 @@ AddCondition(22, 0, "Ad shown", "Ads", "Ad shown", "True if an ad was shown.", "
 
 AddCondition(23, 0, "Is ad showing", "Ads", "Is ad showing", "True if an ad is currently showing.", "IsAdShowing");
 
-AddCondition(24, 0, "On device motion", "Controller only", "On device motion", "Triggered every X millisecond if the plugin property has the 'Device motion' property set higher than 0. This only works for controllers.", "OnDeviceMotion");
+AddCondition(24, cf_trigger, "On device motion", "Controller only", "On device motion", "Triggered every X millisecond if the plugin property has the 'Device motion' property set higher than 0. This only works for controllers.", "OnDeviceMotion");
 
 ////////////////////////////////////////
 // Actions
