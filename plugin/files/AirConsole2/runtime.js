@@ -474,6 +474,12 @@ function AirConsoleOffline() {
 		}
 	};
 
+	Acts.prototype.SetOrientation = function (orientation) {
+		if (this.isController) {
+			this.airConsole.setOrientation((orientation === 1) ? AirConsole.ORIENTATION_PORTRAIT : AirConsole.ORIENTATION_LANDSCAPE);
+		}
+	};
+
 	Acts.prototype.GetPremium = function () {
 		this.airConsole.getPremium();
 	};

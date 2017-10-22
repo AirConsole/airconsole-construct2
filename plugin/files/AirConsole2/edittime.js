@@ -186,6 +186,11 @@ AddAction(17, af_none, "Get premium", "Profile", "(Controller only) Offers the u
 AddNumberParam("Time", "Duration, in milliseconds, of the vibration.");
 AddAction(18, af_none, "Vibrate", "Device", "(Controller only) Vibrate the controller for {0} millisecond", "Vibrate", "Vibrate");
 
+AddComboParamOption("Landscape");
+AddComboParamOption("Portrait");
+AddComboParam("Orientation", "Desired controller orientation.", 0);
+AddAction(19, af_none, "Set orientation", "Controller only", "Set orientation to {0}", "Set orientation", "SetOrientation");
+
 
 ////////////////////////////////////////
 // Expressions
