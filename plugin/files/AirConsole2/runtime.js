@@ -668,7 +668,7 @@ function AirConsoleOffline() {
 	};
 
 	Exps.prototype.GetThisDeviceId = function (ret) {
-		if (this.properties[1] === 1) {
+		if (this.isController) {
 			ret.set_int(this.airConsole.getDeviceId());
 		}
 		else {
