@@ -87,6 +87,7 @@ function AirConsoleOffline() {
 		this.runtime = type.runtime;
 		this.maxPlayers;
 		this.gameReady = false;
+		this.isController;
 		this.deviceId;
 		this.message;
 		this.adCompleted = 0;
@@ -132,8 +133,9 @@ function AirConsoleOffline() {
 		}
 
 		this.maxPlayers = self.properties[0];
+		this.isController = (self.properties[1] === 1) ? true : false;
 
-		if (self.properties[1] === 1) {
+		if (this.isController) {
 			this.airConsole.onReady = function () {
 				self.airConsole.message(AirConsole.SCREEN, {
 					handshake: true
@@ -464,7 +466,12 @@ function AirConsoleOffline() {
 	};
 
 	Acts.prototype.EditProfile = function () {
-		this.airConsole.editProfile();
+		if (this.isController) {
+			this.airConsole.editProfile();
+		}
+		else {
+			console.warn('You can\' use "Edit profile" on screen');
+		}
 	};
 
 	Acts.prototype.GetPremium = function () {
