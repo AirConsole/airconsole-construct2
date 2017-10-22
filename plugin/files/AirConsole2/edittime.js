@@ -184,7 +184,7 @@ AddAction(16, af_none, "Edit profile", "Profile", "(Controller only) Edit the pl
 AddAction(17, af_none, "Get premium", "Profile", "(Controller only) Offers the user to become a premium member. Can only be called from controllers. If you call getPremium in development mode, the device becomes premium immediately", "Get Premium", "GetPremium");
 
 AddNumberParam("Time", "Duration, in milliseconds, of the vibration.");
-AddAction(18, af_none, "Vibrate", "Device", "(Controller only) Vibrate the controller for {0} millisecond", "Vibrate", "Vibrate");
+AddAction(18, af_none, "Vibrate", "Controller only", "(Controller only) Vibrate the controller for {0} millisecond", "Vibrate", "Vibrate");
 
 AddComboParamOption("Landscape");
 AddComboParamOption("Portrait");
