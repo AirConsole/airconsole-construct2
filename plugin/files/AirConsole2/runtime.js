@@ -183,14 +183,14 @@ function AirConsoleOffline() {
 			self.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, self);
 		};
 
-		this.airConsole.onHighscores = function (highscores) {
+		this.airConsole.onHighScores = function (highscores) {
 			if (highscores) {
 				self.highscores = highscores;
 				self.runtime.trigger(pluginProto.cnds.OnHighScores, self);
 			}
 		};
 
-		this.airConsole.onHighscoreStored = function (highscores) {
+		this.airConsole.onHighScoreStored = function (highscores) {
 			if (highscores) {
 				self.highscores = highscores;
 				self.runtime.trigger(pluginProto.cnds.OnHighScoreStored, self);
