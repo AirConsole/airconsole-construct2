@@ -697,6 +697,7 @@ function AirConsoleOffline() {
 	pluginProto.exps = new Exps();
 
 	function getProperties(object) {
+		if (object === null) return;
 		var data = new Object();
 		$.each(object, function(property, value) {
 			if (typeof value === 'object') {
