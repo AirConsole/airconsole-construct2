@@ -1,8 +1,6 @@
 ⚡ ⚡ ⚡ **ATTENTION:** THIS PLUGIN IS NOT MAINTAINED ANYMORE. We, however, appreciate any pull requests. Thank you for your understanding
 
 
-⚠️ We also have a [Construct3 Community plugin](https://github.com/AirConsole/airconsole-construct3/)
-
 # AirConsole Construct2
 Construct2 plugin second generation for AirConsole version 1.7.0
 
