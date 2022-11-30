@@ -2,11 +2,11 @@
 	return {
 		"name":			"AirConsole 2",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"AirConsole2",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7.0.19",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		"version":		"1.8.0.0",				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		"description":	"Extend your game with local multiplayer fun",
 		"author":		"Psychokiller1888 for N-Dreams AG",
 		"help url":		"https://github.com/AirConsole/airconsole-construct2/wiki",
-		"dependency": 	"https://www.airconsole.com/api/airconsole-1.7.0.js",
+		"dependency": 	"https://www.airconsole.com/api/airconsole-1.8.0.js",
 		"category":		"Web",					// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
 		"rotatable":	false,					// only used when "type" is "world".  Enables an angle property on the object.
@@ -282,7 +282,7 @@ var property_list = [
 	new cr.Property(ept_combo, "Synchronize time", "false", "CONTROLLER ONLY - Enable time synchronization with server. This is needed for 'getServerTime()'", "false|true"),
 	new cr.Property(ept_integer, "Device motion", 0, "CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every 'Device motion' milliseconds with the data from the accelerometer and gyroscope")
 ];
-	
+
 // Called by IDE when a new object type is to be created
 function CreateIDEObjectType() {
 	return new IDEObjectType();
@@ -301,17 +301,17 @@ IDEObjectType.prototype.CreateInstance = function(instance) {
 // Class representing an individual instance of an object in the IDE
 function IDEInstance(instance, type) {
 	assert2(this instanceof arguments.callee, "Constructor called as a function");
-	
+
 	// Save the constructor parameters
 	this.instance = instance;
 	this.type = type;
-	
+
 	// Set the default property values from the property table
 	this.properties = {};
-	
+
 	for (var i = 0; i < property_list.length; i++)
 		this.properties[property_list[i].name] = property_list[i].initial_value;
-		
+
 	// Plugin-specific variables
 	// this.myValue = 0...
 }
