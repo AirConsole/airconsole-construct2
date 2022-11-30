@@ -5,7 +5,7 @@ Construct2 plugin second generation for AirConsole version 1.8.0
 AirConsole can be visited on www.airconsole.com and is a great way for unique game experience using your smartphones as controllers
 Construct 2 is a great 2D game creation tool that allows anybody, with or without coding experiences, to start developping their own games
 
-This plugin allows you to build both games and the controllers with Construct2! Don't forget to check out the external merging tool when you need to package your game before testing: https://github.com/Psychokiller1888/AirConsoleMerger/releases
+This plugin allows you to build both games and the controllers with Construct2! Don't forget to check out the external merging tool when you need to package your game before testing: [AirConsoleMerger](https://github.com/Psychokiller1888/AirConsoleMerger/releases)
 
 ## Installation
 
@@ -13,7 +13,7 @@ This plugin allows you to build both games and the controllers with Construct2! 
 
 More information about the plugin:
 
-http://developers.airconsole.com/#/guides/construct2
+[AirConsole guides](http://developers.airconsole.com/#/guides/construct2)
 
 ## Version 1.8.0.0
 
