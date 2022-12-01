@@ -279,12 +279,12 @@ ACESDone()
 
 letproperty_list = [
 	new cr.Property(ept_integer, 'Max players', 4, 'Define the maximum amount of players'),
-	new cr.Property(ept_combo, 'Use translation', 'false', 'Enables AirConsole translation functions', 'false|true'),
 	new cr.Property(ept_combo, 'Type', 'Screen', 'Is this project intended to be a controller?', 'Screen|Controller'),
 	new cr.Property(ept_section, 'Controller only', 'These properties only take effect if \'Is controller\' is checked'),
 	new cr.Property(ept_combo, 'Orientation', 'Landscape', 'CONTROLLER ONLY - Sets this controller in either PORTRAIT or LANDSCAPE mode', 'Landscape|Portrait'),
 	new cr.Property(ept_combo, 'Synchronize time', 'false', 'CONTROLLER ONLY - Enable time synchronization with server. This is needed for \'getServerTime()\'', 'false|true'),
-	new cr.Property(ept_integer, 'Device motion', 0, 'CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every \'Device motion\' milliseconds with the data from the accelerometer and gyroscope')
+	new cr.Property(ept_integer, 'Device motion', 0, 'CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every \'Device motion\' milliseconds with the data from the accelerometer and gyroscope'),
+	new cr.Property(ept_combo, 'Use translation', 'false', 'Enables AirConsole translation functions', 'false|true'),
 ]
 
 // Called by IDE when a new object type is to be created

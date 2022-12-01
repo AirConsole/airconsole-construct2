@@ -135,7 +135,8 @@ function AirConsoleOffline() {
 					orientation:      AirConsole.ORIENTATION_LANDSCAPE,
 					synchronize_time: false,
 					setup_document:   true,
-					device_motion:    false
+					device_motion:    false,
+					translation:      false
 				}
 				if (self.properties[2] === 1) {
 					config.orientation = AirConsole.ORIENTATION_PORTRAIT
@@ -145,6 +146,9 @@ function AirConsoleOffline() {
 				}
 				if (self.properties[4] > 0) {
 					config.device_motion = self.properties[4]
+				}
+				if (self.properties[5] === 0) {
+					config.translation = true
 				}
 
 				this.airConsole = new AirConsole(config)
