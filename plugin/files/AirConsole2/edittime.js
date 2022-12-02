@@ -261,6 +261,9 @@ AddExpression(21, ef_return_number, "Ads", "Ads", "IsAddShowing", "Returns 1 if 
 AddExpression(22, ef_return_number, "Profile", "Profile", "GetThisDeviceId", "Returns the current device id from which this function is called.");
 
 AddExpression(23, ef_return_number, "Controller only", "Controller only", "MotionData", "Returns a JSON converted C2Dictionary containing the device motion data. This works for controllers only, and the plugin should have it's 'Device motion' property set higher than 0");
+
+AddNumberParam("Device id", "Device id");
+AddExpression(24, ef_return_string, "Profile", "Profile", "GetLanguage", "Returns the current IETF language tag of a device e.g. \"en\" or \"en-US\"");
 ////////////////////////////////////////
 ACESDone();
 

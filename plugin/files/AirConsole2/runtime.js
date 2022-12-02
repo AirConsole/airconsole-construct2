@@ -60,6 +60,10 @@ function AirConsoleOffline() {
 	};
 	AirConsoleOffline.prototype.convertPlayerNumberToDeviceId = function() {console.log('AirConsole mock-up: Converting player number to device id')};
 	AirConsoleOffline.prototype.convertDeviceIdToPlayerNumber = function() {console.log('AirConsole mock-up: Converting device id to player number')};
+	AirConsoleOffline.prototype.getLanguage = function() {
+		console.log('AirConsole mock-up: Sending a message');
+		return 'en-US';
+	};
 }
 
 (function ()
@@ -86,6 +90,7 @@ function AirConsoleOffline() {
 		this.type = type;
 		this.runtime = type.runtime;
 		this.maxPlayers;
+		this.useTranslation = false;
 		this.gameReady = false;
 		this.isController;
 		this.deviceId;
@@ -137,6 +142,7 @@ function AirConsoleOffline() {
 
 		this.maxPlayers = self.properties[0];
 		this.isController = (self.properties[1] === 1);
+		this.useTranslation = (self.properties[2] === 1);
 
 		if (this.isController) {
 			this.airConsole.onReady = function () {
@@ -694,6 +700,15 @@ function AirConsoleOffline() {
 		}
 		else {
 			ret.set_string('');
+		}
+	};
+
+	Exps.prototype.GetLanguage = function (ret, deviceId) {
+		if (!this.useTranslation) {
+			console.log('Translation support not enabled. Please turn it on in your Construct 2 project settings.')
+			ret.set_string('')
+		} else {
+			ret.set_string(this.airConsole.getLanguage(deviceId));
 		}
 	};
 
