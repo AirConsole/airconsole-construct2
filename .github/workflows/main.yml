@@ -15,8 +15,14 @@ jobs:
         with:
           files: plugin/
           dest: c2airconsole.c2addon.test
-      - name: 🔧 Saving packed plugin
+      - name: 🔧 Saving artifact for testing
         uses: actions/upload-artifact@v1
         with:
           name: c2airconsole.c2addon.test
           path: ${{ github.workspace }}/c2airconsole.c2addon.test
+      - name: 🔧 Commit and push
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: '["${{ github.workspace }}/c2airconsole.c2addon.test"]'
+          message: 'Deploying plugin'
+          push: true
