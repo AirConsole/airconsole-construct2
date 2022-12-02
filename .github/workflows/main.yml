@@ -14,15 +14,15 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: plugin/
-          dest: c2airconsole.c2addon.test
+          dest: c2airconsole.c2addon
       - name: 🔧 Saving artifact for testing
         uses: actions/upload-artifact@v1
         with:
           name: c2airconsole.c2addon.test
-          path: ${{ github.workspace }}/c2airconsole.c2addon.test
+          path: ${{ github.workspace }}/c2airconsole.c2addon
       - name: 🔧 Commit and push
         uses: EndBug/add-and-commit@v7
         with:
-          add: '["${{ github.workspace }}/c2airconsole.c2addon.test"]'
+          add: '["${{ github.workspace }}/c2airconsole.c2addon"]'
           message: 'Deploying plugin'
           push: true
