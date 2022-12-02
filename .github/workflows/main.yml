@@ -11,5 +11,5 @@ jobs:
       - name: 🔧 Install zip
         uses: actions/checkout@v1
       - name: 🔧 Packaging c2addon
-        run: zip -r c2airconsole.c2addon.test
-        working-directory: ${{ github.workspace }}/plugin
+        run: zip -r c2airconsole.c2addon.test /plugin
+        working-directory: ${{ github.workspace }}
