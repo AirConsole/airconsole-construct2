@@ -722,8 +722,38 @@ function AirConsoleOffline() {
             console.log('Translation support not enabled. Please turn it on in your Construct 2 project settings.')
             ret.set_string('')
         } else {
-            ret.set_string(this.airConsole.getLanguage(deviceId))
+            ret.set_string(this.airConsole.getLanguage(deviceId) || 'en-US')
         }
+    }
+
+    Exps.prototype.GetTranslation = function (ret, id, values) {
+        if (!this.useTranslation) {
+            console.warn('Translation support not enabled. Please turn it on in your Construct 2 project settings.')
+            ret.set_string('')
+            return
+        }
+
+        if (!id) {
+            console.warn('Cannot fetch translation without a string id')
+            ret.set_string('')
+            return
+        }
+
+        if (values) {
+            try {
+                values = JSON.parse(values)
+            } catch {
+                console.warn('Couldn\'t parse passed values for AirConsole GetTranslation.')
+                values = {}
+            }
+            if (values.hasOwnProperty('foo')) {
+                console.warn('Removed "foo" from translation values')
+                delete values['foo']
+            }
+        } else {
+            values = {}
+        }
+        ret.set_string(this.airConsole.getTranslation(id, values) || '')
     }
 
     pluginProto.exps = new Exps()

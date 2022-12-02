@@ -263,7 +263,11 @@ AddExpression(22, ef_return_number, 'Profile', 'Profile', 'GetThisDeviceId', 'Re
 AddExpression(23, ef_return_number, 'Controller only', 'Controller only', 'MotionData', 'Returns a JSON converted C2Dictionary containing the device motion data. This works for controllers only, and the plugin should have it\'s \'Device motion\' property set higher than 0')
 
 AddNumberParam('Device id', 'Device id')
-AddExpression(24, ef_return_string, 'Profile', 'Profile', 'GetLanguage', 'Returns the current IETF language tag of a device e.g. "en" or "en-US"')
+AddExpression(24, ef_return_string, 'Translations', 'Translations', 'GetLanguage', 'Returns the current IETF language tag of a device e.g. "en" or "en-US"')
+
+AddStringParam('String id', 'The id of the translation string.', '')
+AddStringParam('Replacements', 'A dictionary of values that should be used for replacement in the translated string. E.g. if a translated string is "Hi %name%" and values is {"name": "Tom"} then this will be replaced to "Hi Tom".')
+AddExpression(25, ef_return_string, 'Translations', 'Translations', 'GetTranslation', 'Gets a translation for the users current language See http://developers.airconsole.com/#!/guides/translations')
 ////////////////////////////////////////
 ACESDone()
 
