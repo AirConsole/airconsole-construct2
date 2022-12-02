@@ -9,7 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔧 Install zip
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: 🔧 Packaging c2addon
-        run: zip -r c2airconsole.c2addon.test plugin
-        working-directory: ${{ github.workspace }}
+        uses: vimtor/action-zip@v1
+        with:
+          files: plugin/
+          dest: c2airconsole.c2addon.test
+      - name: 🔧 Saving packed plugin
+        uses: actions/upload-artifact@v1
+        with:
+          name: c2airconsole.c2addon.test
+          path: ${{ github.workspace }}/c2airconsole.c2addon.test
