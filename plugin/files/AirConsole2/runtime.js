@@ -268,6 +268,22 @@ function AirConsoleOffline() {
             self.motionData = data
             self.runtime.trigger(pluginProto.cnds.OnDeviceMotion, self)
         }
+
+        this.airConsole.onMute = function (mute) {
+            if (mute) {
+                self.runtime.trigger(pluginProto.cnds.OnMute, self)
+            } else {
+                self.runtime.trigger(pluginProto.cnds.OnUnmute, self)
+            }
+        }
+
+        this.airConsole.onPause = function () {
+            self.runtime.trigger(pluginProto.cnds.OnPause, self)
+        }
+
+        this.airConsole.onResume = function () {
+            self.runtime.trigger(pluginProto.cnds.OnResume, self)
+        }
     }
 
     // only called if a layout object - draw to a canvas 2D context
