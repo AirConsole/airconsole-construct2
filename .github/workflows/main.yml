@@ -12,4 +12,4 @@ jobs:
         uses: montudor/action-zip@v1
       - name: 🔧 Packaging c2addon
         run: zip -qq -r c2airconsole.c2addon.test files info.xml
-        working-directory: plugin
+        working-directory: /home/runner/work/airconsole-construct2/plugin
