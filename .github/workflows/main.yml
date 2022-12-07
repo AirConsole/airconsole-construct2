@@ -1,15 +1,26 @@
 name: Build c2addon
 
-on:
-  release:
-    types: [created]
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 🔧 Install zip
-        uses: actions/checkout@v1
-      - name: 🔧 Packaging c2addon
-        run: zip -r c2airconsole.c2addon.test
-        working-directory: ${{ github.workspace }}/plugin
+      - name: ➕ Install zip
+        uses: actions/checkout@v2
+      - name: 📦 Packaging c2addon
+        uses: vimtor/action-zip@v1
+        with:
+          files: plugin/
+          dest: c2airconsole.c2addon
+      - name: ✅ Saving artifact for testing
+        uses: actions/upload-artifact@v1
+        with:
+          name: c2airconsole.c2addon
+          path: ${{ github.workspace }}/c2airconsole.c2addon
+      - name: 🔖 Commit and push
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: '["${{ github.workspace }}/c2airconsole.c2addon"]'
+          message: '🚀 Deploying plugin'
+          push: true
