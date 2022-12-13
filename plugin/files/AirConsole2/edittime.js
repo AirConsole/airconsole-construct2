@@ -1,30 +1,30 @@
 ﻿function GetPluginSettings() {
-    return {
-        'name': 'AirConsole 2',			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
-        'id': 'AirConsole2',			// this is used to identify this plugin and is saved to the project; never change it
-        'version': '1.8.0.0',				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
-        'description': 'Extend your game with local multiplayer fun',
-        'author': 'Psychokiller1888 for N-Dreams AG',
-        'help url': 'https://github.com/AirConsole/airconsole-construct2/wiki',
-        'dependency': 'https://www.airconsole.com/api/airconsole-1.8.0.js',
-        'category': 'Web',					// Prefer to re-use existing categories, but you can set anything here
-        'type': 'object',				// either "world" (appears in layout and is drawn), else "object"
-        'rotatable': false,					// only used when "type" is "world".  Enables an angle property on the object.
-        'flags': pf_singleglobal			// uncomment lines to enable flags...
-        //	| pf_singleglobal		// exists project-wide, e.g. mouse, keyboard.  "type" must be "object".
-        //	| pf_texture			// object has a single texture (e.g. tiled background)
-        //	| pf_position_aces		// compare/set/get x, y...
-        //	| pf_size_aces			// compare/set/get width, height...
-        //	| pf_angle_aces			// compare/set/get angle (recommended that "rotatable" be set to true)
-        //	| pf_appearance_aces	// compare/set/get visible, opacity...
-        //	| pf_tiling				// adjusts image editor features to better suit tiled images (e.g. tiled background)
-        //	| pf_animations			// enables the animations system.  See 'Sprite' for usage
-        //	| pf_zorder_aces		// move to top, bottom, layer...
-        //  | pf_nosize				// prevent resizing in the editor
-        //	| pf_effects			// allow WebGL shader effects to be added
-        //  | pf_predraw			// set for any plugin which draws and is not a sprite (i.e. does not simply draw
-        // a single non-tiling image the size of the object) - required for effects to work properly
-    }
+	return {
+		'name': 'AirConsole 2',			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
+		'id': 'AirConsole2',			// this is used to identify this plugin and is saved to the project; never change it
+		'version': '1.8.0.0',				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		'description': 'Extend your game with local multiplayer fun',
+		'author': 'Psychokiller1888 for N-Dreams AG',
+		'help url': 'https://github.com/AirConsole/airconsole-construct2/wiki',
+		'dependency': 'https://www.airconsole.com/api/airconsole-1.8.0.js',
+		'category': 'Web',					// Prefer to re-use existing categories, but you can set anything here
+		'type': 'object',				// either "world" (appears in layout and is drawn), else "object"
+		'rotatable': false,					// only used when "type" is "world".  Enables an angle property on the object.
+		'flags': pf_singleglobal			// uncomment lines to enable flags...
+		//	| pf_singleglobal		// exists project-wide, e.g. mouse, keyboard.  "type" must be "object".
+		//	| pf_texture			// object has a single texture (e.g. tiled background)
+		//	| pf_position_aces		// compare/set/get x, y...
+		//	| pf_size_aces			// compare/set/get width, height...
+		//	| pf_angle_aces			// compare/set/get angle (recommended that "rotatable" be set to true)
+		//	| pf_appearance_aces	// compare/set/get visible, opacity...
+		//	| pf_tiling				// adjusts image editor features to better suit tiled images (e.g. tiled background)
+		//	| pf_animations			// enables the animations system.  See 'Sprite' for usage
+		//	| pf_zorder_aces		// move to top, bottom, layer...
+		//  | pf_nosize				// prevent resizing in the editor
+		//	| pf_effects			// allow WebGL shader effects to be added
+		//  | pf_predraw			// set for any plugin which draws and is not a sprite (i.e. does not simply draw
+		// a single non-tiling image the size of the object) - required for effects to work properly
+	}
 }
 
 ////////////////////////////////////////
@@ -289,46 +289,46 @@ ACESDone()
 // new cr.Property(ept_link,		name,	link_text,		description, "firstonly")		// has no associated value; simply calls "OnPropertyChanged" on click
 
 var property_list = [
-    new cr.Property(ept_integer, 'Max players', 4, 'Define the maximum amount of players'),
-    new cr.Property(ept_combo, 'Type', 'Screen', 'Is this project intended to be a controller?', 'Screen|Controller'),
-    new cr.Property(ept_combo, 'Use translations', 'false', 'Use AirConsole server translations service', 'false|true'),
-    new cr.Property(ept_section, 'Controller only', 'These properties only take effect if \'Is controller\' is checked'),
-    new cr.Property(ept_combo, 'Orientation', 'Landscape', 'CONTROLLER ONLY - Sets this controller in either PORTRAIT or LANDSCAPE mode', 'Landscape|Portrait'),
-    new cr.Property(ept_combo, 'Synchronize time', 'false', 'CONTROLLER ONLY - Enable time synchronization with server. This is needed for \'getServerTime()\'', 'false|true'),
-    new cr.Property(ept_integer, 'Device motion', 0, 'CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every \'Device motion\' milliseconds with the data from the accelerometer and gyroscope')
+	new cr.Property(ept_integer, 'Max players', 4, 'Define the maximum amount of players'),
+	new cr.Property(ept_combo, 'Type', 'Screen', 'Is this project intended to be a controller?', 'Screen|Controller'),
+	new cr.Property(ept_combo, 'Use translations', 'false', 'Use AirConsole server translations service', 'false|true'),
+	new cr.Property(ept_section, 'Controller only', 'These properties only take effect if \'Is controller\' is checked'),
+	new cr.Property(ept_combo, 'Orientation', 'Landscape', 'CONTROLLER ONLY - Sets this controller in either PORTRAIT or LANDSCAPE mode', 'Landscape|Portrait'),
+	new cr.Property(ept_combo, 'Synchronize time', 'false', 'CONTROLLER ONLY - Enable time synchronization with server. This is needed for \'getServerTime()\'', 'false|true'),
+	new cr.Property(ept_integer, 'Device motion', 0, 'CONTROLLER ONLY - If set > 0, onDeviceMotion gets called every \'Device motion\' milliseconds with the data from the accelerometer and gyroscope')
 ]
 
 // Called by IDE when a new object type is to be created
 function CreateIDEObjectType() {
-    return new IDEObjectType()
+	return new IDEObjectType()
 }
 
 // Class representing an object type in the IDE
 function IDEObjectType() {
-    assert2(this instanceof arguments.callee, 'Constructor called as a function')
+	assert2(this instanceof arguments.callee, 'Constructor called as a function')
 }
 
 // Called by IDE when a new object instance of this type is to be created
 IDEObjectType.prototype.CreateInstance = function (instance) {
-    return new IDEInstance(instance)
+	return new IDEInstance(instance)
 }
 
 // Class representing an individual instance of an object in the IDE
 function IDEInstance(instance, type) {
-    assert2(this instanceof arguments.callee, 'Constructor called as a function')
+	assert2(this instanceof arguments.callee, 'Constructor called as a function')
 
-    // Save the constructor parameters
-    this.instance = instance
-    this.type = type
+	// Save the constructor parameters
+	this.instance = instance
+	this.type = type
 
-    // Set the default property values from the property table
-    this.properties = {}
+	// Set the default property values from the property table
+	this.properties = {}
 
-    for (var i = 0; i < property_list.length; i++)
-        this.properties[property_list[i].name] = property_list[i].initial_value
+	for (var i = 0; i < property_list.length; i++)
+		this.properties[property_list[i].name] = property_list[i].initial_value
 
-    // Plugin-specific variables
-    // this.myValue = 0...
+	// Plugin-specific variables
+	// this.myValue = 0...
 }
 
 // Called when inserted via Insert Object Dialog for the first time

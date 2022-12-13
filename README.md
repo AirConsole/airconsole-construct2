@@ -15,6 +15,10 @@ More information about the plugin:
 
 [AirConsole guides](http://developers.airconsole.com/#/guides/construct2)
 
+## Version 1.8.0.1
+
+- Minor fixes
+
 ## Version 1.8.0.0
 
 * Updating to AirConsole API v. 1.8.0
