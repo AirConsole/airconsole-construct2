@@ -114,6 +114,7 @@ function AirConsoleOffline() {
 		this.maxPlayers
 		this.useTranslation = false
 		this.gameReady = false
+		this.airConsoleReady = false
 		this.isController
 		this.deviceId
 		this.message
@@ -175,6 +176,22 @@ function AirConsoleOffline() {
 				})
 			}
 		}
+
+		this.airConsole.onReady = function (code) {
+			console.log('onReady triggered')
+			self.airConsoleReady = true
+		}
+
+		this.airConsole.onPause = function () {
+			console.log('Pause triggered')
+			self.runtime.trigger(pluginProto.cnds.OnPause, self)
+		}
+
+		this.airConsole.onResume = function () {
+			console.log('Resume triggered')
+			self.runtime.trigger(pluginProto.cnds.OnResume, self)
+		}
+
 
 		this.airConsole.onConnect = function (deviceId) {
 			if (self.gameReady) {
@@ -271,14 +288,6 @@ function AirConsoleOffline() {
 
 		this.airConsole.onMute = function (mute) {
 			console.warn('Using deprecated action "onMute/onUnmute"')
-		}
-
-		this.airConsole.onPause = function () {
-			self.runtime.trigger(pluginProto.cnds.OnPause, self)
-		}
-
-		this.airConsole.onResume = function () {
-			self.runtime.trigger(pluginProto.cnds.OnResume, self)
 		}
 	}
 
@@ -437,6 +446,7 @@ function AirConsoleOffline() {
 		var deviceIds = this.airConsole.getControllerDeviceIds()
 		for (var i = 0; i < deviceIds.length; i++) {
 			this.airConsole.onConnect(deviceIds[i])
+			this.airConsole.onCustomDeviceStateChange(deviceIds[i], null)
 		}
 	}
 

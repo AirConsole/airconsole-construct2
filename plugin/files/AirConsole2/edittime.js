@@ -2,7 +2,7 @@
 	return {
 		'name': 'AirConsole 2',			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		'id': 'AirConsole2',			// this is used to identify this plugin and is saved to the project; never change it
-		'version': '1.8.0.0',				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		'version': '1.8.0.3',				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		'description': 'Extend your game with local multiplayer fun',
 		'author': 'Psychokiller1888 for N-Dreams AG',
 		'help url': 'https://github.com/AirConsole/airconsole-construct2/wiki',
