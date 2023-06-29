@@ -17,7 +17,7 @@ More information about the plugin:
 
 ## Version 1.8.0.2
 
-- Deprecated onMute/onUnmute
+- Deprecated onMute/onUnmute as API 1.8.0
 
 ## Version 1.8.0.1
 
