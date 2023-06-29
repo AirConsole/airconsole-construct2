@@ -270,11 +270,7 @@ function AirConsoleOffline() {
 		}
 
 		this.airConsole.onMute = function (mute) {
-			if (mute) {
-				self.runtime.trigger(pluginProto.cnds.OnMute, self)
-			} else {
-				self.runtime.trigger(pluginProto.cnds.OnUnmute, self)
-			}
+			console.warn('Using deprecated action "onMute/onUnmute"')
 		}
 
 		this.airConsole.onPause = function () {

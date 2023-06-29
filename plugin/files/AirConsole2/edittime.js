@@ -106,9 +106,9 @@ AddCondition(23, 0, 'Is ad showing', 'Ads', 'Is ad showing', 'True if an ad is c
 
 AddCondition(24, cf_trigger, 'On device motion', 'Controller only', 'On device motion', 'Triggered every X millisecond if the plugin property has the \'Device motion\' property set higher than 0. This only works for controllers.', 'OnDeviceMotion')
 
-AddCondition(25, cf_trigger, 'On mute', 'Signalling', 'On mute', 'Triggered when the game should mute any sound.', 'OnMute')
+AddCondition(25, cf_trigger, 'On mute', 'Deprecated', 'On mute', 'Triggered when the game should mute any sound.', 'OnMute')
 
-AddCondition(26, cf_trigger, 'On unmute', 'Signalling', 'On unmute', 'Triggered when the game should unmute all sounds.', 'OnUnmute')
+AddCondition(26, cf_trigger, 'On unmute', 'Deprecated', 'On unmute', 'Triggered when the game should unmute all sounds.', 'OnUnmute')
 
 AddCondition(27, cf_trigger, 'On pause', 'Signalling', 'On pause', 'Triggered when the game should be paused.', 'OnPause')
 
