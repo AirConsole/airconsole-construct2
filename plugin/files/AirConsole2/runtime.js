@@ -98,7 +98,7 @@ function AirConsoleOffline() {
 	/////////////////////////////////////
 	// Object type class
 	pluginProto.Type = function (plugin) {
-		instanceProto = plugin
+		this.plugin = plugin
 		this.runtime = plugin.runtime
 	}
 
@@ -113,14 +113,14 @@ function AirConsoleOffline() {
 	pluginProto.Instance = function (type) {
 		this.type = type
 		this.runtime = type.runtime
-		this.maxPlayers
+		this.maxPlayers = 0
 		this.useTranslation = false
 		this.gameReady = false
 		this.airConsoleReady = false
 		this.airConsoleStarted = false
-		this.isController
-		this.deviceId
-		this.message
+		this.isController = false
+		this.deviceId = 0
+		this.message = ''
 		this.adCompleted = 0
 		this.adShowing = 0
 		this.persistentData = null
