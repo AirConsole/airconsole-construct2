@@ -132,11 +132,12 @@ function AirConsoleOffline() {
 		this.motionData = {}
 	}
 
-	var pluginInstance = pluginProto.Instance
+	var pluginInstance = null
 	var instanceProto = pluginProto.Instance.prototype
 
 	// called whenever an instance is created
 	instanceProto.onCreate = function () {
+		pluginInstance = this
 	}
 
 	// only called if a layout object - draw to a canvas 2D context
@@ -327,9 +328,9 @@ function AirConsoleOffline() {
 			pluginInstance.airConsole = new AirConsoleOffline()
 		}
 
-		pluginInstance.maxPlayers = self.properties[0]
-		pluginInstance.isController = (self.properties[1] === 1)
-		pluginInstance.useTranslation = (self.properties[2] === 1)
+		pluginInstance.maxPlayers = pluginInstance.properties[0]
+		pluginInstance.isController = (pluginInstance.properties[1] === 1)
+		pluginInstance.useTranslation = (pluginInstance.properties[2] === 1)
 
 		if (pluginInstance.isController) {
 			pluginInstance.airConsole.onReady = function () {
@@ -344,21 +345,21 @@ function AirConsoleOffline() {
 		}
 
 		pluginInstance.airConsole.onPause = function () {
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnPause, self)
+			pluginInstance.runtime.trigger(pluginProto.cnds.OnPause, pluginInstance)
 		}
 
 		pluginInstance.airConsole.onResume = function () {
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnResume, self)
+			pluginInstance.runtime.trigger(pluginProto.cnds.OnResume, pluginInstance)
 		}
 
 
 		pluginInstance.airConsole.onConnect = function (deviceId) {
 			if (pluginInstance.gameReady) {
 				pluginInstance.deviceId = deviceId
-				if (pluginInstance.airConsole.getControllerDeviceIds().length > self.maxPlayers) {
-					pluginInstance.runtime.trigger(pluginProto.cnds.OnTooManyPlayers, self)
+				if (pluginInstance.airConsole.getControllerDeviceIds().length > pluginInstance.maxPlayers) {
+					pluginInstance.runtime.trigger(pluginProto.cnds.OnTooManyPlayers, pluginInstance)
 				} else {
-					pluginInstance.runtime.trigger(pluginProto.cnds.OnConnect, self)
+					pluginInstance.runtime.trigger(pluginProto.cnds.OnConnect, pluginInstance)
 				}
 			}
 		}
