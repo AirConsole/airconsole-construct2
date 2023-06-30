@@ -165,7 +165,7 @@ function AirConsoleOffline() {
 	}
 
 	Cnds.prototype.OnDeviceDisconnect = function (deviceId) {
-		return pluginInstance.deviceId === deviceId
+		return this.deviceId === deviceId
 	}
 
 	Cnds.prototype.OnTooManyPlayers = function () {
@@ -181,31 +181,31 @@ function AirConsoleOffline() {
 	}
 
 	Cnds.prototype.OnMessageFrom = function (deviceId) {
-		return pluginInstance.deviceId === deviceId
+		return this.deviceId === deviceId
 	}
 
 	Cnds.prototype.OnMessageIs = function (property, value) {
-		if (typeof pluginInstance.message === 'string') {
-			return pluginInstance.message === value
+		if (typeof this.message === 'string') {
+			return this.message === value
 		} else {
-			return (pluginInstance.message.hasOwnProperty(property) && pluginInstance.message[property] == value)
+			return (this.message.hasOwnProperty(property) && this.message[property] == value)
 		}
 	}
 
 	Cnds.prototype.OnMessageFromIs = function (property, value, deviceId) {
-		if (typeof pluginInstance.message === 'string') {
-			return (pluginInstance.message === value && pluginInstance.deviceId === deviceId)
+		if (typeof this.message === 'string') {
+			return (this.message === value && this.deviceId === deviceId)
 		} else {
-			return (pluginInstance.message.hasOwnProperty(property) && pluginInstance.message[property] == value && pluginInstance.deviceId === deviceId)
+			return (this.message.hasOwnProperty(property) && this.message[property] == value && this.deviceId === deviceId)
 		}
 	}
 
 	Cnds.prototype.OnMessageHasProperty = function (property) {
-		return (pluginInstance.message.hasOwnProperty(property))
+		return (this.message.hasOwnProperty(property))
 	}
 
 	Cnds.prototype.IsUserLoggedIn = function (deviceId) {
-		return pluginInstance.airConsole.isUserLoggedIn(deviceId)
+		return this.airConsole.isUserLoggedIn(deviceId)
 	}
 
 	Cnds.prototype.OnAdComplete = function () {
@@ -245,23 +245,23 @@ function AirConsoleOffline() {
 	}
 
 	Cnds.prototype.IsPremium = function (deviceId) {
-		return pluginInstance.airConsole.isPremium(deviceId)
+		return this.airConsole.isPremium(deviceId)
 	}
 
 	Cnds.prototype.IsPluginOffline = function () {
-		return pluginInstance.runningOffline
+		return this.runningOffline
 	}
 
 	Cnds.prototype.IsMultipartMessage = function () {
-		return (pluginInstance.message !== null && typeof pluginInstance.message === 'object' && Object.keys(pluginInstance.message).length > 1)
+		return (this.message !== null && typeof this.message === 'object' && Object.keys(this.message).length > 1)
 	}
 
 	Cnds.prototype.AdShown = function () {
-		return pluginInstance.adCompleted === 1
+		return this.adCompleted === 1
 	}
 
 	Cnds.prototype.IsAdShowing = function () {
-		return pluginInstance.adShowing === 1
+		return this.adShowing === 1
 	}
 
 	Cnds.prototype.OnDeviceMotion = function () {
@@ -292,171 +292,172 @@ function AirConsoleOffline() {
 	}
 
 	Acts.prototype.StartAirConsole = function () {
-		if (pluginInstance.airConsoleStarted) {
+		var self = this
+		if (this.airConsoleStarted) {
 			return
 		}
 
 		if (typeof AirConsole !== 'undefined') {
-			pluginInstance.runningOffline = false
-			if (pluginInstance.properties[1] === 1) {
-				pluginInstance.gameReady = true
+			this.runningOffline = false
+			if (this.properties[1] === 1) {
+				this.gameReady = true
 				var config = {
 					orientation: AirConsole.ORIENTATION_LANDSCAPE,
 					synchronize_time: false,
 					setup_document: true,
 					device_motion: false
 				}
-				if (pluginInstance.properties[2] === 0) {
+				if (this.properties[2] === 0) {
 					config.translation = true
 				}
-				if (pluginInstance.properties[3] === 1) {
+				if (this.properties[3] === 1) {
 					config.orientation = AirConsole.ORIENTATION_PORTRAIT
 				}
-				if (pluginInstance.properties[4] === 0) {
+				if (this.properties[4] === 0) {
 					config.synchronize_time = true
 				}
-				if (pluginInstance.properties[5] > 0) {
-					config.device_motion = pluginInstance.properties[4]
+				if (this.properties[5] > 0) {
+					config.device_motion = this.properties[4]
 				}
 
-				pluginInstance.airConsole = new AirConsole(config)
+				this.airConsole = new AirConsole(config)
 			} else {
-				pluginInstance.airConsole = new AirConsole()
+				this.airConsole = new AirConsole()
 			}
 		} else {
-			pluginInstance.runningOffline = true
-			pluginInstance.airConsole = new AirConsoleOffline()
+			this.runningOffline = true
+			this.airConsole = new AirConsoleOffline()
 		}
 
-		pluginInstance.maxPlayers = pluginInstance.properties[0]
-		pluginInstance.isController = (pluginInstance.properties[1] === 1)
-		pluginInstance.useTranslation = (pluginInstance.properties[2] === 1)
+		this.maxPlayers = this.properties[0]
+		this.isController = (this.properties[1] === 1)
+		this.useTranslation = (this.properties[2] === 1)
 
-		if (pluginInstance.isController) {
-			pluginInstance.airConsole.onReady = function () {
-				pluginInstance.airConsole.message(AirConsole.SCREEN, {
+		if (this.isController) {
+			this.airConsole.onReady = function () {
+				this.airConsole.message(AirConsole.SCREEN, {
 					handshake: true
 				})
 			}
 		}
 
-		pluginInstance.airConsole.onReady = function (code) {
-			pluginInstance.airConsoleReady = true
+		this.airConsole.onReady = function (code) {
+			this.airConsoleReady = true
 		}
 
-		pluginInstance.airConsole.onPause = function () {
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnPause, pluginInstance)
+		this.airConsole.onPause = function () {
+			this.runtime.trigger(pluginProto.cnds.OnPause, this)
 		}
 
-		pluginInstance.airConsole.onResume = function () {
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnResume, pluginInstance)
+		this.airConsole.onResume = function () {
+			this.runtime.trigger(pluginProto.cnds.OnResume, this)
 		}
 
 
-		pluginInstance.airConsole.onConnect = function (deviceId) {
-			if (pluginInstance.gameReady) {
-				pluginInstance.deviceId = deviceId
-				if (pluginInstance.airConsole.getControllerDeviceIds().length > pluginInstance.maxPlayers) {
-					pluginInstance.runtime.trigger(pluginProto.cnds.OnTooManyPlayers, pluginInstance)
+		this.airConsole.onConnect = function (deviceId) {
+			if (this.gameReady) {
+				this.deviceId = deviceId
+				if (this.airConsole.getControllerDeviceIds().length > this.maxPlayers) {
+					this.runtime.trigger(pluginProto.cnds.OnTooManyPlayers, this)
 				} else {
-					pluginInstance.runtime.trigger(pluginProto.cnds.OnConnect, pluginInstance)
+					this.runtime.trigger(pluginProto.cnds.OnConnect, this)
 				}
 			}
 		}
 
-		pluginInstance.airConsole.onDisconnect = function (deviceId) {
-			if (pluginInstance.gameReady) {
-				pluginInstance.deviceId = deviceId
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnDisconnect, pluginInstance)
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnDeviceDisconnect, pluginInstance)
+		this.airConsole.onDisconnect = function (deviceId) {
+			if (this.gameReady) {
+				this.deviceId = deviceId
+				this.runtime.trigger(pluginProto.cnds.OnDisconnect, this)
+				this.runtime.trigger(pluginProto.cnds.OnDeviceDisconnect, this)
 			}
 		}
 
-		pluginInstance.airConsole.onMessage = function (deviceId, data) {
-			if (pluginInstance.gameReady && data) {
-				pluginInstance.deviceId = deviceId
-				pluginInstance.message = data
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnMessage, pluginInstance)
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnMessageFrom, pluginInstance)
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnMessageIs, pluginInstance)
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnMessageFromIs, pluginInstance)
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnMessageHasProperty, pluginInstance)
+		this.airConsole.onMessage = function (deviceId, data) {
+			if (this.gameReady && data) {
+				this.deviceId = deviceId
+				this.message = data
+				this.runtime.trigger(pluginProto.cnds.OnMessage, this)
+				this.runtime.trigger(pluginProto.cnds.OnMessageFrom, this)
+				this.runtime.trigger(pluginProto.cnds.OnMessageIs, this)
+				this.runtime.trigger(pluginProto.cnds.OnMessageFromIs, this)
+				this.runtime.trigger(pluginProto.cnds.OnMessageHasProperty, this)
 			}
 		}
 
-		pluginInstance.airConsole.onDeviceStateChange = function (deviceId, data) {
+		this.airConsole.onDeviceStateChange = function (deviceId, data) {
 		}
 
-		pluginInstance.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
-			pluginInstance.deviceId = deviceId
-			pluginInstance.customData = customData
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, pluginInstance)
+		this.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
+			this.deviceId = deviceId
+			this.customData = customData
+			this.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, this)
 		}
 
-		pluginInstance.airConsole.onHighScores = function (highscores) {
+		this.airConsole.onHighScores = function (highscores) {
 			if (highscores) {
-				pluginInstance.highscores = highscores
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnHighScores, pluginInstance)
+				this.highscores = highscores
+				this.runtime.trigger(pluginProto.cnds.OnHighScores, this)
 			}
 		}
 
-		pluginInstance.airConsole.onHighScoreStored = function (highscores) {
+		this.airConsole.onHighScoreStored = function (highscores) {
 			if (highscores) {
-				pluginInstance.highscores = highscores
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnHighScoreStored, pluginInstance)
+				this.highscores = highscores
+				this.runtime.trigger(pluginProto.cnds.OnHighScoreStored, this)
 			}
 		}
 
-		pluginInstance.airConsole.onAdComplete = function (adWasShown) {
-			pluginInstance.adCompleted = (adWasShown) ? 1 : 0
-			pluginInstance.adShowing = 0
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnAdComplete, pluginInstance)
+		this.airConsole.onAdComplete = function (adWasShown) {
+			this.adCompleted = (adWasShown) ? 1 : 0
+			this.adShowing = 0
+			this.runtime.trigger(pluginProto.cnds.OnAdComplete, this)
 		}
 
-		pluginInstance.airConsole.onAdShow = function () {
-			pluginInstance.adShowing = 1
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnAdShow, pluginInstance)
+		this.airConsole.onAdShow = function () {
+			this.adShowing = 1
+			this.runtime.trigger(pluginProto.cnds.OnAdShow, this)
 		}
 
-		pluginInstance.airConsole.onPremium = function (deviceId) {
-			if (pluginInstance.gameReady) {
-				pluginInstance.deviceId = deviceId
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnPremium, pluginInstance)
+		this.airConsole.onPremium = function (deviceId) {
+			if (this.gameReady) {
+				this.deviceId = deviceId
+				this.runtime.trigger(pluginProto.cnds.OnPremium, this)
 			}
 		}
 
-		pluginInstance.airConsole.onPersistentDataLoaded = function (data) {
+		this.airConsole.onPersistentDataLoaded = function (data) {
 			if (data) {
-				pluginInstance.persistentData = data
-				pluginInstance.runtime.trigger(pluginProto.cnds.OnPersistentDataLoaded, pluginInstance)
+				this.persistentData = data
+				this.runtime.trigger(pluginProto.cnds.OnPersistentDataLoaded, this)
 			}
 		}
 
-		pluginInstance.airConsole.onPersistentDataStored = function (uid) {
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnPersistentDataStored, pluginInstance)
+		this.airConsole.onPersistentDataStored = function (uid) {
+			this.runtime.trigger(pluginProto.cnds.OnPersistentDataStored, this)
 		}
 
-		pluginInstance.airConsole.onDeviceProfileChange = function (deviceId) {
-			pluginInstance.deviceId = deviceId
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnDeviceProfileChange, pluginInstance)
+		this.airConsole.onDeviceProfileChange = function (deviceId) {
+			this.deviceId = deviceId
+			this.runtime.trigger(pluginProto.cnds.OnDeviceProfileChange, this)
 		}
 
-		pluginInstance.airConsole.onDeviceMotion = function (data) {
-			pluginInstance.motionData = data
-			pluginInstance.runtime.trigger(pluginProto.cnds.OnDeviceMotion, pluginInstance)
+		this.airConsole.onDeviceMotion = function (data) {
+			this.motionData = data
+			this.runtime.trigger(pluginProto.cnds.OnDeviceMotion, this)
 		}
 
-		pluginInstance.airConsole.onMute = function (mute) {
+		this.airConsole.onMute = function (mute) {
 			console.warn('Using deprecated action "onMute/onUnmute"')
 		}
 	}
 
 	Acts.prototype.GameReady = function () {
-		pluginInstance.gameReady = true
-		var deviceIds = pluginInstance.airConsole.getControllerDeviceIds()
+		this.gameReady = true
+		var deviceIds = this.airConsole.getControllerDeviceIds()
 		for (var i = 0; i < deviceIds.length; i++) {
-			pluginInstance.airConsole.onConnect(deviceIds[i])
-			pluginInstance.airConsole.onCustomDeviceStateChange(deviceIds[i], null)
+			this.airConsole.onConnect(deviceIds[i])
+			this.airConsole.onCustomDeviceStateChange(deviceIds[i], null)
 		}
 	}
 
@@ -470,19 +471,19 @@ function AirConsoleOffline() {
 			value = obj
 		}
 
-		pluginInstance.airConsole.message(deviceId, value)
+		this.airConsole.message(deviceId, value)
 	}
 
 	Acts.prototype.Broadcast = function (property, message) {
-		pluginInstance.airConsole.broadcast(message)
+		this.airConsole.broadcast(message)
 	}
 
 	Acts.prototype.SetCustomDeviceStateProperty = function (property, value) {
-		pluginInstance.airConsole.setCustomDeviceState(property, value)
+		this.airConsole.setCustomDeviceState(property, value)
 	}
 
 	Acts.prototype.RequestHighScores = function (level_name, level_version, uids, ranks, total, top) {
-		pluginInstance.highscores = null
+		this.highscores = null
 		var uidsArray
 		if (uids === 'all') {
 			uidsArray = ''
@@ -492,81 +493,81 @@ function AirConsoleOffline() {
 			uidsArray = [uids]
 		}
 		var ranksArray = (ranks === 'world') ? [ranks] : ranks.split(',')
-		pluginInstance.airConsole.requestHighScores(level_name, level_version, uidsArray, ranksArray, total, top)
+		this.airConsole.requestHighScores(level_name, level_version, uidsArray, ranksArray, total, top)
 	}
 
 	Acts.prototype.StoreHighScores = function (level_name, level_version, score, uid, data, score_string) {
 		var uidArray = uid.split(',')
-		pluginInstance.airConsole.storeHighScore(level_name, level_version, score, uidArray, data, score_string)
+		this.airConsole.storeHighScore(level_name, level_version, score, uidArray, data, score_string)
 	}
 
 	Acts.prototype.SetActivePlayers = function (max_players) {
-		pluginInstance.airConsole.setActivePlayers(max_players)
+		this.airConsole.setActivePlayers(max_players)
 	}
 
 	Acts.prototype.ShowAd = function () {
-		pluginInstance.airConsole.showAd()
+		this.airConsole.showAd()
 	}
 
 	Acts.prototype.NavigateHome = function () {
-		pluginInstance.airConsole.navigateHome()
+		this.airConsole.navigateHome()
 	}
 
 	Acts.prototype.NavigateTo = function (url) {
-		pluginInstance.airConsole.navigateTo(url)
+		this.airConsole.navigateTo(url)
 	}
 
 	Acts.prototype.RequestPersistentData = function (uids) {
-		pluginInstance.persistentData = null
+		this.persistentData = null
 		var uidsArray = (uids.indexOf(',') > -1) ? uids.split(',') : [uids]
-		pluginInstance.airConsole.requestPersistentData(uidsArray)
+		this.airConsole.requestPersistentData(uidsArray)
 	}
 
 	Acts.prototype.StorePersistentData = function (key, value, uid) {
-		pluginInstance.airConsole.storePersistentData(key, value, uid)
+		this.airConsole.storePersistentData(key, value, uid)
 	}
 
 	Acts.prototype.SendPresetMessage = function (deviceId) {
-		if (pluginInstance.runningOffline) return
+		if (this.runningOffline) return
 
-		pluginInstance.airConsole.message(deviceId, pluginInstance.presetMessage)
-		pluginInstance.presetMessage = {}
+		this.airConsole.message(deviceId, this.presetMessage)
+		this.presetMessage = {}
 	}
 
 	Acts.prototype.BroadcastPresetMessage = function () {
-		pluginInstance.airConsole.broadcast(pluginInstance.presetMessage)
-		pluginInstance.presetMessage = {}
+		this.airConsole.broadcast(this.presetMessage)
+		this.presetMessage = {}
 	}
 
 	Acts.prototype.SetPresetMessage = function (key, value) {
-		pluginInstance.presetMessage[key] = value
+		this.presetMessage[key] = value
 	}
 
 	Acts.prototype.ClearPresetMessage = function () {
-		pluginInstance.presetMessage = {}
+		this.presetMessage = {}
 	}
 
 	Acts.prototype.EditProfile = function () {
-		if (pluginInstance.isController) {
-			pluginInstance.airConsole.editProfile()
+		if (this.isController) {
+			this.airConsole.editProfile()
 		} else {
 			console.warn('You can\' use "Edit profile" on screen')
 		}
 	}
 
 	Acts.prototype.SetOrientation = function (orientation) {
-		if (pluginInstance.isController) {
-			pluginInstance.airConsole.setOrientation((orientation === 1) ? AirConsole.ORIENTATION_PORTRAIT : AirConsole.ORIENTATION_LANDSCAPE)
+		if (this.isController) {
+			this.airConsole.setOrientation((orientation === 1) ? AirConsole.ORIENTATION_PORTRAIT : AirConsole.ORIENTATION_LANDSCAPE)
 		}
 	}
 
 	Acts.prototype.GetPremium = function () {
-		pluginInstance.airConsole.getPremium()
+		this.airConsole.getPremium()
 	}
 
 	Acts.prototype.Vibrate = function (time) {
-		if (pluginInstance.properties[1] === 1 && time > 0) {
-			pluginInstance.airConsole.vibrate(time)
+		if (this.properties[1] === 1 && time > 0) {
+			this.airConsole.vibrate(time)
 		}
 	}
 
@@ -583,31 +584,31 @@ function AirConsoleOffline() {
 	// ret.set_any("woo");			// for ef_return_any, accepts either a number or string
 
 	Exps.prototype.DeviceId = function (ret) {
-		ret.set_int(pluginInstance.deviceId)
+		ret.set_int(this.deviceId)
 	}
 
 	Exps.prototype.Message = function (ret) {
-		if (typeof pluginInstance.message === 'object') {
-			if (Object.keys(pluginInstance.message).length === 1) {
-				ret.set_string(pluginInstance.message[Object.keys(pluginInstance.message)[0]])
+		if (typeof this.message === 'object') {
+			if (Object.keys(this.message).length === 1) {
+				ret.set_string(this.message[Object.keys(this.message)[0]])
 			} else {
-				ret.set_string(JSON.stringify(pluginInstance.message))
+				ret.set_string(JSON.stringify(this.message))
 			}
 		} else {
-			ret.set_string(pluginInstance.message)
+			ret.set_string(this.message)
 		}
 	}
 
 	Exps.prototype.MessageAtProperty = function (ret, property) {
-		if (typeof pluginInstance.message === 'object' && pluginInstance.message.hasOwnProperty(property)) {
-			ret.set_string(pluginInstance.message[property])
+		if (typeof this.message === 'object' && this.message.hasOwnProperty(property)) {
+			ret.set_string(this.message[property])
 		} else {
 			console.warn('MessageAtProperty - Tried to access a non existing property')
 		}
 	}
 
 	Exps.prototype.IsMultipartMessage = function (ret) {
-		if (pluginInstance.message !== null && typeof pluginInstance.message === 'object' && Object.keys(pluginInstance.message).length > 1) {
+		if (this.message !== null && typeof this.message === 'object' && Object.keys(this.message).length > 1) {
 			ret.set_int(1)
 		} else {
 			ret.set_int(0)
@@ -615,7 +616,7 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.MessageHasProperty = function (ret, property) {
-		if (pluginInstance.message !== null && typeof pluginInstance.message === 'object' && pluginInstance.message.hasOwnProperty(property)) {
+		if (this.message !== null && typeof this.message === 'object' && this.message.hasOwnProperty(property)) {
 			ret.set_int(1)
 		} else {
 			ret.set_int(0)
@@ -625,59 +626,59 @@ function AirConsoleOffline() {
 	Exps.prototype.MessageAsJSON = function (ret) {
 		var c2Dictionary = {}
 		c2Dictionary['c2dictionary'] = true
-		c2Dictionary['data'] = getProperties(pluginInstance.message)
+		c2Dictionary['data'] = getProperties(this.message)
 		ret.set_string(JSON.stringify(c2Dictionary))
 	}
 
 	Exps.prototype.GetProfilePicture = function (ret, deviceId) {
-		var pic = pluginInstance.airConsole.getProfilePicture(deviceId) || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y'
+		var pic = this.airConsole.getProfilePicture(deviceId) || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y'
 		ret.set_string(pic)
 	}
 
 	Exps.prototype.GetProfilePictureWithSize = function (ret, deviceId, pictureSize) {
-		var pic = pluginInstance.airConsole.getProfilePicture(deviceId, pictureSize) || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y'
+		var pic = this.airConsole.getProfilePicture(deviceId, pictureSize) || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?f=y'
 		ret.set_string(pic)
 	}
 
 	Exps.prototype.GetNickname = function (ret, deviceId) {
-		var nickname = pluginInstance.airConsole.getNickname(deviceId) || 'Nickname not found'
+		var nickname = this.airConsole.getNickname(deviceId) || 'Nickname not found'
 		ret.set_string(nickname)
 	}
 
 	Exps.prototype.GetUID = function (ret, deviceId) {
-		var uid = pluginInstance.airConsole.getUID(deviceId) || 'Unknown UID'
+		var uid = this.airConsole.getUID(deviceId) || 'Unknown UID'
 		ret.set_string(uid)
 	}
 
 	Exps.prototype.GetMessagePropertiesCount = function (ret) {
-		if (pluginInstance.message !== null && typeof pluginInstance.message === 'object') {
-			ret.set_int(Object.keys(pluginInstance.message).length)
+		if (this.message !== null && typeof this.message === 'object') {
+			ret.set_int(Object.keys(this.message).length)
 		} else {
 			ret.set_int(0)
 		}
 	}
 
 	Exps.prototype.GetMasterControllerDeviceId = function (ret) {
-		var id = pluginInstance.airConsole.getMasterControllerDeviceId()
+		var id = this.airConsole.getMasterControllerDeviceId()
 		ret.set_int((typeof id !== 'number' || isNaN(id)) ? -1 : id)
 	}
 
 	Exps.prototype.ConvertPlayerNumberToDeviceId = function (ret, playerNumber) {
-		var id = pluginInstance.airConsole.convertPlayerNumberToDeviceId(playerNumber)
+		var id = this.airConsole.convertPlayerNumberToDeviceId(playerNumber)
 		ret.set_int((typeof id !== 'number') ? -1 : id)
 	}
 
 	Exps.prototype.ConvertDeviceIdToPlayerNumber = function (ret, deviceId) {
-		var playerNumber = pluginInstance.airConsole.convertDeviceIdToPlayerNumber(deviceId)
+		var playerNumber = this.airConsole.convertDeviceIdToPlayerNumber(deviceId)
 		ret.set_int((typeof playerNumber !== 'number') ? -1 : playerNumber)
 	}
 
 	Exps.prototype.IsPremium = function (ret, deviceId) {
-		ret.set_int((pluginInstance.airConsole.isPremium(deviceId) !== false) ? 1 : 0)
+		ret.set_int((this.airConsole.isPremium(deviceId) !== false) ? 1 : 0)
 	}
 
 	Exps.prototype.GetControllerDeviceIds = function (ret) {
-		var arr = pluginInstance.airConsole.getControllerDeviceIds()
+		var arr = this.airConsole.getControllerDeviceIds()
 
 		var c2array = {}
 		c2array['c2array'] = true
@@ -692,10 +693,10 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.GetPersistentData = function (ret) {
-		if (pluginInstance.persistentData !== null) {
+		if (this.persistentData !== null) {
 			var c2Dictionary = {}
 			c2Dictionary['c2dictionary'] = true
-			c2Dictionary['data'] = getProperties(pluginInstance.persistentData)
+			c2Dictionary['data'] = getProperties(this.persistentData)
 			ret.set_string(JSON.stringify(c2Dictionary))
 		} else {
 			console.warn('Persistent data requested but they weren\'t loaded. Did you forget to use RequestPersistentData?')
@@ -704,10 +705,10 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.GetHighscores = function (ret) {
-		if (pluginInstance.highscores !== null) {
+		if (this.highscores !== null) {
 			var c2Dictionary = {}
 			c2Dictionary['c2dictionary'] = true
-			c2Dictionary['data'] = getProperties(pluginInstance.highscores)
+			c2Dictionary['data'] = getProperties(this.highscores)
 			ret.set_string(JSON.stringify(c2Dictionary))
 		} else {
 			console.warn('Highscores data requested but they weren\'t loaded. Did you forget to use RequestHighscores?')
@@ -716,7 +717,7 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.IsPluginOffline = function (ret) {
-		if (pluginInstance.runningOffline) {
+		if (this.runningOffline) {
 			ret.set_int(1)
 		} else {
 			ret.set_int(0)
@@ -724,7 +725,7 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.GetActivePlayerDeviceIds = function (ret) {
-		var arr = pluginInstance.airConsole.getActivePlayerDeviceIds()
+		var arr = this.airConsole.getActivePlayerDeviceIds()
 
 		var c2array = {}
 		c2array['c2array'] = true
@@ -739,26 +740,26 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.IsAddShowing = function (ret) {
-		ret.set_int(pluginInstance.adShowing)
+		ret.set_int(this.adShowing)
 	}
 
 	Exps.prototype.AdShown = function (ret) {
-		ret.set_int(pluginInstance.adCompleted)
+		ret.set_int(this.adCompleted)
 	}
 
 	Exps.prototype.GetThisDeviceId = function (ret) {
-		if (pluginInstance.isController) {
-			ret.set_int(pluginInstance.airConsole.getDeviceId())
+		if (this.isController) {
+			ret.set_int(this.airConsole.getDeviceId())
 		} else {
 			ret.set_int(0)
 		}
 	}
 
 	Exps.prototype.MotionData = function (ret) {
-		if (pluginInstance.motionData !== null) {
+		if (this.motionData !== null) {
 			var c2Dictionary = {}
 			c2Dictionary['c2dictionary'] = true
-			c2Dictionary['data'] = getProperties(pluginInstance.motionData)
+			c2Dictionary['data'] = getProperties(this.motionData)
 			ret.set_string(JSON.stringify(c2Dictionary))
 		} else {
 			ret.set_string('')
@@ -766,16 +767,16 @@ function AirConsoleOffline() {
 	}
 
 	Exps.prototype.GetLanguage = function (ret, deviceId) {
-		if (!pluginInstance.useTranslation) {
+		if (!this.useTranslation) {
 			console.log('Translation support not enabled. Please turn it on in your Construct 2 project settings.')
 			ret.set_string('')
 		} else {
-			ret.set_string(pluginInstance.airConsole.getLanguage(deviceId) || 'en-US')
+			ret.set_string(this.airConsole.getLanguage(deviceId) || 'en-US')
 		}
 	}
 
 	Exps.prototype.GetTranslation = function (ret, id, values) {
-		if (!pluginInstance.useTranslation) {
+		if (!this.useTranslation) {
 			console.warn('Translation support not enabled. Please turn it on in your Construct 2 project settings.')
 			ret.set_string('')
 			return
@@ -801,7 +802,7 @@ function AirConsoleOffline() {
 		} else {
 			values = {}
 		}
-		ret.set_string(pluginInstance.airConsole.getTranslation(id, values) || '')
+		ret.set_string(this.airConsole.getTranslation(id, values) || '')
 	}
 
 	pluginProto.exps = new Exps()
