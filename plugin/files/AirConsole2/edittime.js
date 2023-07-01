@@ -198,7 +198,7 @@ AddComboParamOption('Portrait')
 AddComboParam('Orientation', 'Desired controller orientation.', 0)
 AddAction(19, af_none, 'Set orientation', 'Controller only', 'Set orientation to {0}', 'Set orientation', 'SetOrientation')
 
-AddAction(20, af_none, 'Start AirConsole', 'System', 'Starts AirConsole', 'Instanciates AirConsole. Must be your very first action, as without it, no AirConsole!', 'StartAirConsole')
+AddAction(20, af_none, 'Start AirConsole', 'System', 'Start AirConsole', 'Instanciates AirConsole. Must be your very first action, as without it, no AirConsole!', 'StartAirConsole')
 ////////////////////////////////////////
 // Expressions
 

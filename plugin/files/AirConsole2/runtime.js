@@ -112,16 +112,14 @@ function AirConsoleOffline() {
 	// Instance class
 	pluginProto.Instance = function (type) {
 		this.type = type
-		this.airconsole = null
 		this.runtime = type.runtime
-		this.maxPlayers = 0
+		this.maxPlayers
 		this.useTranslation = false
 		this.gameReady = false
-		this.airConsoleReady = false
 		this.airConsoleStarted = false
-		this.isController = false
-		this.deviceId = 0
-		this.message = ''
+		this.isController
+		this.deviceId
+		this.message
 		this.adCompleted = 0
 		this.adShowing = 0
 		this.persistentData = null
@@ -132,12 +130,12 @@ function AirConsoleOffline() {
 		this.motionData = {}
 	}
 
-	var pluginInstance = null
+	var self = null
 	var instanceProto = pluginProto.Instance.prototype
 
 	// called whenever an instance is created
 	instanceProto.onCreate = function () {
-		pluginInstance = this
+		self = this
 	}
 
 	// only called if a layout object - draw to a canvas 2D context
@@ -149,7 +147,6 @@ function AirConsoleOffline() {
 	// directory or just copy what other plugins do.
 	instanceProto.drawGL = function (glw) {
 	}
-
 
 	//////////////////////////////////////
 	// Conditions
@@ -291,15 +288,14 @@ function AirConsoleOffline() {
 	function Acts() {
 	}
 
-	Acts.prototype.StartAirConsole = function () {
-		var self = this
+	Acts.prototype.StartAirConsole = function() {
 		if (this.airConsoleStarted) {
 			return
 		}
-
+		this.airConsoleStarted = true
 		if (typeof AirConsole !== 'undefined') {
 			this.runningOffline = false
-			if (this.properties[1] === 1) {
+			if (self.properties[1] === 1) {
 				this.gameReady = true
 				var config = {
 					orientation: AirConsole.ORIENTATION_LANDSCAPE,
@@ -307,17 +303,17 @@ function AirConsoleOffline() {
 					setup_document: true,
 					device_motion: false
 				}
-				if (this.properties[2] === 0) {
+				if (self.properties[2] === 0) {
 					config.translation = true
 				}
-				if (this.properties[3] === 1) {
+				if (self.properties[3] === 1) {
 					config.orientation = AirConsole.ORIENTATION_PORTRAIT
 				}
-				if (this.properties[4] === 0) {
+				if (self.properties[4] === 0) {
 					config.synchronize_time = true
 				}
-				if (this.properties[5] > 0) {
-					config.device_motion = this.properties[4]
+				if (self.properties[5] > 0) {
+					config.device_motion = self.properties[4]
 				}
 
 				this.airConsole = new AirConsole(config)
@@ -329,59 +325,46 @@ function AirConsoleOffline() {
 			this.airConsole = new AirConsoleOffline()
 		}
 
-		this.maxPlayers = this.properties[0]
-		this.isController = (this.properties[1] === 1)
-		this.useTranslation = (this.properties[2] === 1)
+		this.maxPlayers = self.properties[0]
+		this.isController = (self.properties[1] === 1)
+		this.useTranslation = (self.properties[2] === 1)
 
 		if (this.isController) {
 			this.airConsole.onReady = function () {
-				this.airConsole.message(AirConsole.SCREEN, {
+				self.airConsole.message(AirConsole.SCREEN, {
 					handshake: true
 				})
 			}
 		}
 
-		this.airConsole.onReady = function (code) {
-			this.airConsoleReady = true
-		}
-
-		this.airConsole.onPause = function () {
-			this.runtime.trigger(pluginProto.cnds.OnPause, this)
-		}
-
-		this.airConsole.onResume = function () {
-			this.runtime.trigger(pluginProto.cnds.OnResume, this)
-		}
-
-
 		this.airConsole.onConnect = function (deviceId) {
-			if (this.gameReady) {
-				this.deviceId = deviceId
-				if (this.airConsole.getControllerDeviceIds().length > this.maxPlayers) {
-					this.runtime.trigger(pluginProto.cnds.OnTooManyPlayers, this)
+			if (self.gameReady) {
+				self.deviceId = deviceId
+				if (self.airConsole.getControllerDeviceIds().length > self.maxPlayers) {
+					self.runtime.trigger(pluginProto.cnds.OnTooManyPlayers, self)
 				} else {
-					this.runtime.trigger(pluginProto.cnds.OnConnect, this)
+					self.runtime.trigger(pluginProto.cnds.OnConnect, self)
 				}
 			}
 		}
 
 		this.airConsole.onDisconnect = function (deviceId) {
-			if (this.gameReady) {
-				this.deviceId = deviceId
-				this.runtime.trigger(pluginProto.cnds.OnDisconnect, this)
-				this.runtime.trigger(pluginProto.cnds.OnDeviceDisconnect, this)
+			if (self.gameReady) {
+				self.deviceId = deviceId
+				self.runtime.trigger(pluginProto.cnds.OnDisconnect, self)
+				self.runtime.trigger(pluginProto.cnds.OnDeviceDisconnect, self)
 			}
 		}
 
 		this.airConsole.onMessage = function (deviceId, data) {
-			if (this.gameReady && data) {
-				this.deviceId = deviceId
-				this.message = data
-				this.runtime.trigger(pluginProto.cnds.OnMessage, this)
-				this.runtime.trigger(pluginProto.cnds.OnMessageFrom, this)
-				this.runtime.trigger(pluginProto.cnds.OnMessageIs, this)
-				this.runtime.trigger(pluginProto.cnds.OnMessageFromIs, this)
-				this.runtime.trigger(pluginProto.cnds.OnMessageHasProperty, this)
+			if (self.gameReady && data) {
+				self.deviceId = deviceId
+				self.message = data
+				self.runtime.trigger(pluginProto.cnds.OnMessage, self)
+				self.runtime.trigger(pluginProto.cnds.OnMessageFrom, self)
+				self.runtime.trigger(pluginProto.cnds.OnMessageIs, self)
+				self.runtime.trigger(pluginProto.cnds.OnMessageFromIs, self)
+				self.runtime.trigger(pluginProto.cnds.OnMessageHasProperty, self)
 			}
 		}
 
@@ -389,66 +372,74 @@ function AirConsoleOffline() {
 		}
 
 		this.airConsole.onCustomDeviceStateChange = function (deviceId, customData) {
-			this.deviceId = deviceId
-			this.customData = customData
-			this.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, this)
+			self.deviceId = deviceId
+			self.customData = customData
+			self.runtime.trigger(pluginProto.cnds.OnCustomDeviceStateChange, self)
 		}
 
 		this.airConsole.onHighScores = function (highscores) {
 			if (highscores) {
-				this.highscores = highscores
-				this.runtime.trigger(pluginProto.cnds.OnHighScores, this)
+				self.highscores = highscores
+				self.runtime.trigger(pluginProto.cnds.OnHighScores, self)
 			}
 		}
 
 		this.airConsole.onHighScoreStored = function (highscores) {
 			if (highscores) {
-				this.highscores = highscores
-				this.runtime.trigger(pluginProto.cnds.OnHighScoreStored, this)
+				self.highscores = highscores
+				self.runtime.trigger(pluginProto.cnds.OnHighScoreStored, self)
 			}
 		}
 
 		this.airConsole.onAdComplete = function (adWasShown) {
-			this.adCompleted = (adWasShown) ? 1 : 0
-			this.adShowing = 0
-			this.runtime.trigger(pluginProto.cnds.OnAdComplete, this)
+			self.adCompleted = (adWasShown) ? 1 : 0
+			self.adShowing = 0
+			self.runtime.trigger(pluginProto.cnds.OnAdComplete, self)
 		}
 
 		this.airConsole.onAdShow = function () {
-			this.adShowing = 1
-			this.runtime.trigger(pluginProto.cnds.OnAdShow, this)
+			self.adShowing = 1
+			self.runtime.trigger(pluginProto.cnds.OnAdShow, self)
 		}
 
 		this.airConsole.onPremium = function (deviceId) {
-			if (this.gameReady) {
-				this.deviceId = deviceId
-				this.runtime.trigger(pluginProto.cnds.OnPremium, this)
+			if (self.gameReady) {
+				self.deviceId = deviceId
+				self.runtime.trigger(pluginProto.cnds.OnPremium, self)
 			}
 		}
 
 		this.airConsole.onPersistentDataLoaded = function (data) {
 			if (data) {
-				this.persistentData = data
-				this.runtime.trigger(pluginProto.cnds.OnPersistentDataLoaded, this)
+				self.persistentData = data
+				self.runtime.trigger(pluginProto.cnds.OnPersistentDataLoaded, self)
 			}
 		}
 
 		this.airConsole.onPersistentDataStored = function (uid) {
-			this.runtime.trigger(pluginProto.cnds.OnPersistentDataStored, this)
+			self.runtime.trigger(pluginProto.cnds.OnPersistentDataStored, self)
 		}
 
 		this.airConsole.onDeviceProfileChange = function (deviceId) {
-			this.deviceId = deviceId
-			this.runtime.trigger(pluginProto.cnds.OnDeviceProfileChange, this)
+			self.deviceId = deviceId
+			self.runtime.trigger(pluginProto.cnds.OnDeviceProfileChange, self)
 		}
 
 		this.airConsole.onDeviceMotion = function (data) {
-			this.motionData = data
-			this.runtime.trigger(pluginProto.cnds.OnDeviceMotion, this)
+			self.motionData = data
+			self.runtime.trigger(pluginProto.cnds.OnDeviceMotion, self)
 		}
 
 		this.airConsole.onMute = function (mute) {
 			console.warn('Using deprecated action "onMute/onUnmute"')
+		}
+
+		this.airConsole.onPause = function () {
+			self.runtime.trigger(pluginProto.cnds.OnPause, self)
+		}
+
+		this.airConsole.onResume = function () {
+			self.runtime.trigger(pluginProto.cnds.OnResume, self)
 		}
 	}
 
@@ -457,7 +448,6 @@ function AirConsoleOffline() {
 		var deviceIds = this.airConsole.getControllerDeviceIds()
 		for (var i = 0; i < deviceIds.length; i++) {
 			this.airConsole.onConnect(deviceIds[i])
-			this.airConsole.onCustomDeviceStateChange(deviceIds[i], null)
 		}
 	}
 
