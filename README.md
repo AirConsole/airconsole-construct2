@@ -3,7 +3,7 @@
 Construct2 plugin second generation for AirConsole version 1.8.0
 
 AirConsole can be visited on www.airconsole.com and is a great way for unique game experience using your smartphones as controllers
-Construct 2 is a great 2D game creation tool that allows anybody, with or without coding experiences, to start developping their own games
+Construct 2 is a great 2D game creation tool that allows anybody, with or without coding experiences, to start developing their own games
 
 This plugin allows you to build both games and the controllers with Construct2! Don't forget to check out the external merging tool when you need to package your game before testing: [AirConsoleMerger](https://github.com/Psychokiller1888/AirConsoleMerger/releases)
 
@@ -15,13 +15,17 @@ More information about the plugin:
 
 [AirConsole guides](http://developers.airconsole.com/#/guides/construct2)
 
+## Version 1.8.0.3
+
+* Added "Start AirConsole" action, required to actually let AC know we are ready to communicate. This should be used before "Game Ready"
+
 ## Version 1.8.0.2
 
-- Deprecated onMute/onUnmute as API 1.8.0
+* Deprecated onMute/onUnmute as API 1.8.0
 
 ## Version 1.8.0.1
 
-- Minor fixes
+* Minor fixes
 
 ## Version 1.8.0.0
 
@@ -37,7 +41,7 @@ More information about the plugin:
 
 ## Version 1.7.0.18
 
-* Fixing all messenging functions for controller mode
+* Fixing all messaging functions for controller mode
 
 ## Version 1.7.0.17
 

@@ -2,7 +2,7 @@
 	return {
 		'name': 'AirConsole 2',			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		'id': 'AirConsole2',			// this is used to identify this plugin and is saved to the project; never change it
-		'version': '1.8.0.0',				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
+		'version': '1.8.0.3',				// 3 first digits follow AirConsole API's version. Last digit for the plugin's version
 		'description': 'Extend your game with local multiplayer fun',
 		'author': 'Psychokiller1888 for N-Dreams AG',
 		'help url': 'https://github.com/AirConsole/airconsole-construct2/wiki',
@@ -198,7 +198,7 @@ AddComboParamOption('Portrait')
 AddComboParam('Orientation', 'Desired controller orientation.', 0)
 AddAction(19, af_none, 'Set orientation', 'Controller only', 'Set orientation to {0}', 'Set orientation', 'SetOrientation')
 
-
+AddAction(20, af_none, 'Start AirConsole', 'System', 'Start AirConsole', 'Instanciates AirConsole. Must be your very first action, as without it, no AirConsole!', 'StartAirConsole')
 ////////////////////////////////////////
 // Expressions
 
