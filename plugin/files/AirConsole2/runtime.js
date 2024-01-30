@@ -781,7 +781,7 @@ function AirConsoleOffline() {
 		if (values) {
 			try {
 				values = JSON.parse(values)
-			} catch {
+			} catch (e) {
 				console.warn('Couldn\'t parse passed values for AirConsole GetTranslation.')
 				values = {}
 			}
